@@ -12,32 +12,37 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                ZippoHUB
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-pills align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
+                        <a class="nav-link text-light" aria-current="page" href="../../../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
+                        <a class="nav-link text-light" href="../../index.php">Cửa hàng</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark bg-light" href="#">
-                            Giỏ hàng <span class="badge bg-secondary">
-                                <?php session_start();
-                                echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;
-                                ?></span></a>
+                        <a class="nav-link text-light" href="#">
+                            Giỏ hàng <span class="badge bg-secondary">4</span></a>
+                        <!-- <button type="button" class="btn btn-light">
+                            Giỏ hàng <span class="badge bg-danger">4</span>
+                        </button> -->
                     </li>
                     <?php
+                    session_start();
                     if (isset($_SESSION['email'])) {
                         echo '<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="../user/canhan.php">Tài khoản</a></li>
+                                <li><a class="dropdown-item" href="../taikhoan/canhan.php">Tài khoản</a></li>
                                 <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
                                 <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -47,7 +52,7 @@
                     } else echo
                     '<li class="nav-item">
                             <a class="nav-link text-light" href="./user/login_resgin/login.php">Đăng nhập</a>
-                    </li>';
+                        </li>';
                     ?>
                 </ul>
             </div>
@@ -56,35 +61,6 @@
 
     <!-- Chi tiet san pham -->
     <div class="container">
-        <!-- step -->
-        <div class="row justify-content-md-center align-items-center mt-4">
-            <div class="col-md-auto">
-                <div class="text-center">
-                    <a type="button" class="btn btn-outline-primary btn-sm active" href="./cart.php">1</a>
-                    <p><strong>Giỏ hàng</strong></p>
-                </div>
-            </div>
-
-            <hr class="bg-primary col-2 rounded-pill" size="10">
-
-            <div class="col-md-auto">
-                <div class="text-center">
-                    <a type="button" class="btn btn-outline-primary btn-sm active">2</a>
-                    <p><strong>Thanh toán</strong></p>
-                </div>
-            </div>
-
-            <hr class="bg-primary col-2 rounded-pill" size="10">
-
-            <div class="col-md-auto">
-                <div class="text-center">
-                    <a type="button" class="btn btn-outline-primary btn-sm">3</a>
-                    <p><strong>Hoàn thành</strong>
-                </div>
-                </p>
-            </div>
-        </div>
-        <!-- step -->
         <main>
             <div class="py-5 text-center">
                 <h2>Thanh toán hóa đơn</h2>
@@ -96,7 +72,18 @@
                         <span class="badge bg-primary rounded-pill">5</span>
                     </h4>
                     <ul class="list-group mb-3" id="listcart">
-
+                        <!-- <li class="list-group-item d-flex justify-content-between lh-sm">
+                            <div>
+                                <h6 class="my-0">Third item</h6>
+                                <small class="text-muted">Brief description</small>
+                            </div>
+                            <span class="text-muted">$5</span>
+                        </li>
+                        
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Tổng tiền:</span>
+                            <strong>1.000.000</strong>
+                        </li> -->
                     </ul>
 
                     <form class="card p-2">
@@ -345,9 +332,7 @@
                     let s11 = JSON.parse(this.responseText).lstcart;
                     let s12 = JSON.parse(this.responseText).checkoutbox;
                     let s13 = JSON.parse(this.responseText).tongg;
-
                     console.log(s13);
-
                     document.getElementById("listcart").innerHTML = s11;
                     document.getElementById("checkoutcard").innerHTML = s12;
                     document.getElementById("numberProd").innerHTML = s13;
@@ -395,11 +380,12 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    console.log(this.responseText);
+                    // console.log(JSON.parse(this.responseText));
+                    window.location.href = "billing.php"
                 }
             }
             //cau hinh request
-            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&name=' + s1 + '&phonee=' + s2 + '&address=' + s3, true);
+            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&name=' + s1 + '&phone=' + s2 + '&address=' + s3, true);
             //gui request
             xhttp.send();
         }
