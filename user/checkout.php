@@ -12,10 +12,6 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                ZippoHUB
-            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -58,7 +54,44 @@
             </div>
         </div>
     </nav>
+    <!-- step -->
+    <div class="row justify-content-md-center align-items-center mt-4">
+        <div class="col-md-auto">
+            <div class="text-center">
+                <a type="button" class="btn btn-outline-primary btn-sm active" style="width:30px; height:30px; border-radius: 50%;">1</a>
+                <p><strong>Giỏ hàng</strong></p>
+            </div>
+        </div>
 
+        <hr class="bg-primary col-2 rounded-pill" size="10">
+
+        <div class="col-md-auto">
+            <div class="text-center">
+                <a type="button" class="btn btn-outline-primary btn-sm active">2</a>
+                <p><strong>Kiểm tra thanh toán</strong></p>
+            </div>
+        </div>
+
+        <hr class="bg-primary col-2 rounded-pill" size="10">
+
+        <div class="col-md-auto">
+            <div class="text-center">
+                <a type="button" class="btn btn-outline-primary btn-sm">3</a>
+                <p><strong>Thanh toán</strong></p>
+            </div>
+        </div>
+
+        <hr class="bg-primary col-2 rounded-pill" size="10">
+
+        <div class="col-md-auto">
+            <div class="text-center">
+                <a type="button" class="btn btn-outline-primary btn-sm">4</a>
+                <p><strong>Hoàn thành</strong>
+            </div>
+            </p>
+        </div>
+    </div>
+    <!-- step -->
     <!-- Chi tiet san pham -->
     <div class="container">
         <main>
@@ -332,7 +365,9 @@
                     let s11 = JSON.parse(this.responseText).lstcart;
                     let s12 = JSON.parse(this.responseText).checkoutbox;
                     let s13 = JSON.parse(this.responseText).tongg;
+
                     console.log(s13);
+
                     document.getElementById("listcart").innerHTML = s11;
                     document.getElementById("checkoutcard").innerHTML = s12;
                     document.getElementById("numberProd").innerHTML = s13;
@@ -343,38 +378,36 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('action=display_cart');
+            xhttp.send('promocode');
         }
 
         function vouchers() {
             var s = document.getElementById('promocode').value;
             var s1 = document.getElementById('promocode').parentElement.children[1];
-            if (s == 'zipposgu') {
-                var xhttp = new XMLHttpRequest() || ActiveXObject();
-                xhttp.onreadystatechange = function() {
-                    //Kiem tra neu nhu da gui request thanh cong
-                    if (this.readyState == 4 && this.status == 200) {
-                        //In ra data nhan duoc
-                        let s12 = JSON.parse(this.responseText).checkoutbox;
-                        document.getElementById("checkoutcard").innerHTML = s12;
-                        s1.outerHTML = '<button type="button" class="btn btn-success" onclick="vouchers()">Đã áp dụng</button>';
-                        console.log(s1);
-                    }
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    let s12 = JSON.parse(this.responseText).checkoutbox;
+                    document.getElementById("checkoutcard").innerHTML = s12;
+                    s1.outerHTML = '<button type="button" class="btn btn-success" onclick="vouchers()">Đã áp dụng</button>';
+                    console.log(JSON.parse(this.responseText).checkoutbox);
                 }
-                //cau hinh request
-                xhttp.open('POST', './PHP_Function/display_checkout.php?promo=' + s, true);
-                //cau hinh header cho request
-                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                //gui request
-                xhttp.send('action=display_cart');
-            } else alert('không có mã hoặc sai');
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/display_checkout.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('promocode=' + s);
         }
 
         function payment() {
             s1 = document.getElementById('fullname').value;
             s2 = document.getElementById('phonee').value;
             s3 = document.getElementById('address').value;
-
+            s4 = document.getElementById('promocode').value;
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
@@ -385,7 +418,7 @@
                 }
             }
             //cau hinh request
-            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&name=' + s1 + '&phone=' + s2 + '&address=' + s3, true);
+            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&magiamgia='+s4+'&name=' + s1 + '&phone=' + s2 + '&address=' + s3, true);
             //gui request
             xhttp.send();
         }

@@ -32,10 +32,47 @@
             margin-bottom: 1.5rem;
         }
     </style>
-    <nav class="nav-bar"></nav>
     <div class="container">
+        <!-- step -->
+        <div class="row justify-content-md-center align-items-center mt-4">
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm active" style="width:30px; height:30px; border-radius: 50%;">1</a>
+                    <p><strong>Giỏ hàng</strong></p>
+                </div>
+            </div>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm active">2</a>
+                    <p><strong>Kiểm tra thanh toán</strong></p>
+                </div>
+            </div>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm active">3</a>
+                    <p><strong>Thanh toán</strong></p>
+                </div>
+            </div>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm">4</a>
+                    <p><strong>Hoàn thành</strong>
+                </div>
+                </p>
+            </div>
+        </div>
+        <!-- step -->
         <div class="header clearfix">
-            <h1 class="text-muted">Trang thanh toán vé máy bay</h1>
+            <h1 class="text-muted">Thanh toán đơn hàng</h1>
         </div>
         <h3 class="">Thông tin đơn hàng</h3>
         <div class="table-responsive">
@@ -45,18 +82,47 @@
                     <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["OrderID"] ?>">
                 </div>
                 <div class="form-group">
+                    <label for="order_id">Ngày đặt:</label>
+                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["OrderDate"] ?>">
+                </div>
+                <div class="form-group">
+                    <label for="order_id">Tên khách:</label>
+                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["Fullname"] ?>">
+                </div>
+                <div class="form-group">
+                    <label for="order_id">Số điện thoại:</label>
+                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["Phonenumber"] ?>">
+                </div>
+                <div class="form-group">
+                    <label for="order_id">Địa chỉ:</label>
+                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["Address"] ?>">
+                </div>
+                <div class="form-group">
+                    <label for="order_id">Số lượng:</label>
+                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo number_format($_SESSION["Order"]["Quantity"]) ?>">
+                </div>
+
+                <div class="form-group">
+                    <label for="order_id">Mã giảm giá:</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1"><?php echo $_SESSION["Order"]["PromoCode"] ?></span>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="amount">Tổng số tiền</label>
-                    <input class="form-control" id="amount" name="amount" type="text" readonly value="<?php echo $_SESSION["Order"]["TotalPrice"] ?>">
+                    <input class="form-control" id="amount" name="amount" type="text" readonly value="<?php echo number_format($_SESSION["Order"]["TotalPrice"]) ?>">
                 </div>
                 <div class="form-group">
                     <label for="order_desc">Nội dung thanh toán</label>
-                    <input class="form-control" id="order_desc" name="order_desc" type="text" value="Thanh toan ve may bay">
+                    <input class="form-control" id="order_desc" name="order_desc" type="text" value="Thanh toán đơn hàng">
                 </div>
                 <div class="form-group">
                     <label for="bank_code">Chọn phương thức thanh toán</label>
                     <select name="bank_code" id="bank_code" class="form-control">
                         <option value="">Không chọn</option>
-                        <option value="NCB">NCB</option>
+                        <option value="NCB" selected>NCB</option>
                         <option value="AGRIBANK">Agribank</option>
                         <option value="SCB">SCB</option>
                         <option value="SACOMBANK">SacomBank</option>

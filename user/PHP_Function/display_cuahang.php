@@ -1,7 +1,7 @@
 <?php
 
 require_once("../../query.php");
-
+session_start();
 //hiện sản phẩm ở cửa hàng
 if (isset($_POST["action"])) {
     // khai bao bien
@@ -12,7 +12,6 @@ if (isset($_POST["action"])) {
         $sql = "SELECT * FROM sanpham LIMIT 0,12";
 
         $temp = "SELECT * FROM sanpham";
-
     } else if ($_POST["action"] == "search") {
 
         $checkbox = explode(",", $_POST["checkbox"]);
@@ -27,10 +26,10 @@ if (isset($_POST["action"])) {
                 $sql .= " or ";
             }
         }
-        $pricefrom =$_POST['pricefrom'] !='' ? $_POST['pricefrom']:0;
-        $priceto =$_POST['priceto'] !='' ? $_POST['priceto']: PHP_INT_MAX;
+        $pricefrom = $_POST['pricefrom'] != '' ? $_POST['pricefrom'] : 0;
+        $priceto = $_POST['priceto'] != '' ? $_POST['priceto'] : PHP_INT_MAX;
 
-        $sql.= ") AND (price BETWEEN {$pricefrom} and {$priceto}) and material like '%{$_POST['material']}%' and madeby like '%{$_POST['madeby']}%'";
+        $sql .= ") AND (price BETWEEN {$pricefrom} and {$priceto}) and material like '%{$_POST['material']}%' and madeby like '%{$_POST['madeby']}%'";
 
         $temp = $sql;
         $page = isset($_POST['page']) ? $_POST['page'] : 1;
@@ -38,7 +37,6 @@ if (isset($_POST["action"])) {
         $start = ($page - 1) * 12;
 
         $sql .= " LIMIT $start, 12";
-
     }
     $result = executeResult($sql);
     $result1 = countRow($temp);
@@ -46,11 +44,16 @@ if (isset($_POST["action"])) {
     foreach ($result as $sp) {
         $arr['arr1'] .= '<div class="card p-0">
         <div class="card-item h-100" style="text-align: center;">
-            <a href="./user/PHP_Function/hien_chitiet_sanpham_grid.php"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
+            <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
             <div class="card-body" style="text-align: center;">
                 <h5 class="card-title">' . $sp['name'] . '</h5>
-                <p class="card-text">' . number_format($sp['price']) . '</p>
-                <a class="btn btn-sm btn-outline-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Mua</a>
+                <p class="card-text">' . number_format($sp['price']) . '</p>';
+        if (!isset($_SESSION["cart"][$sp['id']])) {
+            $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Mua</a>';
+        } else {
+            $arr['arr1'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Đã thêm vào giỏ</a>';
+        }
+        $arr['arr1'] .= '
             </div>
         </div>
         </div>';

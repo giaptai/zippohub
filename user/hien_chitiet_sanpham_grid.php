@@ -16,109 +16,122 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="nav nav-pills">
+                <ul class="nav nav-pills align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link text-light" aria-current="page" href="#">Trang chủ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">Cửa hàng</a>
+                        <a class="nav-link text-dark bg-light" aria-current="page" href="#">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="../user/cart.php">Giỏ hàng</a>
+                        <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
                     </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Tài khoản</a></li>
-                            <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                            <li><a class="dropdown-item" href="#">Phản ánh</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-                        </ul>
+                    <?php
+                    session_start();
+                    if (isset($_SESSION['email'])) {
+                        echo '
+                        <li class="nav-item">
+                        <a class="nav-link text-light" href="./user/cart.php">
+                            Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
                     </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
+                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
+                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
+                            </ul>
+                        </li>';
+                    } else echo
+                    '<li class="nav-item">
+                            <a class="nav-link text-light" href="./login_user.php">Đăng nhập</a>
+                        </li>';
+                    ?>
                 </ul>
             </div>
+            <form class="d-flex">
+                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
+                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
+            </form>
         </div>
     </nav>
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../index.php">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi tiết sản phẩm</li>
+            </ol>
+        </nav>
+    </div>
 
+    <?php
+    require_once('../query.php');
+    if (isset($_GET['id'])) {
+        $result = executeSingleResult("SELECT * FROM sanpham WHERE id='{$_GET['id']}'");
+    }
+
+    ?>
     <!-- Chi tiet san pham -->
-    <h3 style="text-align: center; color: pink; font-style: italic;" class="pt-3">Chi tiết sản phẩm</h3>
-    <!-- <div class="container pt-3 mb-4">
-        <div class="row d-flex justify-content-center">
-            <div class="card flex-row w-75 p-0">
-                <div class="col-md-6">
-                    <div class="images">
-                        <div class="text-center p-3"> <img id="main-image" src="../picture/49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg" width="250" /> </div>
-                        <div class="thumbnail text-center">
-                            <img onclick="change_image(this)" src="../picture/49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg" width="70">
-                            <img onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="70">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="product p-4">
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex align-items-center"> <span class="">Quay lại</span> </div>
-                        </div>
-                        <div class="mt-4 mb-3"> <span class="text-muted brand">SẢN PHẨM</span>
-                            <h5 class="mb-3">Zippi Shipoo</h5>
-                            <div class="price d-flex flex-column ">
-                                <span class="act-price text-decoration-line-through">1.000.000 VND </span>
-                                <small class="text-danger">10% OFF</small>
-                            </div>
-                            <span>990.000 VND</span>
-                        </div>
-                        <div class="mb-5"> <span class="text-uppercase text-muted brand">Giới thiệu:</span>
-                            <p class="about">Đây là sản phẩm dành cho Mu rác rưởi.</p>
-                        </div>
-                        <div class="cart mt-4 align-items-center"><button class="btn btn-primary mr-2 px-4">MUA HÀNG</button></div>
-                    </div>
+    <h1 style="text-align: center; color: red; font-style: italic;" class="pt-3">Chi tiết sản phẩm</h1>
+    <div class="container">
+        <div class="row justify-content-md-evenly">
+            <div class="col-md-auto mb-5">
+                <div class="text-center mb-3 border"> <img id="main-image" src="../picture/49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg" width="300" /> </div>
+                <div class="thumbnail text-center pt-2">
+                    <img class="border" onclick="change_image(this)" src="../picture/49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg" width="100">
+                    <img class="border" onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="100">
+                    <img class="border" onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="100">
                 </div>
             </div>
-        </div>
-    </div> -->
-    <!-- Chi tiet san pham -->
-
-    <!-- Chi tiet san pham 2 -->
-    <div class="mb-3 d-flex w-75 m-auto">
-        <div class="col-md-6">
-            <div class="images">
-                <div class="text-center p-1"> <img id="main-image" src="../picture/49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg" width="250" /> </div>
-                <div class="thumbnail text-center">
-                    <img onclick="change_image(this)" src="../picture/49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg" width="70">
-                    <img onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="70">
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="product p-1">
-                <div class="mt-2 mb-3">
-                    <h4 class="text-muted brand">SẢN PHẨM</h4>
-                    <h5 class="mb-99">Zippi Shipoo</h5>
-                    <div class="price d-flex">
-                        <h5 class="act-price text-decoration-line-through">1.000.000 VND </h5>
-                        <h6 class="text-danger">10% OFF</h6>
+            <div class="col col-lg-6">
+                <div class="product p-1">
+                    <div class="mb-2">
+                        <h2 class="fw-bolder"><?= $result['name'] ?></h2>
+                        <h4 class="text-danger fw-bolder"><?= number_format($result['price']) ?> VND</h4>
+                        <p class="mb-2">Mã sản phẩm: <span class="fw-bold"><?= $result['id'] ?><span></p>
+                        <ul class="">
+                            <li>
+                                <p class="m-0">Tình trạng: <span class="fw-bold"><?= $result['state'] == 1 ? 'Còn hàng' : 'Hết hàng' ?></span></p>
+                            </li>
+                            <li>
+                                <p class="m-0">Thương hiệu: <span class="fw-bold"><?= $result['category'] ?></span></p>
+                            </li>
+                            <li>
+                                <p class="m-0">Chất liệu: <span class="fw-bold"><?= $result['material'] ?></span></p>
+                            </li>
+                            <li>
+                                <p class="m-0">Xuất xứ: <span class="fw-bold"><?= $result['madeby'] ?></span></p>
+                            </li>
+                        </ul>
+                        <!-- <p class="m-0">Tình trạng: <span class="fw-bold">Còn hàng</span>̀</p>
+                        <p class="m-0">Thương hiệu: <span class="fw-bold">Zippo Armor</span>̀</p>
+                        <p class="m-0">Chất liệu: <span class="fw-bold">Đồng</span>̀</p>
+                        <p class="m-0">Xuất xứ: <span class="fw-bold">Nhật Bản</span>̀</p> -->
                     </div>
-                    <h5>990.000 VND</h5>
-                </div>
-                <div class="mb-5">
-                    <h5 class="text-uppercase text-muted brand">Giới thiệu:</h5>
-                    <h6 class="about">Đây là sản phẩm dành cho Mu rác rưởi. Bọn wibu không có quyền công dân
-                    </h6>
-                </div>
-                <div class="">
-                    <button class="btn btn-primary">Mua sản phẩm</button>
+                    <hr class="bg-dark border-dark">
+                    <div class="">
+                        <h5 class="fw-bolder">GIỚI THIỆU: </h5>
+                        <span class="fs-6">Zippo Mèo Khắc Nổi 3D Tuổi Mẹo Tuổi Mão màu vàng chất liệu đồng nguyên khối.
+                            Khắc nổi hiệu ứng 3D cao cấp bền, đẹp, không phai.
+                            Mẫu Zippo độc quyền chỉ có tại ZippoStore.vn hợp làm quà cho bạn trai, bạn bè, anh trai, chú bác, bố, người yêu, sếp nam tuổi mèo, tuổi mẹo, tuổi mão.
+                        </span>
+                    </div>
+                    <hr class="bg-dark border-dark">
+                    <div class="col-12">
+                        <?php
+                        if (!isset($_SESSION["cart"][$result['id']])) {
+                            echo '<button class="btn btn-primary btn-lg" onclick="buyproduct('.$result['id'].')" id="id'.$result['id'].'">Mua sản phẩm</button>';
+                        } else {
+                            echo '<button class="btn btn-primary btn-lg disabled" onclick="buyproduct('.$result['id'].')" id="id'.$result['id'].'">Đã thêm vào giỏ</button>';
+                        }
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Chi tiet san pham 2 -->
+    <!-- Chi tiet san pham -->
 
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-dark text-muted">
@@ -246,9 +259,32 @@
             var container = document.getElementById("main-image");
             container.src = image.src;
         }
-        document.addEventListener("DOMContentLoaded", function(event) {
-            console.log('aaaaaaa');
-        });
+
+        function buyproduct(e) {
+            let btn = document.getElementById("id" + e)
+            btn.innerText = "Đã thêm vào giỏ"
+            btn.classList.add('disabled')
+            btn.classList.add('btn-primary')
+            btn.classList.remove('btn-outline-primary')
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    if (this.responseText == 'outstock') {
+                        alert('Hết hàng');
+                    } else document.getElementById('badge bg-secondary').innerText = this.responseText;
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/display_cart.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('data=' + e +
+                '&action=mua');
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

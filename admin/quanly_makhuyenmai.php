@@ -13,14 +13,14 @@
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item bg-light">
-            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" aria-current="page" href="./quanly_donhang.php">Quản lý đơn hàng</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="#">Quản lý sản phẩm</a>
+            <a class="nav-link" href="./quanly_sanpham.php">Quản lý sản phẩm</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./quanly_taikhoan.php">Quản lý tài khoản</a>
@@ -53,38 +53,33 @@
                 </div>
                 <div class="modal-body" id="modal-body">
                     <form class="form-floating" enctype="multipart/form-data" method="POST">
-                        <div class="text-center mb-3">
-                            <img src="../picture/" class="rounded" alt="..." width="auto" height="200">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="file" class="form-control" name="inputGroupFile02" id="inputGroupFile02" value="">
-                            <button onclick="uploadd()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="form-floating input-group-sm mb-3">
-                                <input type="text" class="form-control " disabled placeholder="1" name="codez" id="codez" value="">
-                                <label for="floatingInput">Mã sản phẩm</label>
-                            </div>
-                            <div class="form-floating input-group-sm mb-3" style="width:75%">
-                                <input type="text" class="form-control" name="namee" id="namee" placeholder="1" value="">
-                                <label for="floatingInput">Tên sản phẩm</label>
+                        <!-- Name input -->
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Mã khuyến mãi:</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Mã khuyến mãi" id="khuyenmai">
+                                <button class="btn btn-outline-secondary" type="button" onclick="console.log(this.parentNode.querySelector('input[type=text]').value=(Math.random() +1).toString(36).substring(2))">Tạo mã</button>
                             </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control" name="amountt" id="amountt" placeholder="1" value="">
-                            <label for="floatingInput">Số lượng</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control" name="prices" id="prices" placeholder="1" value="">
-                            <label for="floatingInput">Giá</label>
-                        </div>
-                        <div class="form mb-3">
-                            <label for="">Tình trạng</label>
-                            <select class="btn btn-light" name="tinhtrang" id="tinhtrang">
-                                <option value="1">Còn hàng</option>
-                                <option value="0">Hết hàng</option>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Trạng thái:</label>
+                            <select class="form-select" id="trangthai">
+                                <option value="1">Còn hạn</option>
+                                <option value="0">Hết hạn</option>
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Ngày hết hạn:</label>
+                            <input type="text" class="form-control" placeholder="Ngày hết hạn" id="ngayhethan">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Giảm giá:</label>
+                            <input type="number" class="form-control" placeholder="Giá giảm" id="giagiam">
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -107,47 +102,43 @@
                 </div>
                 <div class="col ">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Tên sản phẩm</span>
-                        <input type="text" class="form-control" placeholder="Tên sản phẩm" aria-label="Email" id="button-addon1">
+                        <span class="input-group-text" id="basic-addon1">Mã khuyến mãi</span>
+                        <input type="text" class="form-control" placeholder="Mã khuyến mãi" id="button-addon1">
                     </div>
                 </div>
                 <div class="col-md-auto">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search(1)">Tìm kiếm</button>
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">Tìm kiếm</button>
                 </div>
             </div>
         </div>
+
+        <?php require_once("../query.php");
+        $codelist = executeResult("select * from makhuyenmai limit 0, 10");
+        $count = countRow("select * from makhuyenmai");
+        ?>
         <table class="table align-middle caption-top">
             <caption>
-                Quản lý sản phẩm
-                <a type="button" class="btn btn-success btn-sm" href="./quanly_makhuyenmai_them.php">Thêm sản phẩm</a>
+                Quản lý mã khuyến mãi
+                <a type="button" class="btn btn-success btn-sm" href="./quanly_makhuyenmai_them.php">Thêm mã khuyến mãi</a>
                 <div type="button" class="btn btn-outline-primary m-2">
-                    Tổng sản phẩm <span class="badge bg-danger" id="badge">4</span>
+                    Tổng mã <span class="badge bg-danger" id="badge"><?= $count ?></span>
                 </div>
             </caption>
-            <!-- <thead>
-                <tr>
-                <th scope="col" colspan="1"> <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="xoa1trang()">Xóa tất cả</button></th>
-
-                    <th scope="col" colspan="4"><input type="text" class="form-control" placeholder="Tên sản phẩm" aria-label="Email" id="button-addon1"></th>
-                    <th scope="col" colspan="1"> <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search(1)">Tìm kiếm</button></th>
-                </tr>
-            </thead> -->
             <thead>
                 <tr>
                     <th scope="col" class="w-auto">
                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault0">
                         <label>STT</label>
                     </th>
-                    <th scope="col">Ma khuyen mai</th>
-                    <th scope="col">Trang thai</th>
-                    <th scope="col">Gia Giam</th>
-                    <th scope="col">Ngay het han</th>
+                    <th scope="col">Mã khuyến mãi</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col">Giảm giá</th>
+                    <th scope="col">Ngày hết hạn</th>
                     <th scope="col" style="width:9rem">Thao tác</th>
                 </tr>
             </thead>
-            <tbody id="table_tbody_sanpham">
-                <?php require_once("../query.php");
-                $codelist = executeResult("select * from makhuyenmai");
+            <tbody id="table_tbody_makhuyenmai">
+                <?php
                 foreach ($codelist as $code) {
                     echo '<tr>
                     <th scope="row">
@@ -160,38 +151,33 @@
                         <span>' . $code["id_khuyenmai"] . '</span>
                     </td>
                     <td>' . $code["trangthai"] . '</td>
-                    <td>' . $code["giamgia"] . '</td>
+                    <td>' . number_format($code["giamgia"]) . '</td>
                     <td>' . $code["ngayhethan"] . '</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" name="xoa" id="xoa866" onclick="deleteproduct(866)">Xóa</button>
-                        <button type="button" class="btn btn-info btn-sm" id="sua866" onclick="detail(866)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">Xóa</button>
+                        <button type="button" id="btn' . $code["id_khuyenmai"] . '" value="' . $code["id_khuyenmai"] . '" class="btn btn-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
                     </td>
                 </tr>';
                 } ?>
 
             </tbody>
             <tfoot>
-                <td colspan="6" style="text-align:center">
-                    <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_sanpham">
-
-                    </div>
-                </td>
+                <tr>
+                    <td colspan="6" style="text-align:center">
+                        <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_makhuyenmai">
+                            <?php
+                                for($i=0; $i<ceil($count/10); $i++){
+                                    echo  '<button type="button" class="btn btn-outline-secondary" onclick="phantrang('.($i+1).')">'.($i+1).'</button>';
+                                }
+                            ?>
+                    </td>
+                </tr>
             </tfoot>
         </table>
     </div>
     <!--  -->
     <script>
-        function uploadd() {
-            var s = document.getElementById("inputGroupFile02");
-            var ss = s.value.replace(/C:\\fakepath\\/, '');
-            document.getElementsByClassName("rounded")[0].src = "../picture/" + ss;
-        }
-
-        // danh sach san pham va phan trang
-       
-
-
-        function search(p) {
+        function search() {
             s1 = document.getElementById('button-addon1').value;
             console.log(s1);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
@@ -200,20 +186,39 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    console.log(JSON.parse(this.responseText).pagin);
-                    let arr1 = JSON.parse(this.responseText).arr1;
-                    let pagin = JSON.parse(this.responseText).pagin;
-                    document.getElementById('table_tbody_sanpham').innerHTML = arr1;
-                    document.getElementById('table_tfoot_sanpham').innerHTML = pagin;
-                    document.getElementById('flexCheckDefault0').checked = false;
+                    console.log(this.responseText)
+                    document.getElementById('table_tbody_makhuyenmai').innerHTML = this.responseText;
+
                 }
             }
             //cau hinh request
-            xhttp.open('POST', './PHP_Function/sanpham.php', true);
+            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('action=search&name=' + s1 + '&page=' + p);
+            xhttp.send('search&val=' + s1);
+        }
+
+        function phantrang(page) {
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    // Chèn phản hồi từ máy chủ vào một phần tử HTML
+                    document.getElementById('flexCheckDefault0').checked=false;
+                    document.getElementById('table_tbody_makhuyenmai').innerHTML = this.responseText;
+                    const nextURL = './quanly_makhuyenmai.php?page=' + page;
+                    const nextTitle = 'My new page title';
+                    const nextState = {
+                        additionalInformation: 'Updated the URL with JS'
+                    };
+                    //window.history.pushState(nextState, nextTitle, nextURL);
+                    window.history.replaceState(nextState, nextTitle, nextURL);
+
+                }
+            };
+            xhttp.open('GET', './PHP_Function/makhuyenmai.php?page=' + page, true);
+            xhttp.send();
         }
 
         function detail(e) {
@@ -226,7 +231,7 @@
                     document.getElementById('modal-dialog').innerHTML = this.responseText;
                 }
             };
-            xhttp.open('GET', './PHP_Function/sanpham.php?id=' + e, true);
+            xhttp.open('GET', './PHP_Function/makhuyenmai.php?id=' + e, true);
             xhttp.send();
         }
 
@@ -271,25 +276,20 @@
             xhttp.send('deleted1page&data=' + arr);
         }
 
-        function editproduct(id) {
-            var s = document.getElementById("imgproduct").src;
-            var img = s.split('/');
+        function editpromo(p) {
+            var khuyenmai = document.getElementById("khuyenmai").value;
+            var trangthai = document.getElementById("trangthai").value;
+            var ngayhethan = document.getElementById("ngayhethan").value;
+            var giamgia = document.getElementById("giamgia").value;
+            var s = document.getElementById('btn' + p).parentNode.parentNode;
+            console.log(s.children[2], s.children[3], s.children[4]);
+
             var formatter = new Intl.NumberFormat('vi-VN', {
                 style: 'currency',
                 currency: 'VND',
                 separator: ','
             })
-            var s1 = document.getElementById('codez').value;
-            var s2 = document.getElementById('namee').value;
-            var s3 = document.getElementById('amountt').value;
-            var s4 = document.getElementById('prices').value;
-            var s5 = document.getElementById('tinhtrang').value;
-            let row = document.getElementById("sua" + id).parentElement.parentElement;
-            row.children[1].children[0].src = "../picture/" + img[img.length - 1];
-            row.children[1].children[1].innerText = s2;
-            row.children[2].innerText = s3;
-            row.children[3].innerHTML = formatter.format(s4);
-            row.children[4].children[0].value = s5
+
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
@@ -298,24 +298,24 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc     
                     alert(this.responseText);
+                    s.children[2].innerText = trangthai
+                    s.children[3].innerText = formatter.format(giamgia);
+                    s.children[4].innerText = ngayhethan
                 }
             }
             //cau hinh request
-            xhttp.open('POST', './PHP_Function/sanpham.php', true);
+            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
             xhttp.send('edit' +
-                '&inputGroupFile02=' + img[img.length - 1] +
-                '&codez=' + s1 +
-                "&namee=" + s2 +
-                "&amountt=" + s3 +
-                "&prices=" + s4 +
-                "&tinhtrang=" + s5
+                '&khuyenmai=' + khuyenmai +
+                '&trangthai=' + trangthai +
+                "&ngayhethan=" + ngayhethan +
+                "&giamgia=" + giamgia
             );
         }
 
-        //Ajax javascript xóa đối tượng
         let deleteproduct = function(id) {
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
@@ -331,32 +331,12 @@
                 }
             }
             //cau hinh request
-            xhttp.open('POST', './PHP_Function/sanpham.php', true);
+            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
             xhttp.send('deleted&id=' + id);
         }
-
-        // function phantrang(page) {
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             // Chèn phản hồi từ máy chủ vào một phần tử HTML
-        //             document.getElementById('table_tbody_sanpham').innerHTML = this.responseText;
-        //             const nextURL = './quanly_sanpham.php?page=' + page;
-        //             const nextTitle = 'My new page title';
-        //             const nextState = {
-        //                 additionalInformation: 'Updated the URL with JS'
-        //             };
-        //             //window.history.pushState(nextState, nextTitle, nextURL);
-        //             window.history.replaceState(nextState, nextTitle, nextURL);
-        //         }
-        //     };
-        //     xhttp.open('GET', './PHP_Function/sanpham.php?page=' + page, true);
-        //     xhttp.send();
-        // }
 
         // function add() {
         //     var xhttp = new XMLHttpRequest() || ActiveXObject();

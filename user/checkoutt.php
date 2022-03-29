@@ -5,12 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style></style>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -57,86 +54,104 @@
         </div>
     </nav>
 
-    <!-- step -->
-    <div class="row justify-content-md-center align-items-center mt-4">
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm active" style="width:100%; height:100%; border-radius: 50%;">1</a>
-                <p><strong>Giỏ hàng</strong></p>
-            </div>
-        </div>
-
-        <hr class="bg-primary col-2 rounded-pill" size="10">
-
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm">2</a>
-                <p><strong>Kiểm tra thanh toán</strong></p>
-            </div>
-        </div>
-
-        <hr class="bg-primary col-2 rounded-pill" size="10">
-
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm">3</a>
-                <p><strong>Thanh toán</strong></p>
-            </div>
-        </div>
-
-        <hr class="bg-primary col-2 rounded-pill" size="10">
-
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm">4</a>
-                <p><strong>Hoàn thành</strong>
-            </div>
-            </p>
-        </div>
-    </div>
-    <!-- step -->
-
-    <div style="width: 90%; margin:3rem auto 1rem auto;">
-        <table class="table align-middle">
-            <thead>
-                <tr>
-                    <th scope="col" style="width: 8rem;">
-                        <input type="checkbox" class="form-check-input mt-0" id="flexCheckDefault0">
-                        <span>Tất cả</span>
-                    </th>
-                    <th scope="col">Sản phẩm</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Tổng tiền</th>
-                    <th scope="col">Xóa</th>
-                </tr>
-            </thead>
-
-            <tbody id="cartt">
-
-            </tbody>
-
-            <tfoot id="cartt2">
-
-            </tfoot>
-        </table>
-    </div>
-
-    <div id="checkout" style="width: 90%; margin: 1rem auto 2rem auto;" class="d-flex justify-content-end">
-        <div class="card" style="width: 18rem;">
-            <h5 class="card-title" style="padding: 1rem 0 0 1rem;">Thanh toán</h5>
-            <div class="card-body d-flex justify-content-between">
-                <div>
-                    <p class="card-text">Tạm tính:</p>
-                    <b class="card-text">Tổng:</b>
-                </div>
-                <div id="checkoutttt">
-                    <p class="card-text">0</p>
-                    <b class="card-text">0</b>
+    <!-- Chi tiet san pham -->
+    <div class="container">
+        <!-- step -->
+        <div class="row justify-content-md-center align-items-center mt-4">
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm active" style="width:30px; height:30px; border-radius: 50%;">1</a>
+                    <p><strong>Giỏ hàng</strong></p>
                 </div>
             </div>
-            <a class="btn btn-primary" href="./checkout.php">Thanh toán</a>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm active">2</a>
+                    <p><strong>Kiểm tra thanh toán</strong></p>
+                </div>
+            </div>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm">3</a>
+                    <p><strong>Thanh toán</strong></p>
+                </div>
+            </div>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm">4</a>
+                    <p><strong>Hoàn thành</strong>
+                </div>
+                </p>
+            </div>
         </div>
+        <!-- step -->
+        <main>
+            <div class="py-5 text-center">
+                <h2>Thanh toán hóa đơn</h2>
+            </div>
+            <div class="row g-5">
+                <div class="col-md-5 col-lg-4 order-md-last">
+                    <h4 class="d-flex justify-content-between align-items-center mb-3" id="numberProd">
+                        <span class="text-primary">Thanh toán</span>
+                        <span class="badge bg-primary rounded-pill">5</span>
+                    </h4>
+                    <ul class="list-group mb-3" id="listcart">
+
+                    </ul>
+
+                    <form class="card p-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Promo code" id="promocode">
+                            <button type="button" class="btn btn-secondary" onclick="vouchers()">Khuyến mãi</button>
+                        </div>
+                    </form>
+                    <!-- <div style="width: 90%; margin: 1rem auto 2rem auto;" class="d-flex justify-content-end"> -->
+                    <div class="card mt-3">
+                        <div class="card-body d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-text">Tạm tính:</h6>
+                                <h6 class="card-text">Vận chuyển:</h6>
+                                <h6 class="card-text">Khuyến mãi:</h6>
+                                <h6 class="card-text">Tổng thanh toán:</h6>
+                            </div>
+                            <div id="checkoutcard">
+                                <h6 class="card-text">1</h6>
+                                <h6 class="card-text">1</h6>
+                                <h6 class="card-text">1</h6>
+                                <h6 class="card-text">1</h6>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary" href="../vnpay_php/vnpay_return.php">Thanh toán</a>
+                    </div>
+                    <!-- </div> -->
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    <h4 class="mb-3 text-primary">Thông tin người nhận</h4>
+                    <form class="needs-validation" novalidate="" id="axxxc">
+
+                    </form>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <div class="list-group" id="listaddr">
+                                <!--  -->
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                </div>
+            </div>
+            <footer class="my-5 pt-5 text-muted text-center text-small">
+
+            </footer>
     </div>
     <!-- Chi tiet san pham -->
 
@@ -260,8 +275,73 @@
         </div>
         <!-- Copyright -->
     </footer>
-    <!-- Footer -->
-    <script async>
+
+    <script>
+        checkout1();
+
+        function checkout1() {
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    document.getElementById("axxxc").innerHTML = this.responseText;
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/display_checkout.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=display_info');
+        }
+
+        listaddress();
+
+        function listaddress() {
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    document.getElementById("listaddr").innerHTML = this.responseText;
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/display_checkout.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=listaddr');
+        }
+
+        function addrInput() {
+            let s = document.getElementById('address').value;
+            console.log(s);
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    document.getElementById("listaddr").innerHTML = this.responseText;
+                }
+            }
+            //cau hinh request
+            xhttp.open('GET', './PHP_Function/display_checkout.php?data=' + s, true);
+            //gui request
+            xhttp.send();
+        }
+
+        function clickaddr(e) {
+            let s1 = document.getElementById('addr' + e).children[0].children[0].textContent;
+            let s2 = document.getElementById('addr' + e).children[1].textContent;
+            let s3 = document.getElementById('addr' + e).children[2].textContent;
+            console.log(s1, s2, s3);
+            document.getElementById('fullname').value = s1;
+            document.getElementById('phonee').value = s2;
+            document.getElementById('address').value = s3;
+        }
+
         displaycart();
 
         function displaycart() {
@@ -269,121 +349,69 @@
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    //document.getElementById("listcart").innerHTML = this.responseText;
+                    let s11 = JSON.parse(this.responseText).lstcart;
+                    let s12 = JSON.parse(this.responseText).checkoutbox;
+                    let s13 = JSON.parse(this.responseText).tongg;
+
+                    console.log(s13);
+
+                    document.getElementById("listcart").innerHTML = s11;
+                    document.getElementById("checkoutcard").innerHTML = s12;
+                    document.getElementById("numberProd").innerHTML = s13;
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/display_checkout.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('promocode');
+        }
+
+        function vouchers() {
+            var s = document.getElementById('promocode').value;
+            var s1 = document.getElementById('promocode').parentElement.children[1];
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    let s12 = JSON.parse(this.responseText).checkoutbox;
+                    document.getElementById("checkoutcard").innerHTML = s12;
+                    s1.outerHTML = '<button type="button" class="btn btn-success" onclick="vouchers()">Đã áp dụng</button>';
+                    console.log(JSON.parse(this.responseText).checkoutbox);
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/display_checkout.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('promocode=' + s);
+        }
+
+        function payment() {
+            s1 = document.getElementById('fullname').value;
+            s2 = document.getElementById('phonee').value;
+            s3 = document.getElementById('address').value;
+
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
                     console.log(this.responseText);
-                    let dimemay = JSON.parse(this.responseText).tbody;
-                    let dimemay1 = JSON.parse(this.responseText).tfooter;
-                    let dimemay2 = JSON.parse(this.responseText).checkoutOK;
-                    //In ra data nhan duoc
-                    document.getElementById('cartt').innerHTML = dimemay;
-                    document.getElementById('cartt2').innerHTML = dimemay1;
-                    document.getElementById('checkoutttt').innerHTML = dimemay2;
-                    let div = document.createElement('div');
-                    div.innerHTML = div.innerHTML + dimemay2;
-                    if (div.children[0].innerText == 0) {
-                        document.getElementById("checkout").innerHTML = ''
-                    }
                 }
             }
             //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_cart.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&name=' + s1 + '&phonee=' + s2 + '&address=' + s3, true);
             //gui request
-            xhttp.send('action=listcart');
-        }
-
-        function subtract(id) {
-            console.log(id.parentNode.querySelector('input[type=number]'));
-            console.log(id.value);
-
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //id.parentNode.querySelector('input[type=number]').stepDown();
-                    displaycart()
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_cart.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('type=giamsoluong&id=' + id.value);
-        }
-
-        function add(id) {
-            console.log(id.parentNode.querySelector('input[type=number]'));
-            console.log(id.value);
-
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    displaycart()
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_cart.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('type=tangsoluong&id=' + id.value);
-        }
-
-        document.getElementById('flexCheckDefault0').addEventListener('click', function() {
-            let d = document.getElementById('flexCheckDefault0')
-            let s = document.querySelectorAll('input[type=checkbox]');
-            if (d.checked) {
-                s.forEach((item) => {
-                    item.checked = true;
-                })
-            } else {
-                s.forEach((item) => {
-                    item.checked = false;
-                })
-            }
-        })
-
-        function dele(e) {
-            console.log(e);
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    displaycart();
-                    // document.getElementById('id' + e).parentElement.parentElement.remove();
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_cart.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=dele&id=' + e);
-        }
-
-        function deletedAll() {
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    displaycart();
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_cart.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=deletedall');
+            xhttp.send();
         }
     </script>
-
-    <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>
+    <!-- Footer -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 

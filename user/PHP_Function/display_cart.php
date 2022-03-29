@@ -33,7 +33,7 @@ if (isset($_POST['data']) && isset($_POST['action'])) {
 if (isset($_POST["type"])) {
     if (($_POST["type"]) == "tangsoluong") {
         $id = $_POST["id"];
-        $_SESSION['cart'][$id]["soluong"] += 1;
+        ($_SESSION['cart'][$id]["soluong"] <99) ? $_SESSION['cart'][$id]["soluong"]+= 1: 'Qua so luong';
         die();
     }
     if (isset($_POST["type"]) == "giamsoluong") {

@@ -26,7 +26,7 @@ if (isset($_POST["action"])) {
         foreach($result0 as $sp0){
             $arr['arr0'].='<div class="card p-0">
             <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/hien_chitiet_sanpham_grid.php"><img style="width:8rem; height:9rem;" src="./picture/' . $sp0['img'] . '" class="card-img-top" alt="..."></a>
+                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp0['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp0['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp0['name'] . '</h5>
                     <p class="card-text">' . number_format( $sp0['price']) . '</p>
@@ -39,7 +39,7 @@ if (isset($_POST["action"])) {
         foreach($result1 as $sp1){
             $arr['arr1'].='<div class="card p-0">
             <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/hien_chitiet_sanpham_grid.php"><img style="width:8rem; height:9rem;" src="./picture/' . $sp1['img'] . '" class="card-img-top" alt="..."></a>
+                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp1['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp1['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp1['name'] . '</h5>
                     <p class="card-text">' . number_format( $sp1['price']) . '</p>
@@ -52,7 +52,7 @@ if (isset($_POST["action"])) {
         foreach($result2 as $sp2){
             $arr['arr2'].='<div class="card p-0">
             <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/PHP_Function/hien_chitiet_sanpham_grid.php"><img style="width:8rem; height:9rem;" src="./picture/' . $sp2['img'] . '" class="card-img-top" alt="..."></a>
+                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp2['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp2['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp2['name'] . '</h5>
                     <p class="card-text">' . number_format( $sp2['price']) . '</p>
@@ -65,7 +65,7 @@ if (isset($_POST["action"])) {
         foreach($result3 as $sp3){
             $arr['arr3'].='<div class="card p-0">
             <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/PHP_Function/hien_chitiet_sanpham_grid.php"><img style="width:8rem; height:9rem;" src="./picture/' . $sp3['img'] . '" class="card-img-top" alt="..."></a>
+                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp3['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp3['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp3['name'] . '</h5>
                     <p class="card-text">' . number_format( $sp3['price']) . '</p>
@@ -87,7 +87,7 @@ if (isset($_GET["page"])) {
     foreach($result as $sp){
         echo '<div class="card p-0">
         <div class="card-item h-100" style="text-align: center;">
-            <a href="./user/PHP_Function/hien_chitiet_sanpham_grid.php"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
+            <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
             <div class="card-body" style="text-align: center;">
                 <h5 class="card-title">' . $sp['name'] . '</h5>
                 <p class="card-text">' . number_format( $sp['price']) . '</p>
@@ -125,7 +125,7 @@ if (isset($_GET["action"])) {
         foreach($result as $sp){
             echo '<div class="card p-0">
             <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/PHP_Function/hien_chitiet_sanpham_grid.php"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
+                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp['name'] . '</h5>
                     <p class="card-text">' . number_format( $sp['price']) . '</p>

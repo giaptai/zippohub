@@ -23,46 +23,46 @@ if (isset($_POST['action'])) {
             if ($row['statuss'] == 'Đã xác nhận') {
                 $arr['arr1'] .= '<td>
                 <a class="btn btn-danger btn-sm">Hủy đơn</a>
-                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
             }
 
-            if ($row['statuss'] == 'Đã giao') {
+            if ($row['statuss'] == 'Đã giao') {
                 $arr['arr1'] .= '<td>
-                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
             }
 
-            if ($row['statuss'] == 'Chờ xác nhận') {
+            if ($row['statuss'] == 'Chờ xác nhận') {
                 $arr['arr1'] .= '<td>
                 <a class="btn btn-success btn-sm" id="id' . $row['id_hoadon'] . '" onclick="confirm(' . $row['id_hoadon'] . ')">Xác nhận</a>
                  <a class="btn btn-danger btn-sm">Hủy đơn</a>
-                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
             }
             if ($row['statuss'] == 'Đang giao') {
                 $arr['arr1'] .= '<td>
-                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
             }
 
-            if ($row['statuss'] == 'Đã hủy') {
+            if ($row['statuss'] == 'Đã hủy') {
                 $arr['arr1'] .= '<td>
-                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
             }
         }
         $arr['tongdon'] = countRow($sql);
-        $arr['choxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Chờ xác nhận'");
-        $arr['daxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã xác nhận'");
+        $arr['choxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Chờ xác nhận'");
+        $arr['daxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã xác nhận'");
         $arr['danggiao'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đang giao'");
         $arr['dagiao'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã giao'");
-        $arr['dahuy'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã hủy'");
+        $arr['dahuy'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã hủy'");
         echo json_encode($arr);
     }
 }
@@ -90,49 +90,49 @@ if (isset($_POST['search'])) {
             <td>' . number_format($row['total_money']) . '</td>
             <td>' . $row['statuss'] . '</td>';
 
-        if ($row['statuss'] == 'Đã xác nhận') {
+        if ($row['statuss'] == 'Đã xác nhận') {
             $arr['arr1'] .= '<td>
                 <a class="btn btn-danger btn-sm">Hủy đơn</a>
-                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
         }
 
-        if ($row['statuss'] == 'Đã giao') {
+        if ($row['statuss'] == 'Đã giao') {
             $arr['arr1'] .= '<td>
-                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
         }
 
-        if ($row['statuss'] == 'Chờ xác nhận') {
+        if ($row['statuss'] == 'Chờ xác nhận') {
             $arr['arr1'] .= '<td>
                 <a class="btn btn-success btn-sm" id="id' . $row['id_hoadon'] . '" onclick="confirm(' . $row['id_hoadon'] . ')">Xác nhận</a>
                  <a class="btn btn-danger btn-sm">Hủy đơn</a>
-                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
         }
         if ($row['statuss'] == 'Đang giao') {
             $arr['arr1'] .= '<td>
-                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
         }
 
-        if ($row['statuss'] == 'Đã hủy') {
+        if ($row['statuss'] == 'Đã giao') {
             $arr['arr1'] .= '<td>
-                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+                 <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                 </td>
             </tr>';
         }
     }
     $arr['tongdon'] = countRow($sql);
-    $arr['choxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Chờ xác nhận'");
-    $arr['daxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã xác nhận'");
+    $arr['choxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Chờ xác nhận'");
+    $arr['daxacnhan'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã xác nhận'");
     $arr['danggiao'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đang giao'");
     $arr['dagiao'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã giao'");
-    $arr['dahuy'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã hủy'");
+    $arr['dahuy'] = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã hủy'");
     echo json_encode($arr);
 }
 
@@ -157,7 +157,7 @@ if (isset($_GET['key'])) {
         <td>
             <a class="btn btn-success btn-sm" id="id' . $row['id_hoadon'] . '" onclick="confirm(' . $row['id_hoadon'] . ')">Xác nhận</a>
             <a class="btn btn-danger btn-sm">Hủy đơn</a>
-            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
         </td>
         </tr>';
         }
@@ -175,11 +175,12 @@ if (isset($_POST['action'])) {
 
 if (isset($_POST['timkiemma'])) {
     $val = $_POST['value'];
-    if(empty($val)){
+    if (empty($val)) {
         $sql = "SELECT * FROM hoadon";
-    }else $sql = "SELECT * FROM hoadon WHERE id_hoadon={$val}";
-    $result = executeResult($sql);
-    foreach ($result as $row) {
+    } else $sql = "SELECT * FROM hoadon WHERE id_hoadon={$val}";
+    
+    if(countRow($sql)>0){
+        $row = executeSingleResult($sql);
         echo ' <tr>
         <th scope="row">
             <div class="form-check">
@@ -195,40 +196,40 @@ if (isset($_POST['timkiemma'])) {
         if ($row['statuss'] == 'Đã xác nhận') {
             echo  '<td>
             <a class="btn btn-danger btn-sm">Hủy đơn</a>
-            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
 
-        if ($row['statuss'] == 'Đã giao') {
+        if ($row['statuss'] == 'Đã giao') {
             echo '<td>
-            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
 
-        if ($row['statuss'] == 'Chờ xác nhận') {
+        if ($row['statuss'] == 'Chờ xác nhận') {
             echo '<td>
             <a class="btn btn-success btn-sm" id="id' . $row['id_hoadon'] . '" onclick="confirm(' . $row['id_hoadon'] . ')">Xác nhận</a>
              <a class="btn btn-danger btn-sm">Hủy đơn</a>
-             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
         if ($row['statuss'] == 'Đang giao') {
             echo '<td>
-             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
 
-        if ($row['statuss'] == 'Đã hủy') {
+        if ($row['statuss'] == 'Đã hủy') {
             echo '<td>
-             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
-    }
+    }echo 'Không tìm thấy';
 }
 // xác nhận đơn hàng
 if (isset($_POST['status'])) {
@@ -253,36 +254,36 @@ if (isset($_POST['status'])) {
         if ($row['statuss'] == 'Đã xác nhận') {
             echo  '<td>
             <a class="btn btn-danger btn-sm">Hủy đơn</a>
-            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
 
-        if ($row['statuss'] == 'Đã giao') {
+        if ($row['statuss'] == 'Đã giao') {
             echo '<td>
-            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+            <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
 
-        if ($row['statuss'] == 'Chờ xác nhận') {
+        if ($row['statuss'] == 'Chờ xác nhận') {
             echo '<td>
             <a class="btn btn-success btn-sm" id="id' . $row['id_hoadon'] . '" onclick="confirm(' . $row['id_hoadon'] . ')">Xác nhận</a>
              <a class="btn btn-danger btn-sm">Hủy đơn</a>
-             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
         if ($row['statuss'] == 'Đang giao') {
             echo '<td>
-             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }
 
-        if ($row['statuss'] == 'Đã hủy') {
+        if ($row['statuss'] == 'Đã hủy') {
             echo '<td>
-             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id='.$row['id_hoadon'].'">Chi tiết</a>
+             <a class="btn btn-info btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
             </td>
         </tr>';
         }

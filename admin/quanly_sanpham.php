@@ -13,8 +13,8 @@
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item bg-light">
-            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
+        <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" aria-current="page" href="./quanly_donhang.php">Quản lý đơn hàng</a>

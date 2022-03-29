@@ -1,50 +1,4 @@
-<?php ob_start();
-session_start();
-require_once("../connection.php");
-require_once("./config.php");
-$vnp_SecureHash = $_GET['vnp_SecureHash'];
-$inputData = array();
-foreach ($_GET as $key => $value) {
-    if (substr($key, 0, 4) == "vnp_") {
-        $inputData[$key] = $value;
-    }
-}
-unset($inputData['vnp_SecureHashType']);
-unset($inputData['vnp_SecureHash']);
-ksort($inputData);
-$i = 0;
-$hashData = $Result = "";
-foreach ($inputData as $key => $value) {
-    if ($i == 1) {
-        $hashData = $hashData . '&' . $key . "=" . $value;
-    } else {
-        $hashData = $hashData . $key . "=" . $value;
-        $i = 1;
-    }
-}
-$secureHash = hash('sha256', $vnp_HashSecret . $hashData);
-if ($secureHash == $vnp_SecureHash) {
-    if ($_GET['vnp_ResponseCode'] == '00') {
-        $Time = date("Y-m-d h:i:s", strtotime($_GET['vnp_PayDate']));
-        $_SESSION["Order"]["OrderDate"] = $Time;
-        $PaymentArray = array(
-            "OrderID" => $_GET["vnp_TxnRef"], "Total" => $_GET['vnp_Amount'] / 100, "Note" => $_GET['vnp_OrderInfo'],
-            "PaymentTime" => $Time, "vnp_response_code" => $_GET['vnp_ResponseCode'],
-            "code_vnpay" => $_GET['vnp_TransactionNo'], "BankCode" => $_GET['vnp_BankCode']
-        );
-        $_SESSION["Payment"] = $PaymentArray;
-        if (mysqli_num_rows(Query("select * from payments where OrderID = '" . $_SESSION["Order"]["OrderID"] . "'")) == 1) {
-            return;
-        }
-        if (AddOrder($_SESSION["Order"]) == 1 && AddPayment($_SESSION["Payment"]) == 1 && AddOrderDetails($_SESSION["OrderDetail"]) == 1) {
-            $Result = "Giao dịch thành công";
-        }
-    } else {
-        $Result = "Giao dịch không thành công";
-    }
-} else {
-    $Result = "Chu kỳ không hợp lệ";
-} ?>
+<!--  -->
 <!DOCTYPE html>
 <html>
 
@@ -84,31 +38,31 @@ if ($secureHash == $vnp_SecureHash) {
         </div>
         <div class="table-responsive">
             <div class="form-group">
-                <label class="form-control">Mã đơn hàng: <?php echo $_GET['vnp_TxnRef'] ?></label>
+                <label class="form-control">Mã đơn hàng: </label>
             </div>
             <div class="form-group">
-                <label class="form-control">Tổng số tiền: <?php echo number_format($_GET['vnp_Amount'] / 100) ?> VNĐ</label>
+                <label class="form-control">Tổng số tiền: VNĐ</label>
             </div>
             <div class="form-group">
-                <label class="form-control">Nội dung thanh toán: <?php echo $_GET['vnp_OrderInfo'] ?></label>
+                <label class="form-control">Nội dung thanh toán:</label>
             </div>
             <div class="form-group">
-                <label class="form-control">Mã phản hồi (vnp_ResponseCode): <?php echo $_GET['vnp_ResponseCode'] ?></label>
+                <label class="form-control">Mã phản hồi (vnp_ResponseCode):</label>
             </div>
             <div class="form-group">
-                <label class="form-control">Mã giao dịch của VNPAY: <?php echo $_GET['vnp_TransactionNo'] ?></label>
+                <label class="form-control">Mã giao dịch của VNPAY: </label>
             </div>
             <div class="form-group">
-                <label class="form-control">Mã Ngân hàng: <?php echo $_GET['vnp_BankCode'] ?></label>
+                <label class="form-control">Mã Ngân hàng:</label>
             </div>
             <div class="form-group">
-                <label class="form-control">Thời gian thanh toán: <?php echo date("d-m-Y h:i:s", strtotime($_GET['vnp_PayDate'])) ?></label>
+                <label class="form-control">Thời gian thanh toán:</label>
             </div>
             <div class="form-group">
-                <label class="form-control">Người thanh toán: <?php echo $_SESSION['Member'][0]["Fullname"] ?></label>
+                <label class="form-control">Người thanh toán: </label>
             </div>
             <div class="form-group">
-                <label class="form-control">Kết quả: <?php echo $Result ?></label>
+                <label class="form-control">Kết quả: </label>
             </div>
             <a href="../pages/member-orders.html" class="btn btn-primary">Quay lại</a>
         </div>

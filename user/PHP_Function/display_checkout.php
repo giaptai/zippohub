@@ -77,8 +77,10 @@ if (isset($_GET['data'])) {
 }
 
 // phần thanh toán nằm bên trái
-if (isset($_POST['action'])) {
-    if ($_POST['action'] == 'display_cart') {
+if (isset($_POST['promocode'])) {
+        $discount=$_POST['promocode'];
+        $result=executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$discount}'");
+
         $tongtien = 0;
         $summ = 0;
         $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg' => '');
@@ -109,12 +111,12 @@ if (isset($_POST['action'])) {
         <span>Tạm tính:</span>
         <strong>' . number_format($tongtien) . '</strong>
         </li>';
-        if (isset($_GET['promo'])) {
+        if (!empty($_POST['promocode'])) {
             $stringg['checkoutbox'] .=
                 '<h6 class="card-text">' . number_format($tongtien) . '</h6>
             <h6 class="card-text">' . number_format(30000) . '</h6>
-            <h6 class="card-text">' . number_format(-15000) . '</h6>
-            <h6 class="card-text">' . number_format($tongtien + 30000 - 15000) . '</h6>';
+            <h6 class="card-text">' . number_format($result['giamgia']) . '</h6>
+            <h6 class="card-text">' . number_format($tongtien + 30000 - $result['giamgia']) . '</h6>';
         } else {
             $stringg['checkoutbox'] .=
                 '<h6 class="card-text">' . number_format($tongtien) . '</h6>
@@ -124,40 +126,8 @@ if (isset($_POST['action'])) {
         }
 
         echo json_encode($stringg);
-    }
 }
 
-if (isset($_POST['promo'])) {
-    if ($_POST['promo'] == 'zipposgu') {
-        $tongtien = 0;
-        $summ = 0;
-        $stringg = array('checkoutbox' => '');
-        $arr = array(
-            'id' => '',
-            'name' => '',
-            'imagee' => '',
-            'soluong' => 0,
-            'gia' => 0
-        );
-        isset($_SESSION['cart']) ? $arr = $_SESSION['cart'] : $arr = [];
-        foreach ($arr as $cart) {
-            //$summ=$summ+1;
-            $tongtien = $tongtien + ($cart['gia'] * $cart['soluong']);
-        }
-        $stringg['checkoutbox'] .=
-            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
-        <h6 class="card-text">' . number_format(30000) . '</h6>
-        <h6 class="card-text">' . number_format(-15000) . '</h6>
-        <h6 class="card-text">' . number_format($tongtien + 30000 - 15000) . '</h6>';
-    } else {
-        $stringg['checkoutbox'] .=
-            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
-        <h6 class="card-text">' . number_format(30000) . '</h6>
-        <h6 class="card-text">' . number_format(0) . '</h6>
-        <h6 class="card-text">' . number_format($tongtien + 30000 - 0) . '</h6>';
-    }
-    echo json_encode($stringg);
-}
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'payment') {
@@ -167,15 +137,20 @@ if (isset($_GET['action'])) {
         $Fullname = $_GET['name'];
         $Phonenumber = $_GET['phone'];
         $Address = $_GET['address'];
+        $makhuyenmai = $_GET['magiamgia'];
+        $result=executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$makhuyenmai}'");
+        
         $TotalPrice = 0;
         $Quantity = 0;
         foreach ($_SESSION['cart'] as $cart) {
             $TotalPrice += ($cart['soluong'] * $cart['gia']);
             $Quantity += $cart['soluong'];
         }
+        //$TotalPrice=number_format($TotalPrice-$result['giamgia']);
+        // tạo mảng thanh toán
         $_SESSION["Order"] = array(
-            "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
-            "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity)
+            "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice-$result['giamgia']+30000), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
+            "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $makhuyenmai
         );
         // die(json_encode($_SESSION["Order"]));
         // $sql = "INSERT INTO hoadon(id_hoadon, id_user, ngaymua, fullname, phone, address, total_product, total_money, statuss) 

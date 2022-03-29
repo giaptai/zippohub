@@ -272,6 +272,7 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
+                    console.log(this.responseText)
                     let s0 = JSON.parse(this.responseText).arr1;
                     let pagin = JSON.parse(this.responseText).pagin;
                     document.getElementById('sanpham').innerHTML = s0;
@@ -286,13 +287,13 @@
             //gui request
             xhttp.send('action=displaycuahang');
         }
-        
+
         function timkiem(p) {
-            let pricefrom=document.getElementById('pricefrom').value;
-            let priceto=document.getElementById('priceto').value;
-            let material=document.getElementById('material').value;
-            let madeby=document.getElementById('madeby').value;
-            
+            let pricefrom = document.getElementById('pricefrom').value;
+            let priceto = document.getElementById('priceto').value;
+            let material = document.getElementById('material').value;
+            let madeby = document.getElementById('madeby').value;
+
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
@@ -311,14 +312,14 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('action=search'+
-                    '&checkbox=' + getCheckBoxes() +
-                    '&page='+p +
-                    '&pricefrom='+pricefrom+
-                    '&priceto='+priceto+
-                    '&material='+material+
-                    '&madeby='+madeby
-                     );
+            xhttp.send('action=search' +
+                '&checkbox=' + getCheckBoxes() +
+                '&page=' + p +
+                '&pricefrom=' + pricefrom +
+                '&priceto=' + priceto +
+                '&material=' + material +
+                '&madeby=' + madeby
+            );
         }
 
         function getCheckBoxes() {
@@ -349,6 +350,11 @@
         }
 
         function buyproduct(e) {
+            let btn = document.getElementById("id" + e)
+            btn.innerText = "Đã thêm vào giỏ"
+            btn.classList.add('disabled')
+            btn.classList.add('btn-primary')
+            btn.classList.remove('btn-outline-primary')
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {

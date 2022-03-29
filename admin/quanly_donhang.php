@@ -13,8 +13,8 @@
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item bg-light">
-            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
+        <li class="nav-item">
+            <a class="nav-link " aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
         <li class="nav-item bg-light">
             <a class="nav-link active" aria-current="page" href="#">Quản lý đơn hàng</a>
@@ -50,13 +50,13 @@
                     <label class="btn btn-outline-primary btn-sm" for="btnradio1">Tổng đơn<span class="badge bg-danger" id="badge_tongdon">0</span></label>
                 </div>
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Chờ xác nhận">
-                    <label class="btn btn-outline-primary btn-sm" for="btnradio2">Chờ xác nhận<span class="badge bg-danger" id="badge_choxacnhan">0</span></label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Chờ xác nhận">
+                    <label class="btn btn-outline-primary btn-sm" for="btnradio2">Chờ xác nhận<span class="badge bg-danger" id="badge_choxacnhan">0</span></label>
                 </div>
                 <div class="col-md-auto">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Đã xác nhận">
-                    <label class="btn btn-outline-primary btn-sm" for="btnradio3">Đã xác nhận<span class="badge bg-danger" id="badge_daxacnhan">0</span></label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Đã xác nhận">
+                    <label class="btn btn-outline-primary btn-sm" for="btnradio3">Đã xác nhận<span class="badge bg-danger" id="badge_daxacnhan">0</span></label>
                 </div>
                 <div class="col-md-auto">
 
@@ -69,8 +69,8 @@
                     <label class="btn btn-outline-primary btn-sm" for="btnradio5">Đã giao<span class="badge bg-danger" id="badge_dagiao">0</span></label>
                 </div>
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" value="Đã hủy">
-                    <label class="btn btn-outline-primary btn-sm" for="btnradio6">Đã hủy<span class="badge bg-danger" id="badge_dahuy">0</span></label>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" value="Đã hủy">
+                    <label class="btn btn-outline-primary btn-sm" for="btnradio6">Đã hủy<span class="badge bg-danger" id="badge_dahuy">0</span></label>
                 </div>
                 <div class="col-md-auto">
                     <div class="input-group input-group-sm ">

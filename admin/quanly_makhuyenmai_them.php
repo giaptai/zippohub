@@ -13,8 +13,8 @@
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item bg-light">
-            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
+        <li class="nav-item ">
+            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" aria-current="page" href="./quanly_donhang.php">Quản lý đơn hàng</a>
@@ -23,7 +23,7 @@
             <a class="nav-link" href="./quanly_sanpham.php">Quản lý sản phẩm</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="#">Quản lý tài khoản</a>
+            <a class="nav-link" href="#">Quản lý tài khoản</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
@@ -46,53 +46,54 @@
     <!-- Modal Them tai khoan -->
     <div class="">
         <div class="col-6 m-auto">
-            <h4>Thêm tài khoản</h4>
+            <h4>Thêm mã khuyến mãi</h4>
             <form class="form-floating" enctype="multipart/form-data" method="POST">
                 <!-- Name input -->
-                <div class="form-floating mb-4">
-                    <input type="text" id="namee" class="form-control" placeholder="1" name="namee" value="">
-                    <label class="form-label" for="floatingInput">Họ và tên</label>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Mã khuyến mãi:</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Mã khuyến mãi" id="khuyenmai" >
+                        <button class="btn btn-outline-secondary" type="button"  onclick="console.log(this.parentNode.querySelector('input[type=text]').value=(Math.random() +1).toString(36).substring(2))">Tạo mã</button>
+                    </div>
                 </div>
-                <!-- Email input -->
-                <div class="form-floating mb-4">
-                    <input type="email" id="emaill" class="form-control" placeholder="1" name="emaill" value="">
-                    <label class="form-label" for="form5Example2">Email</label>
+              
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label" >Trạng thái:</label>
+                    <select class="form-select" id="trangthai">
+                        <option value="1">Còn hạn</option>
+                        <option value="0">Hết hạn</option>
+                    </select>
                 </div>
-                <!-- Email input -->
-                <div class="form-floating mb-4">
-                    <input type="password" id="passwordd" class="form-control" placeholder="1" name="passwordd" value="">
-                    <label class="form-label" for="form5Example2">Mật khẩu</label>
+            
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label" >Ngày hết hạn:</label>
+                    <input type="date" class="form-control"  placeholder="Ngày hết hạn" id="ngayhethan">
                 </div>
 
-                <div class="form-floating mb-4">
-                    <input type="tel" id="phonee" class="form-control" placeholder="1" name="phonee" value="">
-                    <label class="form-label" for="form5Example2">Số điện thoại</label>
-                </div>
-
-                <div class="form-floating mb-4">
-                    <textarea class="form-control" id="addresss" rows="10" placeholder="1" name="addresss"></textarea>
-                    <label class="form-label" for="floatingInput">Địa chỉ</label>
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label" >Giá giảm:</label>
+                    <input type="number" class="form-control"  placeholder="Giá giảm" id="giagiam">
                 </div>
 
             </form>
         </div>
 
         <div class="col-6 m-auto">
-            <a type="button" class="btn btn-secondary" href="./quanly_taikhoan.php">Quay lại</a>
-            <button type="button" class="btn btn-primary" onclick="addCus()">Thêm</button>
+            <a type="button" class="btn btn-secondary" href="./quanly_makhuyenmai.php">Quay lại</a>
+            <button type="button" class="btn btn-primary" onclick="addPromo()">Thêm</button>
         </div>
     </div>
 
     <!-- Modal chi tiet san pham -->
     <!--  -->
     <script>
-        function addCus() {
+        function addPromo() {
 
-            var s1 = document.getElementById('namee').value;
-            var s2 = document.getElementById('emaill').value;
-            var s3 = document.getElementById('passwordd').value;
-            var s4 = document.getElementById('phonee').value;
-            var s5 = document.getElementById('addresss').value
+            var s1 = document.getElementById('khuyenmai').value;
+            var s2 = document.getElementById('trangthai').value;
+            var s3 = document.getElementById('ngayhethan').value;
+            var s4 = document.getElementById('giagiam').value;
+            console.log(s1, s2, s3, s4);
 
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
@@ -102,20 +103,18 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc     
                     alert(this.responseText);
-                    //location.reload();
                 }
             }
             //cau hinh request
-            xhttp.open('POST', './PHP_Function/taikhoan.php', true);
+            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('add=them' +
-                "&namee=" + s1 +
-                '&emaill=' + s2 +
-                "&passwordd=" + s3 +
-                "&phonee=" + s4 +
-                "&addresss=" + s5
+            xhttp.send('them' +
+                "&khuyenmai=" + s1 +
+                '&trangthai=' + s2 +
+                "&ngayhethan=" + s3 +
+                "&giagiam=" + s4
             );
         }
     </script>
