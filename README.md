@@ -1,3 +1,3 @@
 # zippohub
-dit me m tai
+dit me m tai\n
 can than bo may dap bay gio
