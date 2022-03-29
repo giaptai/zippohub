@@ -6,7 +6,7 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == 'display_info') {
         $sql = "SELECT * FROM taikhoan WHERE `id`={$_SESSION['iduser']}";
         $result = executeSingleResult($sql);
-            echo '
+        echo '
                 <div class="col-12 input-group-lg">
                 <label for="firstName" class="form-label" >Họ và tên</label>
                 <input type="text" id="fullname" class="form-control" placeholder="" value="' . $result['fullname'] . '" required="">
@@ -38,7 +38,7 @@ if (isset($_POST['action'])) {
                     Please enter your address.
                 </div>
             </div>';
-            }
+    }
 }
 
 // in ra danh sách địa chỉ của khách hàng
@@ -46,7 +46,7 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == 'listaddr') {
         $sql = "SELECT * FROM diachikhach WHERE `id_user`={$_SESSION['iduser']}";
         $result = executeResult($sql);
-        foreach($result as $arr) {
+        foreach ($result as $arr) {
             echo ' <a onclick="clickaddr(' . $arr['id_addr'] . ')" id="addr' . $arr['id_addr'] . '" class="list-group-item list-group-item-action" aria-current="true">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="">' . $arr["name"] . '</h6>
@@ -64,8 +64,8 @@ if (isset($_GET['data'])) {
     $stringg = $_GET['data'];
     $sql = "SELECT * FROM diachikhach WHERE addr LIKE '%{$stringg}%' AND id_user={$_SESSION['iduser']}";
     $result = executeResult($sql);
-    foreach ($result as $arr ) {
-        echo ' <a onclick="clickaddr(' . $arr['id_addr'] . ')" id="addr' . $arr['id_addr'] . '" class="list-group-item list-group-item-action" aria-current="true">
+    foreach ($result as $arr) {
+        echo ' <a href="#" onclick="clickaddr(' . $arr['id_addr'] . ')" id="addr' . $arr['id_addr'] . '" class="list-group-item list-group-item-action" aria-current="true">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="">' . $arr["name"] . '</h6>
                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
@@ -80,8 +80,8 @@ if (isset($_GET['data'])) {
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'display_cart') {
         $tongtien = 0;
-        $summ=0;
-        $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg'=>'');
+        $summ = 0;
+        $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg' => '');
         $arr = array(
             'id' => '',
             'name' => '',
@@ -101,28 +101,28 @@ if (isset($_POST['action'])) {
             <span class="text-muted">' . number_format($cart['gia']) . '</span>
         </li>';
         }
-       
-        $stringg['tongg'].='<span class="text-primary">Thanh toán</span>
-        <span class="badge bg-primary rounded-pill">'. count($_SESSION['cart']).'</span>';
+
+        $stringg['tongg'] .= '<span class="text-primary">Thanh toán</span>
+        <span class="badge bg-primary rounded-pill">' . count($_SESSION['cart']) . '</span>';
 
         $stringg['lstcart'] .= '<li class="list-group-item d-flex justify-content-between">
         <span>Tạm tính:</span>
         <strong>' . number_format($tongtien) . '</strong>
         </li>';
-        if(isset($_GET['promo'])){
-            $stringg['checkoutbox'] .= 
-            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
+        if (isset($_GET['promo'])) {
+            $stringg['checkoutbox'] .=
+                '<h6 class="card-text">' . number_format($tongtien) . '</h6>
             <h6 class="card-text">' . number_format(30000) . '</h6>
             <h6 class="card-text">' . number_format(-15000) . '</h6>
             <h6 class="card-text">' . number_format($tongtien + 30000 - 15000) . '</h6>';
-        }else {
-            $stringg['checkoutbox'] .= 
-            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
+        } else {
+            $stringg['checkoutbox'] .=
+                '<h6 class="card-text">' . number_format($tongtien) . '</h6>
             <h6 class="card-text">' . number_format(30000) . '</h6>
             <h6 class="card-text">' . number_format(0) . '</h6>
             <h6 class="card-text">' . number_format($tongtien + 30000 - 0) . '</h6>';
         }
-        
+
         echo json_encode($stringg);
     }
 }
@@ -130,7 +130,7 @@ if (isset($_POST['action'])) {
 if (isset($_POST['promo'])) {
     if ($_POST['promo'] == 'zipposgu') {
         $tongtien = 0;
-        $summ=0;
+        $summ = 0;
         $stringg = array('checkoutbox' => '');
         $arr = array(
             'id' => '',
@@ -144,14 +144,14 @@ if (isset($_POST['promo'])) {
             //$summ=$summ+1;
             $tongtien = $tongtien + ($cart['gia'] * $cart['soluong']);
         }
-        $stringg['checkoutbox'] .= 
-        '<h6 class="card-text">' . number_format($tongtien) . '</h6>
+        $stringg['checkoutbox'] .=
+            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
         <h6 class="card-text">' . number_format(30000) . '</h6>
         <h6 class="card-text">' . number_format(-15000) . '</h6>
         <h6 class="card-text">' . number_format($tongtien + 30000 - 15000) . '</h6>';
-    }else{
-        $stringg['checkoutbox'] .= 
-        '<h6 class="card-text">' . number_format($tongtien) . '</h6>
+    } else {
+        $stringg['checkoutbox'] .=
+            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
         <h6 class="card-text">' . number_format(30000) . '</h6>
         <h6 class="card-text">' . number_format(0) . '</h6>
         <h6 class="card-text">' . number_format($tongtien + 30000 - 0) . '</h6>';
@@ -161,33 +161,36 @@ if (isset($_POST['promo'])) {
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'payment') {
-        $id_hoadon = rand(100000, 999999);
+        $OrderID = rand(100000, 999999);
         $id_user = $_SESSION['iduser'];
-        $datee = date("d-m-Y"); //lấy ngày hiện tại, định dạng day-month-year
-        $fullname = $_GET['name'];
-        $phone = $_GET['phonee'];
-        $address = $_GET['address'];
-        echo ($datee);
-        $sumtien = 0;
-        $sumsoluong = 0;
+        $OrderDate = date("d-m-Y"); //lấy ngày hiện tại, định dạng day-month-year
+        $Fullname = $_GET['name'];
+        $Phonenumber = $_GET['phone'];
+        $Address = $_GET['address'];
+        $TotalPrice = 0;
+        $Quantity = 0;
         foreach ($_SESSION['cart'] as $cart) {
-            $sumtien = $sumtien + ($cart['soluong'] * $cart['gia']);
-            $sumsoluong = $sumsoluong + $cart['soluong'];
+            $TotalPrice += ($cart['soluong'] * $cart['gia']);
+            $Quantity += $cart['soluong'];
         }
-        $sql = "INSERT INTO hoadon(id_hoadon, id_user, ngaymua, fullname, phone, address, total_product, total_money, statuss) 
-        VALUES ('$id_hoadon', '$id_user', '$datee', '$fullname', '$phone', '$address','$sumsoluong','$sumtien', 'Chờ xác nhận')";
-
-        if (execute($sql)) {
-            foreach ($_SESSION['cart'] as $cart) {
-                $product_id = $cart['id'];
-                $amount = $cart["soluong"];
-                $tol = $cart["soluong"]*$cart["gia"];
-                $sql1 = "INSERT INTO chitiethoadon(id_hoadon, id_sanpham, amount, total) 
-                VALUES ('$id_hoadon','$product_id','$amount','$tol')";
-                execute($sql1);
-            }
-        unset($_SESSION['cart']);
-        } else echo 'fail';
+        $_SESSION["Order"] = array(
+            "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
+            "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity)
+        );
+        // die(json_encode($_SESSION["Order"]));
+        // $sql = "INSERT INTO hoadon(id_hoadon, id_user, ngaymua, fullname, phone, address, total_product, total_money, statuss) 
+        // VALUES ('$OrderID', '$id_user', '$datee', '$fullname', '$phone', '$address','$Quantity','$sumtien', 'Chờ xác nhận')";
+        // if (execute($sql)) {
+        //     foreach ($_SESSION['cart'] as $cart) {
+        //         $product_id = $cart['id'];
+        //         $amount = $cart["soluong"];
+        //         $tol = $cart["soluong"]*$cart["gia"];
+        //         $sql1 = "INSERT INTO chitiethoadon(id_hoadon, id_sanpham, amount, total) 
+        //         VALUES ('$id_hoadon','$product_id','$amount','$tol')";
+        //         execute($sql1);
+        //     }
+        // unset($_SESSION['cart']);
+        // } else echo 'fail';
         // $sql1="INSERT INTO chitiethoadon(id_hoadon, id_sanpham, amount, total) 
         // VALUES ('$id_hoadon','[value-2]','[value-3]','[value-4]')";
     }
