@@ -1,35 +1,35 @@
 <?php
 require_once('../../query.php');
-session_start();
 
-if (isset($_POST['data']) && isset($_POST['action'])) {
-    if ($_POST['action'] == 'mua') {
+session_start();
+if (isset($_POST['data']) && isset($_POST['mua'])) {
+    $id = $_POST['data'];
+    $sql = "SELECT * FROM sanpham WHERE id={$id}";
+    $product = executeSingleResult($sql);
+
+    $item = array(
+        'id' => $product['id'],
+        'name' => $product['name'],
+        'imagee' => $product['img'],
+        'soluong' => 1,
+        'gia' => $product['price']
+    );
+    
+    if (isset($_SESSION["cart"])) {
         if (count($_SESSION["cart"]) == 5) {
             die("Đã đạt giới hạn mua hàng vui lòng đạt vip 15 để mua thêm");
         }
-        $id = $_POST['data'];
-        $sql = "SELECT * FROM `sanpham` WHERE `id`={$id}";
-        $product = executeSingleResult($sql);
-        //$product = mysqli_fetch_assoc($query);
-        $item = array(
-            'id' => $product['id'],
-            'name' => $product['name'],
-            'imagee' => $product['img'],
-            'soluong' => 1,
-            'gia' => $product['price']
-            // 'tong'=> ($product['price']*$item['soluong'])
-        );
+
         if (isset($_SESSION['cart'][$id])) {
             if ($_SESSION['cart'][$id]['soluong'] < $product['amount']) {
                 $_SESSION['cart'][$id]["soluong"] += 1;
-                //$_SESSION['cart'][$id]["tong"] += $_SESSION['cart'][$id]["soluong"]*$item['price'];
             } else {
                 echo "bruh moment";
             }
         } else {
             $_SESSION['cart'][$id] = $item;
         }
-    }
+    }else $_SESSION['cart'][$id] = $item;
 }
 
 if (isset($_POST["type"])) {

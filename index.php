@@ -337,7 +337,7 @@
                     document.getElementById('zipposterlingsilver').innerHTML = s2;
                     document.getElementById('zippobasemodels').innerHTML = s3;
 
-                    console.log(JSON.parse(this.responseText));
+                    console.log((this.responseText));
 
                 }
             }

@@ -1,7 +1,7 @@
 <?php
-
 require_once("../../query.php");
 session_start();
+
 //hiện sản phẩm ở cửa hàng
 if (isset($_POST["action"])) {
     // khai bao bien
@@ -10,8 +10,8 @@ if (isset($_POST["action"])) {
     if ($_POST["action"] == 'displaycuahang') {
 
         $sql = "SELECT * FROM sanpham LIMIT 0,12";
-
         $temp = "SELECT * FROM sanpham";
+        
     } else if ($_POST["action"] == "search") {
 
         $checkbox = explode(",", $_POST["checkbox"]);
