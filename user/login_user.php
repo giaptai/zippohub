@@ -268,6 +268,21 @@
     </footer>
     <!-- Footer -->
     <script>
+        function isEmailValid(email) {
+            const emailRegexp = new RegExp(
+                /^[a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1}([a-zA-Z0-9][\-_\.\+\!\#\$\%\&\'\*\/\=\?\^\`\{\|]{0,1})*[a-zA-Z0-9]@[a-zA-Z0-9][-\.]{0,1}([a-zA-Z][-\.]{0,1})*[a-zA-Z0-9]\.[a-zA-Z0-9]{1,}([\.\-]{0,1}[a-zA-Z]){0,}[a-zA-Z0-9]{0,}$/i
+            )
+            return emailRegexp.test(email)
+        }
+
+        function isPasswordValid(str) {
+            return /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,16})$/.test(str)
+        }
+
+        function isPhonenumberValid(str) {
+            return /^[0][0-9]{9}$/.test(str);
+        }
+
         function formRG(e) {
             if (e == 1) {
                 document.getElementById("formLG").style.display = "none";
@@ -293,10 +308,10 @@
                     if (this.responseText == 'success') {
                         alert(this.responseText);
                         window.location.href = '../index.php';
-                    } else alert('Không tìm thấy tài khoản, có thể do:\n'+
-                    '1. Tài khoản đã bị khóa.\n'+
-                    '2. Sai email hoặc mật khẩu.\n'+
-                    '3. Tài khoản chưa đăng ký.');
+                    } else alert('Không tìm thấy tài khoản, có thể do:\n' +
+                        '1. Tài khoản đã bị khóa.\n' +
+                        '2. Sai email hoặc mật khẩu.\n' +
+                        '3. Tài khoản chưa đăng ký.');
                     //console.log(this.responseText);
                 }
             }
@@ -316,7 +331,7 @@
             email = document.getElementById('email').value;
             matkhau = document.getElementById('matkhau').value;
             diachi = document.getElementById('diachi').value;
-            console.log(hovaten, sodienthoai, email, matkhau, diachi );
+            console.log(hovaten, sodienthoai, email, matkhau, diachi);
 
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request

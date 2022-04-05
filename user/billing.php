@@ -6,10 +6,10 @@
     <title>Thông tin đơn hàng</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-
 </head>
 
 <body>
@@ -34,10 +34,10 @@
     </style>
     <div class="container">
         <!-- step -->
-        <div class="row justify-content-md-center align-items-center mt-4">
+        <div class="step-container row justify-content-md-center align-items-center mt-4">
             <div class="col-md-auto">
                 <div class="text-center">
-                    <a type="button" class="btn btn-outline-primary btn-sm active" style="width:30px; height:30px; border-radius: 50%;">1</a>
+                    <a type="button" class="btn btn-outline-primary btn-sm active">1</a>
                     <p><strong>Giỏ hàng</strong></p>
                 </div>
             </div>
@@ -71,10 +71,9 @@
             </div>
         </div>
         <!-- step -->
-        <div class="header clearfix">
+        <div class="header clearfix mt-4">
             <h1 class="text-muted">Thanh toán đơn hàng</h1>
         </div>
-        <h3 class="">Thông tin đơn hàng</h3>
         <div class="table-responsive">
             <form action="../vnpay_php/vnpay_create_payment.php" id="create_form" method="post">
                 <div class="form-group">
@@ -83,36 +82,22 @@
                 </div>
                 <div class="form-group">
                     <label for="order_id">Ngày đặt:</label>
-                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["OrderDate"] ?>">
+                    <input class="form-control" id="" name="" type="text" readonly value="<?php echo $_SESSION["Order"]["OrderDate"] ?>">
                 </div>
-                <div class="form-group">
-                    <label for="order_id">Tên khách:</label>
-                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["Fullname"] ?>">
-                </div>
-                <div class="form-group">
-                    <label for="order_id">Số điện thoại:</label>
-                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["Phonenumber"] ?>">
-                </div>
-                <div class="form-group">
-                    <label for="order_id">Địa chỉ:</label>
-                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["Address"] ?>">
-                </div>
-                <div class="form-group">
-                    <label for="order_id">Số lượng:</label>
-                    <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo number_format($_SESSION["Order"]["Quantity"]) ?>">
-                </div>
-
                 <div class="form-group">
                     <label for="order_id">Mã giảm giá:</label>
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1"><?php echo $_SESSION["Order"]["PromoCode"] ?></span>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                        <span class="input-group-text" id="basic-addon1"><?php if (!empty($_SESSION["Order"]["PromoCode"])) {
+                                                                                echo $_SESSION["Order"]["PromoCode"];
+                                                                            } else {
+                                                                                echo "Chưa áp dụng";
+                                                                            } ?></span>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $_SESSION["Order"]["Fullname"] ?>">
                     </div>
                 </div>
-
                 <div class="form-group">
                     <label for="amount">Tổng số tiền</label>
-                    <input class="form-control" id="amount" name="amount" type="text" readonly value="<?php echo number_format($_SESSION["Order"]["TotalPrice"]) ?>">
+                    <input class="form-control" id="amount" name="amount" type="text" readonly value="<?php echo number_format($_SESSION["Order"]["TotalPrice"]) ?> VND">
                 </div>
                 <div class="form-group">
                     <label for="order_desc">Nội dung thanh toán</label>

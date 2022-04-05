@@ -349,14 +349,14 @@
             xhttp.send('action=displaysanpham');
         }
 
-        function logout(){
+        function logout() {
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    window.location.href="./user/login_user.php";
+                    window.location.href = "./user/login_user.php";
                 }
             }
             //cau hinh request
@@ -374,9 +374,15 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    if (this.responseText == 'outstock') {
-                        alert('Hết hàng');
-                    } else document.getElementById('badge bg-secondary').innerText = this.responseText;
+                    if (this.responseText != '') {
+                        alert(this.responseText)
+                    } else {
+                        let btn = document.getElementById("id" + e)
+                        btn.innerText = "Đã thêm vào giỏ"
+                        btn.classList.add('disabled')
+                        btn.classList.add('btn-primary')
+                        btn.classList.remove('btn-outline-primary')
+                    }
                 }
             }
             //cau hinh request

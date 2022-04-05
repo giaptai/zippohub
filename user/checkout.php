@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
@@ -25,10 +26,8 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">
-                            Giỏ hàng <span class="badge bg-secondary">4</span></a>
-                        <!-- <button type="button" class="btn btn-light">
-                            Giỏ hàng <span class="badge bg-danger">4</span>
-                        </button> -->
+                            Giỏ hàng <span class="badge bg-secondary">4</span>
+                        </a>
                     </li>
                     <?php
                     session_start();
@@ -55,10 +54,10 @@
         </div>
     </nav>
     <!-- step -->
-    <div class="row justify-content-md-center align-items-center mt-4">
+    <div class="step-container row justify-content-md-center align-items-center mt-4">
         <div class="col-md-auto">
             <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm active" style="width:30px; height:30px; border-radius: 50%;">1</a>
+                <a type="button" class="btn btn-outline-primary btn-sm active">1</a>
                 <p><strong>Giỏ hàng</strong></p>
             </div>
         </div>
@@ -68,7 +67,7 @@
         <div class="col-md-auto">
             <div class="text-center">
                 <a type="button" class="btn btn-outline-primary btn-sm active">2</a>
-                <p><strong>Kiểm tra thanh toán</strong></p>
+                <p><strong>Kiểm tra thông tin</strong></p>
             </div>
         </div>
 
@@ -96,7 +95,7 @@
     <div class="container">
         <main>
             <div class="py-5 text-center">
-                <h2>Thanh toán hóa đơn</h2>
+                <h2>Thông tin hóa đơn</h2>
             </div>
             <div class="row g-5">
                 <div class="col-md-5 col-lg-4 order-md-last">
@@ -122,7 +121,7 @@
                     <form class="card p-2">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Promo code" id="promocode">
-                            <button type="button" class="btn btn-secondary" onclick="vouchers()">Khuyến mãi</button>
+                            <button type="button" class="btn btn-secondary" onclick="vouchers()">Áp dụng</button>
                         </div>
                     </form>
                     <!-- <div style="width: 90%; margin: 1rem auto 2rem auto;" class="d-flex justify-content-end"> -->
@@ -418,7 +417,7 @@
                 }
             }
             //cau hinh request
-            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&magiamgia='+s4+'&name=' + s1 + '&phone=' + s2 + '&address=' + s3, true);
+            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&magiamgia=' + s4 + '&name=' + s1 + '&phone=' + s2 + '&address=' + s3, true);
             //gui request
             xhttp.send();
         }

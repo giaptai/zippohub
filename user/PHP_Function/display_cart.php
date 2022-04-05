@@ -4,9 +4,11 @@ session_start();
 
 if (isset($_POST['data']) && isset($_POST['action'])) {
     if ($_POST['action'] == 'mua') {
+        if (count($_SESSION["cart"]) == 5) {
+            die("Đã đạt giới hạn mua hàng vui lòng đạt vip 15 để mua thêm");
+        }
         $id = $_POST['data'];
         $sql = "SELECT * FROM `sanpham` WHERE `id`={$id}";
-        /*$query*/
         $product = executeSingleResult($sql);
         //$product = mysqli_fetch_assoc($query);
         $item = array(
@@ -22,7 +24,7 @@ if (isset($_POST['data']) && isset($_POST['action'])) {
                 $_SESSION['cart'][$id]["soluong"] += 1;
                 //$_SESSION['cart'][$id]["tong"] += $_SESSION['cart'][$id]["soluong"]*$item['price'];
             } else {
-                echo "outstock";
+                echo "bruh moment";
             }
         } else {
             $_SESSION['cart'][$id] = $item;
@@ -33,7 +35,7 @@ if (isset($_POST['data']) && isset($_POST['action'])) {
 if (isset($_POST["type"])) {
     if (($_POST["type"]) == "tangsoluong") {
         $id = $_POST["id"];
-        ($_SESSION['cart'][$id]["soluong"] <99) ? $_SESSION['cart'][$id]["soluong"]+= 1: 'Qua so luong';
+        ($_SESSION['cart'][$id]["soluong"] < 99) ? $_SESSION['cart'][$id]["soluong"] += 1 : 'Qua so luong';
         die();
     }
     if (isset($_POST["type"]) == "giamsoluong") {
@@ -76,9 +78,9 @@ if (isset($_POST['action'])) {
                     <td scope="col">' . number_format($cart['gia']) . '</td> 
                     <td>
                         <div class="input-group">
-                            <button class="subtract btn btn-outline-primary btn-sm" onclick="subtract(this)" value="'.$cart['id'].'"><i class="bi bi-dash-lg"></i></button>
-                            <input type="number" min="1" max="99" step="1" disabled style="width: 4rem;" class="btn btn-outline-primary" id="ditmem'.$cart['id'].'" value="' . number_format($cart['soluong']) . '">
-                            <button class="add btn btn-outline-primary btn-sm" value="'.$cart['id'].'" onclick="add(this)"><i class="bi bi-plus-lg"></i></button>
+                            <button class="subtract btn btn-outline-primary btn-sm" onclick="subtract(this)" value="' . $cart['id'] . '"><i class="bi bi-dash-lg"></i></button>
+                            <input type="text" min="1" max="99" step="1" disabled style="text-align: center; width: 3rem;" class="btn btn-outline-primary" id="ditmem' . $cart['id'] . '" value="' . number_format($cart['soluong']) . '">
+                            <button class="add btn btn-outline-primary btn-sm" value="' . $cart['id'] . '" onclick="add(this)"><i class="bi bi-plus-lg"></i></button>
                         </div>
                     </td>
                     <td scope="col">' . number_format($cart['soluong'] * $cart['gia']) . '</td>

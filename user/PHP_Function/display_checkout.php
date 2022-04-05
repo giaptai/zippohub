@@ -78,68 +78,71 @@ if (isset($_GET['data'])) {
 
 // phần thanh toán nằm bên trái
 if (isset($_POST['promocode'])) {
-        $discount=$_POST['promocode'];
-        $result=executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$discount}'");
+    $discount = $_POST['promocode'];
+    $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$discount}'");
 
-        $tongtien = 0;
-        $summ = 0;
-        $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg' => '');
-        $arr = array(
-            'id' => '',
-            'name' => '',
-            'imagee' => '',
-            'soluong' => 0,
-            'gia' => 0
-        );
-        isset($_SESSION['cart']) ? $arr = $_SESSION['cart'] : $arr = [];
-        foreach ($arr as $cart) {
-            //$summ=$summ+1;
-            $tongtien = $tongtien + ($cart['gia'] * $cart['soluong']);
-            $stringg['lstcart'] .= '<li class="list-group-item d-flex justify-content-between lh-sm">
+    $tongtien = 0;
+    $summ = 0;
+    $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg' => '');
+    $arr = array(
+        'id' => '',
+        'name' => '',
+        'imagee' => '',
+        'soluong' => 0,
+        'gia' => 0
+    );
+    isset($_SESSION['cart']) ? $arr = $_SESSION['cart'] : $arr = [];
+    foreach ($arr as $cart) {
+        //$summ=$summ+1;
+        $tongtien = $tongtien + ($cart['gia'] * $cart['soluong']);
+        $stringg['lstcart'] .= '<li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
                 <h6 class="my-0">' . $cart['name'] . '</h6>
                 <small class="text-muted">' . $cart['soluong'] . '</small>
             </div>
             <span class="text-muted">' . number_format($cart['gia']) . '</span>
         </li>';
-        }
+    }
 
-        $stringg['tongg'] .= '<span class="text-primary">Thanh toán</span>
+    $stringg['tongg'] .= '<span class="text-primary">Thanh toán</span>
         <span class="badge bg-primary rounded-pill">' . count($_SESSION['cart']) . '</span>';
 
-        $stringg['lstcart'] .= '<li class="list-group-item d-flex justify-content-between">
+    $stringg['lstcart'] .= '<li class="list-group-item d-flex justify-content-between">
         <span>Tạm tính:</span>
         <strong>' . number_format($tongtien) . '</strong>
         </li>';
-        if (!empty($_POST['promocode'])) {
-            $stringg['checkoutbox'] .=
-                '<h6 class="card-text">' . number_format($tongtien) . '</h6>
+    if (!empty($_POST['promocode'])) {
+        $stringg['checkoutbox'] .=
+            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
             <h6 class="card-text">' . number_format(30000) . '</h6>
             <h6 class="card-text">' . number_format($result['giamgia']) . '</h6>
             <h6 class="card-text">' . number_format($tongtien + 30000 - $result['giamgia']) . '</h6>';
-        } else {
-            $stringg['checkoutbox'] .=
-                '<h6 class="card-text">' . number_format($tongtien) . '</h6>
+    } else {
+        $stringg['checkoutbox'] .=
+            '<h6 class="card-text">' . number_format($tongtien) . '</h6>
             <h6 class="card-text">' . number_format(30000) . '</h6>
             <h6 class="card-text">' . number_format(0) . '</h6>
             <h6 class="card-text">' . number_format($tongtien + 30000 - 0) . '</h6>';
-        }
+    }
 
-        echo json_encode($stringg);
+    echo json_encode($stringg);
 }
 
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'payment') {
-        $OrderID = rand(100000, 999999);
+        $OrderID = rand(1, 2147483647);
         $id_user = $_SESSION['iduser'];
         $OrderDate = date("d-m-Y"); //lấy ngày hiện tại, định dạng day-month-year
         $Fullname = $_GET['name'];
         $Phonenumber = $_GET['phone'];
         $Address = $_GET['address'];
-        $makhuyenmai = $_GET['magiamgia'];
-        $result=executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$makhuyenmai}'");
-        
+        $makhuyenmai = '';
+        $result = 0;
+        if (!empty($_GET['magiamgia'])) {
+            $makhuyenmai = $_GET['magiamgia'];
+            $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai={$makhuyenmai}")['giamgia'];
+        }
         $TotalPrice = 0;
         $Quantity = 0;
         foreach ($_SESSION['cart'] as $cart) {
@@ -149,7 +152,7 @@ if (isset($_GET['action'])) {
         //$TotalPrice=number_format($TotalPrice-$result['giamgia']);
         // tạo mảng thanh toán
         $_SESSION["Order"] = array(
-            "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice-$result['giamgia']+30000), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
+            "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice - $result + 30000), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
             "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $makhuyenmai
         );
         // die(json_encode($_SESSION["Order"]));
