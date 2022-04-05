@@ -34,8 +34,10 @@
                         echo '
                         <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
-                    </li>
+                        Giỏ hàng <span class="badge bg-secondary">';
+                        echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;
+                        echo     
+                        '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -391,7 +393,7 @@
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
             xhttp.send('data=' + e +
-                '&action=mua');
+                '&mua');
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

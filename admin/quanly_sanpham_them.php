@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <ul class="nav nav-tabs justify-content-end">
+    <!-- <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item bg-light">
             <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
         </li>
@@ -40,7 +40,7 @@
                 <li><a class="dropdown-item" href="#">Separated link</a></li>
             </ul>
         </li>
-    </ul>
+    </ul> -->
     <!--  -->
 
     <!-- Modal Them san pham -->

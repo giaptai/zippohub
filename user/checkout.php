@@ -19,10 +19,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-pills align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link text-light" aria-current="page" href="../../../index.php">Trang chủ</a>
+                        <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="../../index.php">Cửa hàng</a>
+                        <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="#">

@@ -34,8 +34,10 @@
                         echo '
                         <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
-                    </li>
+                            Giỏ hàng <span class="badge bg-secondary">';
+                        echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;
+                        echo     
+                        '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
