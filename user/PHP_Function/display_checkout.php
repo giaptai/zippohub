@@ -79,7 +79,8 @@ if (isset($_GET['data'])) {
 // phần thanh toán nằm bên trái
 if (isset($_POST['promocode'])) {
     $discount = $_POST['promocode'];
-    $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$discount}'");
+    $ntm = date('Y-m-d');
+    $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$discount}' AND ngayhethan <= '$ntm'");
 
     $tongtien = 0;
     $summ = 0;
@@ -124,52 +125,37 @@ if (isset($_POST['promocode'])) {
             <h6 class="card-text">' . number_format(0) . '</h6>
             <h6 class="card-text">' . number_format($tongtien + 30000 - 0) . '</h6>';
     }
-
     echo json_encode($stringg);
 }
 
 
-if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'payment') {
-        $OrderID = rand(1, 2147483647);
-        $id_user = $_SESSION['iduser'];
-        $OrderDate = date("d-m-Y"); //lấy ngày hiện tại, định dạng day-month-year
-        $Fullname = $_GET['name'];
-        $Phonenumber = $_GET['phone'];
-        $Address = $_GET['address'];
-        $makhuyenmai = '';
-        $result = 0;
-        if (!empty($_GET['magiamgia'])) {
-            $makhuyenmai = $_GET['magiamgia'];
-            $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai={$makhuyenmai}")['giamgia'];
-        }
-        $TotalPrice = 0;
-        $Quantity = 0;
-        foreach ($_SESSION['cart'] as $cart) {
-            $TotalPrice += ($cart['soluong'] * $cart['gia']);
-            $Quantity += $cart['soluong'];
-        }
-        //$TotalPrice=number_format($TotalPrice-$result['giamgia']);
-        // tạo mảng thanh toán
-        $_SESSION["Order"] = array(
-            "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice - $result + 30000), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
-            "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $makhuyenmai
-        );
-        // die(json_encode($_SESSION["Order"]));
-        // $sql = "INSERT INTO hoadon(id_hoadon, id_user, ngaymua, fullname, phone, address, total_product, total_money, statuss) 
-        // VALUES ('$OrderID', '$id_user', '$datee', '$fullname', '$phone', '$address','$Quantity','$sumtien', 'Chờ xác nhận')";
-        // if (execute($sql)) {
-        //     foreach ($_SESSION['cart'] as $cart) {
-        //         $product_id = $cart['id'];
-        //         $amount = $cart["soluong"];
-        //         $tol = $cart["soluong"]*$cart["gia"];
-        //         $sql1 = "INSERT INTO chitiethoadon(id_hoadon, id_sanpham, amount, total) 
-        //         VALUES ('$id_hoadon','$product_id','$amount','$tol')";
-        //         execute($sql1);
-        //     }
-        // unset($_SESSION['cart']);
-        // } else echo 'fail';
-        // $sql1="INSERT INTO chitiethoadon(id_hoadon, id_sanpham, amount, total) 
-        // VALUES ('$id_hoadon','[value-2]','[value-3]','[value-4]')";
+if (isset($_GET['payment'])) {
+    // if ($_GET['action'] == 'payment') {
+    $OrderID = rand(1, 2147483647);
+    $id_user = $_SESSION['iduser'];
+    $OrderDate = date("d-m-Y"); //lấy ngày hiện tại, định dạng day-month-year
+    $Fullname = $_GET['name'];
+    $Phonenumber = $_GET['phone'];
+    $Address = $_GET['address'];
+    $makhuyenmai = '';
+    $result = 0;
+    $ntm = date('Y-m-d');
+    if (!empty($_GET['magiamgia'])) {
+        $makhuyenmai = $_GET['magiamgia'];
+        $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$makhuyenmai}' AND ngayhethan <= '$ntm'");
     }
+    // die(json_encode($result));
+
+    $TotalPrice = 0;
+    $Quantity = 0;
+    foreach ($_SESSION['cart'] as $cart) {
+        $TotalPrice += ($cart['soluong'] * $cart['gia']);
+        $Quantity += $cart['soluong'];
+    }
+    //$TotalPrice=number_format($TotalPrice-$result['giamgia']);
+    // tạo mảng thanh toán
+    $_SESSION["Order"] = array(
+        "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice - $result['giamgia'] + 30000), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
+        "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $makhuyenmai,
+    );
 }

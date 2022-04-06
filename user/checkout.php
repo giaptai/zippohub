@@ -388,10 +388,10 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
+                    console.log(this.responseText);
                     let s12 = JSON.parse(this.responseText).checkoutbox;
                     document.getElementById("checkoutcard").innerHTML = s12;
                     s1.outerHTML = '<button type="button" class="btn btn-success" onclick="vouchers()">Đã áp dụng</button>';
-                    console.log(JSON.parse(this.responseText).checkoutbox);
                 }
             }
             //cau hinh request
@@ -414,10 +414,11 @@
                     //In ra data nhan duoc
                     // console.log(JSON.parse(this.responseText));
                     window.location.href = "billing.php"
+                    //console.log(this.responseText)
                 }
             }
             //cau hinh request
-            xhttp.open('GET', './PHP_Function/display_checkout.php?action=payment&magiamgia=' + s4 + '&name=' + s1 + '&phone=' + s2 + '&address=' + s3, true);
+            xhttp.open('GET', './PHP_Function/display_checkout.php?payment=&magiamgia=' + s4 + '&name=' + s1 + '&phone=' + s2 + '&address=' + s3, true);
             //gui request
             xhttp.send();
         }

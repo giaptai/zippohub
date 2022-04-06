@@ -34,11 +34,23 @@ if ($secureHash == $vnp_SecureHash) {
         );
         $_SESSION["Payment"] = $PaymentArray;
         if (mysqli_num_rows(execute("select * from payments where OrderID = '" . $_SESSION["Order"]["OrderID"] . "'")) == 1) {
-            return;
+            // return;
         }
-        // if (AddOrder($_SESSION["Order"]) == 1 && AddPayment($_SESSION["Payment"]) == 1 && AddOrderDetails($_SESSION["OrderDetail"]) == 1) {
-            // $Result = "Giao dịch thành công";
-        // }
+        $paymentadd = execute("INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
+        VALUES ('" .  $PaymentArray["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
+            '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $PaymentArray["PaymentTime"] . "')");
+
+        $orderadd = execute("INSERT INTO `hoadon`(`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`,
+         `total_product`, `magiamgia`, `total_money`, `statuss`)
+        VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["iduser"] . "','" . $_SESSION["Order"]["OrderDate"] . "',
+        '" . $_SESSION["Order"]["Fullname"] . "','" . $_SESSION["Order"]["Phonenumber"] . "','" .
+            $_SESSION["Order"]["Address"] . "','" . $_SESSION["Order"]["Quantity"] . "','" .
+            $_SESSION["Order"]["PromoCode"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','Chờ xác nhận')");
+
+        foreach ($_SESSION['cart'] as $cart) {
+            execute("INSERT INTO `chitiethoadon`(`id_hoadon`, `id_sanpham`, `amount`, `total`) VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $cart['id'] . "','" . $cart['soluong'] . "','" . ($cart['soluong'] * $cart['gia']) . "')");
+        }
+        $Result = "Giao dịch thành công";
     } else {
         $Result = "Giao dịch không thành công";
     }
@@ -144,7 +156,7 @@ if ($secureHash == $vnp_SecureHash) {
                     <label class="form-control">Thời gian thanh toán: <?php echo date("d-m-Y h:i:s", strtotime($_GET['vnp_PayDate'])) ?></label>
                 </div>
                 <div class="form-group">
-                    <label class="form-control">Người thanh toán: <?php echo $_SESSION['Member'][0]["Fullname"] ?></label>
+                    <label class="form-control">Người thanh toán: <?php echo $_SESSION["Order"]["Fullname"] ?></label>
                 </div>
                 <div class="form-group">
                     <label class="form-control">Kết quả: <?php echo $Result ?></label>
