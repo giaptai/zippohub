@@ -81,10 +81,8 @@ if (isset($_POST['promocode'])) {
     $discount = $_POST['promocode'];
     $ntm = date('Y-m-d');
     $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$discount}' AND ngayhethan <= '$ntm'");
-
-    $tongtien = 0;
-    $summ = 0;
-    $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg' => '');
+    $tongtien = $summ = 0;
+    $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg' => '', 'response' => '');
     $arr = array(
         'id' => '',
         'name' => '',
@@ -92,9 +90,13 @@ if (isset($_POST['promocode'])) {
         'soluong' => 0,
         'gia' => 0
     );
+    if ($result == '') {
+        $stringg["response"] = 'error';
+    } else {
+        $stringg["response"] = 'success';
+    }
     isset($_SESSION['cart']) ? $arr = $_SESSION['cart'] : $arr = [];
     foreach ($arr as $cart) {
-        //$summ=$summ+1;
         $tongtien = $tongtien + ($cart['gia'] * $cart['soluong']);
         $stringg['lstcart'] .= '<li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
@@ -130,10 +132,9 @@ if (isset($_POST['promocode'])) {
 
 
 if (isset($_GET['payment'])) {
-    // if ($_GET['action'] == 'payment') {
     $OrderID = rand(1, 2147483647);
     $id_user = $_SESSION['iduser'];
-    $OrderDate = date("d-m-Y"); //lấy ngày hiện tại, định dạng day-month-year
+    $OrderDate = date("d-m-Y");
     $Fullname = $_GET['name'];
     $Phonenumber = $_GET['phone'];
     $Address = $_GET['address'];
@@ -144,16 +145,12 @@ if (isset($_GET['payment'])) {
         $makhuyenmai = $_GET['magiamgia'];
         $result = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$makhuyenmai}' AND ngayhethan <= '$ntm'");
     }
-    // die(json_encode($result));
-
     $TotalPrice = 0;
     $Quantity = 0;
     foreach ($_SESSION['cart'] as $cart) {
         $TotalPrice += ($cart['soluong'] * $cart['gia']);
         $Quantity += $cart['soluong'];
     }
-    //$TotalPrice=number_format($TotalPrice-$result['giamgia']);
-    // tạo mảng thanh toán
     $_SESSION["Order"] = array(
         "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice - $result['giamgia'] + 30000), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
         "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $makhuyenmai,

@@ -26,29 +26,25 @@ $secureHash = hash('sha256', $vnp_HashSecret . $hashData);
 if ($secureHash == $vnp_SecureHash) {
     if ($_GET['vnp_ResponseCode'] == '00') {
         $Time = date("Y-m-d h:i:s", strtotime($_GET['vnp_PayDate']));
-        $_SESSION["Order"]["OrderDate"] = $Time;
         $PaymentArray = array(
-            "OrderID" => $_GET["vnp_TxnRef"], "Total" => $_GET['vnp_Amount'] / 100, "Note" => $_GET['vnp_OrderInfo'],
+            "Total" => $_GET['vnp_Amount'] / 100, "Note" => $_GET['vnp_OrderInfo'],
             "PaymentTime" => $Time, "vnp_response_code" => $_GET['vnp_ResponseCode'],
             "code_vnpay" => $_GET['vnp_TransactionNo'], "BankCode" => $_GET['vnp_BankCode']
         );
-        $_SESSION["Payment"] = $PaymentArray;
-        if (mysqli_num_rows(execute("select * from payments where OrderID = '" . $_SESSION["Order"]["OrderID"] . "'")) == 1) {
-            // return;
-        }
         $paymentadd = execute("INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
-        VALUES ('" .  $PaymentArray["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
+        VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
             '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $PaymentArray["PaymentTime"] . "')");
-
         $orderadd = execute("INSERT INTO `hoadon`(`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`,
          `total_product`, `magiamgia`, `total_money`, `statuss`)
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["iduser"] . "','" . $_SESSION["Order"]["OrderDate"] . "',
         '" . $_SESSION["Order"]["Fullname"] . "','" . $_SESSION["Order"]["Phonenumber"] . "','" .
             $_SESSION["Order"]["Address"] . "','" . $_SESSION["Order"]["Quantity"] . "','" .
             $_SESSION["Order"]["PromoCode"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','Chờ xác nhận')");
-
         foreach ($_SESSION['cart'] as $cart) {
-            execute("INSERT INTO `chitiethoadon`(`id_hoadon`, `id_sanpham`, `amount`, `total`) VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $cart['id'] . "','" . $cart['soluong'] . "','" . ($cart['soluong'] * $cart['gia']) . "')");
+            execute("INSERT INTO `chitiethoadon`(`id_hoadon`, `id_sanpham`, `amount`, `total`) 
+            VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $cart['id'] . "','" . $cart['soluong'] . "','" . ($cart['soluong'] * $cart['gia']) . "')");
+            echo "INSERT INTO `chitiethoadon`(`id_hoadon`, `id_sanpham`, `amount`, `total`) 
+            VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $cart['id'] . "','" . $cart['soluong'] . "','" . ($cart['soluong'] * $cart['gia']) . "')";
         }
         $Result = "Giao dịch thành công";
     } else {
@@ -164,21 +160,10 @@ if ($secureHash == $vnp_SecureHash) {
                 <a href="../pages/member-orders.html" class="btn btn-primary">Quay lại</a>
             </div>
             <footer class="footer">
-                <p>&copy; Quản lý bán vé máy bay trực tuyến 2021</p>
+                <p>&copy; Quản lý bán bật lửa zippo trực tuyến 2022</p>
             </footer>
         </div>
         <script src="../config/CheckOut.js"></script>
 </body>
 
 </html>
-
-<!-- CREATE TABLE `payments` (
-  `PaymentID` int(11) NOT NULL,
-  `OrderID` bigint(11) DEFAULT NULL,
-  `Total` int(11) NOT NULL,
-  `Note` varchar(255) CHARACTER SET utf32 COLLATE utf32_vietnamese_ci DEFAULT NULL,
-  `vnp_response_code` varchar(5) NOT NULL,
-  `code_vnpay` varchar(255) NOT NULL COMMENT '\r\n\r\n',
-  `BankCode` varchar(255) NOT NULL,
-  `PaymentTime` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8; -->
