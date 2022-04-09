@@ -11,6 +11,12 @@
 <style>
     .card:hover {
         border: 1px ridge;
+        transform: scale(1.1)
+    }
+
+    .card {
+        transition: 0.5s ease-in-out;
+        margin: 0 1rem 0 0;
     }
 </style>
 
@@ -36,9 +42,6 @@
                     </li>
                     <?php
                     session_start();
-                    // if (isset($_POST["logout"])) {
-                       
-                    // }
                     if (isset($_SESSION['email'])) {
                         echo
                         '</span></a></li>
@@ -51,7 +54,7 @@
                                 <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
                                 <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" name="logout"  onclick="logout()">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
@@ -127,10 +130,10 @@
     <hr class="featurette-divider">
     <div class="row row-md-2 justify-content-between " style="width: 80%;margin:2rem auto 1rem auto;">
         <div class="col-12 mb-3">
-            <div class="p-3 mb-2 bg-light text-primary">
+            <form action="./cuahang.php" method="post" class="p-3 mb-2 bg-light text-primary">
                 <span> Zippo Armor </span>
-                <button class="btn btn-primary btn-sm" style="float: right;">Xem thêm</button>
-            </div>
+                <button name="xemthem" value="Zippo Armor" class="btn btn-primary btn-sm see-more" style="float: right;">Xem thêm</button>
+            </form>
 
             <div class="row row-cols-md-6" id="zippoarmor">
 
@@ -138,20 +141,19 @@
         </div>
 
         <div class="col-12 mb-3">
-            <div class="p-3 mb-2 bg-light text-primary">
+            <form action="./cuahang.php" method="post" class="p-3 mb-2 bg-light text-primary">
                 <span> Zippo Sterling Silver </span>
-                <button class="btn btn-primary btn-sm" style="float: right;">Xem thêm</button>
-            </div>
+                <button name="xemthem" value="Zippo Sterling Silver" class="btn btn-primary btn-sm see-more" style="float: right;">Xem thêm</button>
+            </form>
             <div class="row row-cols-md-6" id="zipposterlingsilver">
-
             </div>
         </div>
 
         <div class="col-12 mb-3">
-            <div class="p-3 mb-2 bg-light text-primary">
+            <form action="./cuahang.php" method="post" class="p-3 mb-2 bg-light text-primary">
                 <span> Zippo Base Models </span>
-                <button class="btn btn-primary btn-sm" style="float: right;">Xem thêm</button>
-            </div>
+                <button name="xemthem" value="Zippo Base Models" class="btn btn-primary btn-sm see-more" style="float: right;">Xem thêm</button>
+            </form>
             <div class="row row-cols-md-6" id="zippobasemodels">
 
             </div>
@@ -172,20 +174,20 @@
                 <p><a class="btn btn-secondary" href="#">View details »</a></p>
             </div>
             <div class="col-lg-3">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-                </svg>
+                <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <!-- <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text> -->
+                </img>
 
-                <h2>Lê Ngọc Toàn</h2>
+                <h2>Nguyễn Giáp Tài</h2>
                 <p>11111</p>
                 <p><a class="btn btn-secondary" href="#">View details »</a></p>
             </div>
             <div class="col-lg-3">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-                </svg>
+                <img class="bd-placeholder-img rounded-circle" src="./picture/tri.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <!-- <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text> -->
+                </img>
 
                 <h2>Bùi Trí</h2>
                 <p>111111.</p>
@@ -197,7 +199,7 @@
                     <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
                 </svg>
 
-                <h2>Tài Giáp</h2>
+                <h2>Lê Ngọc Toàn</h2>
                 <p>111111</p>
                 <p><a class="btn btn-secondary" href="#">View details »</a></p>
             </div>
@@ -338,13 +340,9 @@
                     let s1 = JSON.parse(this.responseText).arr1;
                     let s2 = JSON.parse(this.responseText).arr2;
                     let s3 = JSON.parse(this.responseText).arr3;
-
                     document.getElementById('zippoarmor').innerHTML = s1;
                     document.getElementById('zipposterlingsilver').innerHTML = s2;
                     document.getElementById('zippobasemodels').innerHTML = s3;
-
-                    console.log((this.responseText));
-
                 }
             }
             //cau hinh request
@@ -396,9 +394,28 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('data=' + e +
-                '&mua');
+            xhttp.send('data=' + e + '&mua');
         }
+        let morebtn = document.querySelectorAll(".see-more")
+        morebtn.forEach((e) => {
+            e.addEventListener('click', () => {
+                console.log(e)
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc 
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './user/PHP_Function/display_cuahang.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=xemthem&data=' + e.previousElementSibling.innerText);
+            })
+        })
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

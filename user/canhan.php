@@ -58,16 +58,12 @@
             </div>
         </div>
     </nav>
-
-
-    <?php
-    echo $_SESSION['iduser'] ?>
     <div style="display: flex; width:90%; margin:3rem auto 3rem auto; justify-content: space-between;">
         <div id="menu" class="list-group" style="width:16%;">
             <h5>Nguyễn Tiến</h5>
             <button type="button" class="list-group-item list-group-item-action active">Thông tin cá nhân</button>
-            <a type="button" class="list-group-item list-group-item-action" href="./diachi.php?diachi&id=<?=$_SESSION['iduser']?>">Địa chỉ</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?=$_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
+            <a type="button" class="list-group-item list-group-item-action" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
+            <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
             <button type="button" class="list-group-item list-group-item-action">Mã khuyến mãi</button>
             <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
             <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>

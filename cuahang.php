@@ -1,3 +1,7 @@
+<?php session_start();
+if (isset($_POST["xemthem"])) {
+    $_SESSION["xemthem"] = $_POST["xemthem"];
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +15,11 @@
 <style>
     .card:hover {
         border: 1px ridge;
+        transform: scale(1.1)
+    }
+
+    .card {
+        transition: 0.5s ease-in-out;
     }
 </style>
 
@@ -23,21 +32,21 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-pills align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link text-light" aria-current="page" href="./index.php">Trang chủ</a>
+                        <a class="nav-link text-dark bg-light" aria-current="page" href="index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark bg-light" href="#">Cửa hàng</a>
+                        <a class="nav-link text-light" href="./cuahang.php">Cửa hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
                             Giỏ hàng <span class="badge bg-secondary">
-                            <?=isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;?></span>
+                                <?= isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
                         </a>
                     </li>
                     <?php
                     session_start();
                     if (isset($_SESSION['email'])) {
-                        echo     
+                        echo
                         '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
@@ -59,18 +68,17 @@
                 </ul>
             </div>
             <form class="d-flex">
-                <input class="form-control me-3" type="search" placeholder="Search">
+                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
                 <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
             </form>
         </div>
     </nav>
 
-    <div class="container">
-        <h3>Cửa hàng</h3>
+    <div class="container mt-4 mb-4">
         <div class="row justify-content-between">
             <div class="col-sm-3 p-0">
                 <div class="col-sm-9 p-0">
-                    <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+                    <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
                         Tìm kiếm nâng cao
                     </button>
                     <!-- collapse -->
@@ -375,7 +383,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('data='+e +'&mua');
+            xhttp.send('data=' + e + '&mua');
         }
 
         function logout() {
@@ -396,13 +404,13 @@
             xhttp.send('logout');
         }
 
-        function huyhet(){
-            document.querySelectorAll('input[type=checkbox]')[0].checked=true;
+        function huyhet() {
+            document.querySelectorAll('input[type=checkbox]')[0].checked = true;
             uncheck();
-            document.getElementById('pricefrom').value='';
-            document.getElementById('priceto').value='';
-            document.getElementById('material').value='';
-            document.getElementById('madeby').value='';
+            document.getElementById('pricefrom').value = '';
+            document.getElementById('priceto').value = '';
+            document.getElementById('material').value = '';
+            document.getElementById('madeby').value = '';
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
