@@ -2,6 +2,7 @@
 require_once('../../query.php');
 
 session_start();
+
 if (isset($_POST['data']) && isset($_POST['mua'])) {
     $id = $_POST['data'];
     $sql = "SELECT * FROM sanpham WHERE id={$id}";
@@ -111,6 +112,11 @@ if (isset($_POST['action'])) {
     }
 }
 
+if(isset($_POST['checkout']) ){
+    if( isset($_SESSION['iduser']) ){
+        echo 'success';
+    }else echo 'fail';
+}
 
 // if(isset($_POST['data']) && isset($_POST['em'])){
 //     if($_POST['em']==$_SESSION['email']){
@@ -184,17 +190,4 @@ if (isset($_POST['action'])) {
 //     }
 // }
 
-// if(isset($_POST['data']) && isset($_POST['name']) && isset($_POST['tien']) && isset($_POST['adr'])){
-//     if($_POST['data']=='checkout'){
-//         $s0=rand(1, 1000000);
-//         $dt=date("Y-m-d");
-//         $s1=$_POST['name'];
-//         $s11=$_POST['adr'];
-//         $s2=$_POST['tien'];
-//         $sql1="INSERT INTO donhang(id, date, name, address ,total) 
-//         VALUES ('$s0','$dt','$s1','$s11','$s2')";
-//         if( mysqli_query($conn, $sql1)){
-//             echo 'don hang thanh cong';
-//         }else echo 'don hang that bai';
-//     }
-// }
+

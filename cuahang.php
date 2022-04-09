@@ -28,14 +28,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark bg-light" href="#">Cửa hàng</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="./user/cart.php">
+                            Giỏ hàng <span class="badge bg-secondary">
+                            <?=isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;?></span>
+                        </a>
+                    </li>
                     <?php
                     session_start();
                     if (isset($_SESSION['email'])) {
-                        echo '
-                        <li class="nav-item">
-                        <a class="nav-link text-light" href="./user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary">';
-                        echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;
                         echo     
                         '</span></a></li>
                         <li class="nav-item dropdown">
@@ -47,7 +48,7 @@
                                 <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
                                 <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
@@ -123,7 +124,7 @@
                             </div>
                             <hr class="bg-secondary">
                             <button type="button" class="btn btn-primary btn-sm mb-2" onclick="timkiem(1)">Xem 5 kết quả</button>
-                            <button type="button" class="btn btn-danger btn-sm">Hủy</button>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="huyhet()">Hủy</button>
                         </div>
                     </div>
                 </div>
@@ -375,6 +376,33 @@
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
             xhttp.send('data='+e +'&mua');
+        }
+
+        function logout() {
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    window.location.href = "./user/login_user.php";
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './user/PHP_Function/dangnhap_dangki.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('logout');
+        }
+
+        function huyhet(){
+            document.querySelectorAll('input[type=checkbox]')[0].checked=true;
+            uncheck();
+            document.getElementById('pricefrom').value='';
+            document.getElementById('priceto').value='';
+            document.getElementById('material').value='';
+            document.getElementById('madeby').value='';
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

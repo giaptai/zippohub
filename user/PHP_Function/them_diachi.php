@@ -5,7 +5,7 @@ if (isset($_POST['id_user'])) {
     $id_user = $_POST['id_user'];
     $dem = "SELECT * FROM diachikhach where id_user={$id_user}";
     if (countRow($dem) < 5) {
-        $id_addr = rand(100, 9999);
+        $id_addr = $_POST['id_addr'];
         $name = $_POST['name'];
         $phone = $_POST['phone'];
         $addr = $_POST['addr'];
@@ -14,6 +14,6 @@ if (isset($_POST['id_user'])) {
         $result = execute($sql);
         if ($result) {
             echo 'Thêm địa chỉ thành công';
-        } else echo 'Lỗi';
+        } else echo 'fail';
     }else echo 'Mỗi tài khoản chỉ được tối đa 5 địa chỉ';
 }

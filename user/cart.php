@@ -49,7 +49,7 @@
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-light" href="./user/login_resgin/login.php">Đăng nhập</a>
+                            <a class="nav-link text-light" href="./login_user.php">Đăng nhập</a>
                     </li>';
                     ?>
                 </ul>
@@ -135,7 +135,7 @@
                     <b class="card-text">0</b>
                 </div>
             </div>
-            <a class="btn btn-primary" href="./checkout.php">Thanh toán</a>
+            <a class="btn btn-primary" onclick="checkout()">Thanh toán</a>
         </div>
     </div>
     <!-- Chi tiet san pham -->
@@ -380,6 +380,28 @@
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
             xhttp.send('action=deletedall');
+        }
+
+        function checkout(){
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    console.log(this.responseText);
+                    if(this.responseText=='fail'){
+                        alert('Bạn cần đăng nhập để thanh toán !');
+                    }else{
+                        window.location.href="./checkout.php";
+                    }
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/display_cart.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('checkout');
         }
     </script>
 

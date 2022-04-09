@@ -112,29 +112,6 @@
                 </div>
                 <!-- Modal -->
                 <div id="addruser">
-                    <!-- <div class="item mt-3" style="border: 1px ridge">
-                        <div class="d-flex justify-content-between p-2">
-                            <div class="info">
-                                <div class="name">Nguyễn Vĩnh Tiến</div>
-                                <div class="address"><span>Địa chỉ: </span>267/5a tân chánh hiệp, Phường Tân Chánh Hiệp, Quận 12, Hồ Chí Minh</div>
-                                <div class="phone"><span>Điện thoại: </span>0388875727</div>
-                            </div>
-                            <div><a class="text-primary text-decoration-none fs-6" href="">Chỉnh sửa</a>
-                                <a class="btn btn-light text-danger btn-sm fs-6" href="">Xóa</a>
-                            </div>
-                        </div>
-                    </div> -->
-                    <!-- 
-                    <div class="item mt-3" style="border: 1px ridge">
-                        <div class="d-flex justify-content-between p-2">
-                            <div class="info">
-                                <div class="name">Nguyễn Giáp Tài</div>
-                                <div class="address"><span>Địa chỉ: </span>267/5a tân chánh hiệp, Phường Tân Chánh Hiệp, Quận 12, Hồ Chí Minh</div>
-                                <div class="phone"><span>Điện thoại: </span>0388875727</div>
-                            </div>
-                            <div><a class="text-primary text-decoration-none fs-6" href="">Chỉnh sửa</a></div>
-                        </div>
-                    </div> -->
                     <?php
                     require_once('../query.php');
                     if (isset($_GET['diachi'])) {
@@ -307,15 +284,39 @@
         }
 
         function addAr(id) {
+            let s0 = Math.floor(Math.random() * 10001) + 1000;
             let s1 = document.getElementById('dc_hoten').value;
             let s2 = document.getElementById('dc_sdt').value;
             let s3 = document.getElementById('dc_diachi').value;
+
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    alert(this.responseText);
+                    if (this.responseText == 'fail') {
+                        alert('Thêm địa chỉ lỗi, có thể do:\n' +
+                            '1. Trùng số điện thoại.\n' +
+                            '2. Tên người nhận lỗi');
+                    } else {
+                        alert(this.responseText);
+                        node = document.createElement("div");
+                        node.className = "item mt-3";
+                        node.style.cssText = "border: 1px ridge";
+                        node.innerHTML = '<div class="d-flex justify-content-between p-2">' +
+                            '<div class="info">' +
+                            '<div class="name">' + s1 + '</div>' +
+                            '<div class="address"><span>Địa chỉ: </span>' + s3 + '</div>' +
+                            '<div class="phone"><span>Điện thoại: </span>' + s2 + '</div>' +
+                            '</div>' +
+                            '<div>' +
+                            '<a class="text-primary text-decoration-none fs-6">Chỉnh sửa </a>' +
+                            '<a class="btn btn-light text-danger btn-sm fs-6" onclick="xoaDiaChi(this, ' + s0 + ')">Xóa</a>' +
+                            '</div>' +
+                            '</div>'
+                        document.getElementById("addruser").append(node);
+                    }
+
                 }
             }
             //cau hinh request
@@ -323,7 +324,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('id_user=' + id + '&name=' + s1 + '&phone=' + s2 + '&addr=' + s3);
+            xhttp.send('id_user=' + id + '&id_addr=' + s0 + '&name=' + s1 + '&phone=' + s2 + '&addr=' + s3);
         }
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>

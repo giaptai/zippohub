@@ -28,15 +28,19 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./cuahang.php">Cửa hàng</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="./user/cart.php">
+                            Giỏ hàng <span class="badge bg-secondary">
+                                <?= isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                        </a>
+                    </li>
                     <?php
                     session_start();
+                    // if (isset($_POST["logout"])) {
+                       
+                    // }
                     if (isset($_SESSION['email'])) {
-                        echo '
-                        <li class="nav-item">
-                        <a class="nav-link text-light" href="./user/cart.php">
-                        Giỏ hàng <span class="badge bg-secondary">';
-                        echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;
-                        echo     
+                        echo
                         '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,7 +51,7 @@
                                 <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
                                 <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" name="logout"  onclick="logout()">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo

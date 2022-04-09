@@ -34,6 +34,9 @@ if ($secureHash == $vnp_SecureHash) {
         $paymentadd = execute("INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
             '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $PaymentArray["PaymentTime"] . "')");
+        echo "INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
+     VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
+         '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $PaymentArray["PaymentTime"] . "')";
         $orderadd = execute("INSERT INTO `hoadon`(`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`,
          `total_product`, `magiamgia`, `total_money`, `statuss`)
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["iduser"] . "','" . $_SESSION["Order"]["OrderDate"] . "',
@@ -43,8 +46,6 @@ if ($secureHash == $vnp_SecureHash) {
         foreach ($_SESSION['cart'] as $cart) {
             execute("INSERT INTO `chitiethoadon`(`id_hoadon`, `id_sanpham`, `amount`, `total`) 
             VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $cart['id'] . "','" . $cart['soluong'] . "','" . ($cart['soluong'] * $cart['gia']) . "')");
-            echo "INSERT INTO `chitiethoadon`(`id_hoadon`, `id_sanpham`, `amount`, `total`) 
-            VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $cart['id'] . "','" . $cart['soluong'] . "','" . ($cart['soluong'] * $cart['gia']) . "')";
         }
         $Result = "Giao dịch thành công";
     } else {

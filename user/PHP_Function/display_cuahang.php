@@ -11,7 +11,6 @@ if (isset($_POST["action"])) {
 
         $sql = "SELECT * FROM sanpham LIMIT 0,12";
         $temp = "SELECT * FROM sanpham";
-        
     } else if ($_POST["action"] == "search") {
 
         $checkbox = explode(",", $_POST["checkbox"]);
@@ -41,27 +40,29 @@ if (isset($_POST["action"])) {
     $result = executeResult($sql);
     $result1 = countRow($temp);
     //die($sql);
-    foreach ($result as $sp) {
-        $arr['arr1'] .= '<div class="card p-0">
+    if ($result1 > 0) {
+        foreach ($result as $sp) {
+            $arr['arr1'] .= '<div class="card p-0">
         <div class="card-item h-100" style="text-align: center;">
             <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
             <div class="card-body" style="text-align: center;">
                 <h5 class="card-title">' . $sp['name'] . '</h5>
                 <p class="card-text">' . number_format($sp['price']) . '</p>';
-        if (!isset($_SESSION["cart"][$sp['id']])) {
-            $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Mua</a>';
-        } else {
-            $arr['arr1'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Đã thêm vào giỏ</a>';
-        }
-        $arr['arr1'] .= '
+            if (!isset($_SESSION["cart"][$sp['id']])) {
+                $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Mua</a>';
+            } else {
+                $arr['arr1'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Đã thêm vào giỏ</a>';
+            }
+            $arr['arr1'] .= '
             </div>
         </div>
         </div>';
-    }
+        }
 
-    for ($i = 0; $i < ceil(($result1) / 12); $i++) {
-        $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
-    }
+        for ($i = 0; $i < ceil(($result1) / 12); $i++) {
+            $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+        }
+    }else $arr['arr1']="Không tim thấy sản phẩm !";
     //echo $sql;
     echo json_encode($arr);
 }
