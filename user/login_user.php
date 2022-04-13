@@ -128,6 +128,36 @@
                         <label for="floatingInput">Địa chỉ email</label>
                     </div>
                     <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="matkhau" placeholder="Mật khẩu" >
+                        <label for="floatingInput">Mật khẩu</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" >
+                        <label for="floatingInput">Địa chỉ</label>
+                    </div>
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" onclick="dangky()">Đăng kí</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Đã có tài khoản? <a href="#!" class="link-danger" onclick="formRG(2)">Đăng nhập</a></p>
+                    </div>
+                </form>
+
+                <!-- <form id="formFG" style="display:block">
+                    <div class="divider d-flex align-items-center my-4">
+                        <p class="text-center fs-3 fw-bold mx-3 mb-0">Quên mật khẩu</p>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="hovaten" placeholder="Nguyen Van A">
+                        <label for="floatingInput">Email</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="sodienthoai" placeholder="09001201">
+                        <label for="floatingInput">Số điện thoại</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <label for="floatingInput">Địa chỉ email</label>
+                    </div>
+                    <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="matkhau" placeholder="Enter password">
                         <label for="floatingInput">Mật khẩu</label>
                     </div>
@@ -137,9 +167,9 @@
                     </div>
                     <div class="text-center text-lg-start mt-4 pt-2">
                         <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" onclick="dangky()">Đăng kí</button>
-                        <a href="#!" class="link-danger" onclick="formRG(2)">Quay lại Đăng nhập</a>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Đã có tài khoản? <a href="#!" class="link-danger" onclick="formRG(2)">Đăng nhập</a></p>
                     </div>
-                </form>
+                </form> -->
 
             </div>
         </div>
@@ -351,7 +381,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request 'data=login'+
-            xhttp.send('action=dangky' +
+            xhttp.send('dangky' +
                 '&hovaten=' + hovaten +
                 '&sodienthoai=' + sodienthoai +
                 '&email=' + email +

@@ -34,9 +34,11 @@ if ($secureHash == $vnp_SecureHash) {
         $paymentadd = execute("INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
             '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $PaymentArray["PaymentTime"] . "')");
+
         echo "INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
-     VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
+        VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
          '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $PaymentArray["PaymentTime"] . "')";
+
         $orderadd = execute("INSERT INTO `hoadon`(`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`,
          `total_product`, `magiamgia`, `total_money`, `statuss`)
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["iduser"] . "','" . $_SESSION["Order"]["OrderDate"] . "',
@@ -158,7 +160,7 @@ if ($secureHash == $vnp_SecureHash) {
                 <div class="form-group">
                     <label class="form-control">Kết quả: <?php echo $Result ?></label>
                 </div>
-                <a href="../pages/member-orders.html" class="btn btn-primary">Quay lại</a>
+                <a href="../index.php" class="btn btn-primary">Quay lại</a>
             </div>
             <footer class="footer">
                 <p>&copy; Quản lý bán bật lửa zippo trực tuyến 2022</p>

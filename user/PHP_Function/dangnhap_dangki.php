@@ -16,7 +16,7 @@ if (isset($_POST['email']) && isset($_POST['pass'])) {
     } else echo 'fail';
 }
 
-if (isset($_POST['action'])) {
+if (isset($_POST['dangky'])) {
     $id = rand(1, 99999);
     $hovaten = $_POST['hovaten'];
     $sodienthoai = $_POST['sodienthoai'];
@@ -24,13 +24,21 @@ if (isset($_POST['action'])) {
     $matkhau = $_POST['matkhau'];
     $diachi = $_POST['diachi'];
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo 'ko hop le';
-        die();
-    } else {
-        echo 'ok';
+    if (!preg_match('/^[0-9]{10,11}$/', $sodienthoai)){
+        echo 'Số điện thoại lỗi';
         die();
     }
+
+    if (!preg_match('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email)){
+        echo 'Email không hợp lệ';
+        die();
+    }
+
+    if (!preg_match('/^[a-zA-Z0-9]{3,20}$/', $matkhau)){
+        echo 'Mật khẩu không hợp lệ';
+        die();
+    }
+
     $sql = "INSERT INTO taikhoan(id, fullname, email, `password`, `phone`, `address`, `status`) 
         VALUES ('$id','$hovaten','$email','$matkhau','$sodienthoai','$diachi',1)";
     $result = execute($sql);

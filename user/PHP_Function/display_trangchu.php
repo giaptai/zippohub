@@ -21,7 +21,7 @@ if (isset($_POST["action"])) {
                 <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp0['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp0['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp0['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp0['price']) . ' đ</p>';
+                    <p class="card-text">' . number_format($sp0['price']) . ' VNĐ</p>';
             if (!isset($_SESSION["cart"][$sp0['id']])) {
                 $arr['arr0'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp0['id'] . '" onclick="buyproduct(' . $sp0['id'] . ')">Mua</a>';
             } else {
@@ -39,7 +39,7 @@ if (isset($_POST["action"])) {
                 <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp1['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp1['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp1['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp1['price']) . ' đ</p>';
+                    <p class="card-text">' . number_format($sp1['price']) . ' VNĐ</p>';
             if (!isset($_SESSION["cart"][$sp1['id']])) {
                 $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp1['id'] . '" onclick="buyproduct(' . $sp1['id'] . ')">Mua</a>';
             } else {
@@ -57,7 +57,7 @@ if (isset($_POST["action"])) {
                 <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp2['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp2['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp2['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp2['price']) . ' đ</p>';
+                    <p class="card-text">' . number_format($sp2['price']) . ' VNĐ</p>';
             if (!isset($_SESSION["cart"][$sp2['id']])) {
                 $arr['arr2'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp2['id'] . '" onclick="buyproduct(' . $sp2['id'] . ')">Mua</a>';
             } else {
@@ -75,7 +75,7 @@ if (isset($_POST["action"])) {
                 <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp3['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp3['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp3['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp3['price']) . ' đ</p>';
+                    <p class="card-text">' . number_format($sp3['price']) . ' VNĐ</p>';
             if (!isset($_SESSION["cart"][$sp3['id']])) {
                 $arr['arr3'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp3['id'] . '" onclick="buyproduct(' . $sp3['id'] . ')">Mua</a>';
             } else {
@@ -101,7 +101,7 @@ if (isset($_GET["page"])) {
             <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
             <div class="card-body" style="text-align: center;">
                 <h5 class="card-title">' . $sp['name'] . '</h5>
-                <p class="card-text">' . number_format($sp['price']) . ' đ</p>
+                <p class="card-text">' . number_format($sp['price']) . ' VNĐ</p>
                 <a class="btn btn-sm btn-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Mua</a>
             </div>
         </div>
@@ -135,7 +135,7 @@ if (isset($_GET["action"])) {
                 <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
                 <div class="card-body" style="text-align: center;">
                     <h5 class="card-title">' . $sp['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp['price']) . '</p>
+                    <p class="card-text">' . number_format($sp['price']) . 'VNĐ</p>
                     <a class="btn btn-sm btn-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Mua</a>
                 </div>
             </div>

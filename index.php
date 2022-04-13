@@ -11,13 +11,13 @@
 <style>
     .card:hover {
         border: 1px ridge;
-        transform: scale(1.1)
+        /* transform: scale(1.1) */
     }
 
-    .card {
+    /* .card {
         transition: 0.5s ease-in-out;
         margin: 0 1rem 0 0;
-    }
+    } */
 </style>
 
 <body>
@@ -37,11 +37,11 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
                             Giỏ hàng <span class="badge bg-secondary">
-                                <?= isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                                <?php  session_start(); echo  isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
                         </a>
                     </li>
                     <?php
-                    session_start();
+                   
                     if (isset($_SESSION['email'])) {
                         echo
                         '</span></a></li>

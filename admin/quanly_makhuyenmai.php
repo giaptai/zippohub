@@ -150,7 +150,7 @@
                     <td>
                         <span>' . $code["id_khuyenmai"] . '</span>
                     </td>
-                    <td>' . $code["trangthai"] . '</td>
+                    <td>' .($code["trangthai"]==1 ? 'Còn hạn':'Hết hạn'). '</td>
                     <td>' . number_format($code["giamgia"]) . '</td>
                     <td>' . $code["ngayhethan"] . '</td>
                     <td>

@@ -93,7 +93,7 @@
                     <th scope="col">Tổng sản phẩm</th>
                     <th scope="col">Tổng tiền</th>
                     <th scope="col">Trạng thái</th>
-                    <th scope="col" style="width:20%">Thao tác</th>
+                    <th scope="col" style="width:auto">Thao tác</th>
                 </tr>
             </thead>
             <tbody id="table_tbody_donhang">
@@ -227,9 +227,9 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    s1.children[5].innerText = "Đã xác nhận";
+                    s1.children[5].innerHTML = '<p class="mb-0 text-secondary" style="font-weight: 500;">Đã xác nhận</p>';
                     console.log(this.responseText);
-                    table_donhang();
+                    // table_donhang();
                 }
             }
             //cau hinh request
@@ -238,6 +238,28 @@
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
             xhttp.send('action=confirm&id=' + id);
+        }
+
+        function cancelOrder(id) {
+            let s1 = document.getElementById('id' + id).parentElement.parentElement;
+            console.log(s1.children[5]);
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    s1.children[5].innerHTML = '<p class="mb-0 text-danger" style="font-weight: 500;">Đã hủy</p>';
+                    console.log(this.responseText);
+                    //table_donhang();
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/donhang.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('cancelorder&id=' + id);
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

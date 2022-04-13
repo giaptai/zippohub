@@ -38,7 +38,7 @@ if (isset($_POST["action"]) || isset($_SESSION["xemthem"])) {
             <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
             <div class="card-body" style="text-align: center;">
                 <h5 class="card-title">' . $sp['name'] . '</h5>
-                <p class="card-text">' . number_format($sp['price']) . '</p>';
+                <p class="card-text">' . number_format($sp['price']) . ' VNĐ</p>';
             if (!isset($_SESSION["cart"][$sp['id']])) {
                 $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Thêm vào giỏ</a>';
             } else {

@@ -68,7 +68,7 @@
             <a type="button" class="list-group-item list-group-item-action" href='./canhan.php?id=<?= $_SESSION['iduser'] ?>'>Thông tin cá nhân</a>
             <button type="button" class="list-group-item list-group-item-action active">Địa chỉ</button>
             <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
-            <button type="button" class="list-group-item list-group-item-action">Mã khuyến mãi</button>
+            <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
             <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
             <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
         </div>

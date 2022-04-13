@@ -134,7 +134,7 @@ if (isset($_POST['promocode'])) {
 if (isset($_GET['payment'])) {
     $OrderID = rand(1, 2147483647);
     $id_user = $_SESSION['iduser'];
-    $OrderDate = date("d-m-Y");
+    $OrderDate = date("Y-m-d h:i:s");
     $Fullname = $_GET['name'];
     $Phonenumber = $_GET['phone'];
     $Address = $_GET['address'];

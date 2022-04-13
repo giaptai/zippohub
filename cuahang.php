@@ -15,12 +15,12 @@ if (isset($_POST["xemthem"])) {
 <style>
     .card:hover {
         border: 1px ridge;
-        transform: scale(1.1)
+        /* transform: scale(1.1) */
     }
 
-    .card {
+    /* .card {
         transition: 0.5s ease-in-out;
-    }
+    } */
 </style>
 
 <body>
@@ -32,10 +32,10 @@ if (isset($_POST["xemthem"])) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-pills align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link text-dark bg-light" aria-current="page" href="index.php">Trang chủ</a>
+                        <a class="nav-link text-light" aria-current="page" href="./index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="./cuahang.php">Cửa hàng</a>
+                        <a class="nav-link text-dark bg-light">Cửa hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
@@ -44,7 +44,7 @@ if (isset($_POST["xemthem"])) {
                         </a>
                     </li>
                     <?php
-                    session_start();
+                    // session_start();
                     if (isset($_SESSION['email'])) {
                         echo
                         '</span></a></li>
@@ -131,7 +131,7 @@ if (isset($_POST["xemthem"])) {
                                 </select>
                             </div>
                             <hr class="bg-secondary">
-                            <button type="button" class="btn btn-primary btn-sm mb-2" onclick="timkiem(1)">Xem 5 kết quả</button>
+                            <button type="button" class="btn btn-primary btn-sm mb-2" onclick="timkiem(1)">Xem kết quả</button>
                             <button type="button" class="btn btn-danger btn-sm" onclick="huyhet()">Hủy</button>
                         </div>
                     </div>
