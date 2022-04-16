@@ -179,13 +179,13 @@
 
         function timkiem() {
             let val = document.getElementById('ipsearch').value;
-            console.log(val);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
+                    console.log(this.responseText);
                     document.getElementById('table_tbody_donhang').innerHTML = this.responseText;
                 }
             }
@@ -196,62 +196,45 @@
             //gui request
             xhttp.send('timkiemma&value=' + val);
         }
-        // var xhttp = new XMLHttpRequest() || ActiveXObject();
-        // //Bat su kien thay doi trang thai cuar request
-        // xhttp.onreadystatechange = function() {
-        //     //Kiem tra neu nhu da gui request thanh cong
-        //     if (this.readyState == 4 && this.status == 200) {
-        //         //In ra data nhan duoc
-        //         document.getElementById('table_tbody_donhang').innerHTML = this.responseText;
-        //         const nextURL = './quanly_donhang.php?key='+s1;
-        //         const nextTitle = 'My new page title';
-        //         const nextState = {
-        //             additionalInformation: 'Updated the URL with JS'
-        //         };
-        //         //window.history.pushState(nextState, nextTitle, nextURL);
-        //         window.history.replaceState(nextState, nextTitle, nextURL);
-        //     }
-        // }
-        // //cau hinh request
-        // xhttp.open('GET', './PHP_Function/donhang.php?key='+s1, true);
-        // //gui request
-        // xhttp.send();
-        //document.getElementById('phanloai').
 
-        function confirm(id) {
-            let s1 = document.getElementById('id' + id).parentElement.parentElement;
-            console.log(s1.children[5]);
+        function thaotac(id, act, ele) {
+            console.log(id, act, ele);
+            let s1 = ele.parentElement.parentElement;
             var xhttp = new XMLHttpRequest() || ActiveXObject();
+                    // document.getElementById('badge_choxacnhan').innerHTML = s3;
+                    // document.getElementById('badge_daxacnhan').innerHTML = s4;
+                  
+                    // document.getElementById('badge_danggiao').innerHTML = s5;
+                    // document.getElementById('badge_dagiao').innerHTML = s6;
+                    // document.getElementById('badge_dahuy').innerHTML = s7;
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    s1.children[5].innerHTML = '<p class="mb-0 text-secondary" style="font-weight: 500;">Đã xác nhận</p>';
-                    console.log(this.responseText);
-                    // table_donhang();
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/donhang.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=confirm&id=' + id);
-        }
-
-        function cancelOrder(id) {
-            let s1 = document.getElementById('id' + id).parentElement.parentElement;
-            console.log(s1.children[5]);
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    s1.children[5].innerHTML = '<p class="mb-0 text-danger" style="font-weight: 500;">Đã hủy</p>';
-                    console.log(this.responseText);
+                    if(act=='Đã xác nhận'){
+                        document.getElementById('badge_choxacnhan').innerText=parseInt(document.getElementById('badge_choxacnhan').innerText)-1;
+                        document.getElementById('badge_daxacnhan').innerText=parseInt(document.getElementById('badge_daxacnhan').innerText)+1;
+                        s1.children[6].children[0].outerHTML='<a class="btn btn-outline-dark btn-sm" onclick="thaotac('+id+', `Đang giao`, this)">Đang giao</a>';
+                        s1.children[5].innerHTML = '<p class="mb-0 text-primary" style="font-weight: 500;">Đã xác nhận</p>';
+                    }else if(act=='Đang giao'){
+                        document.getElementById('badge_daxacnhan').innerText=parseInt(document.getElementById('badge_daxacnhan').innerText)-1;
+                        document.getElementById('badge_danggiao').innerText=parseInt(document.getElementById('badge_danggiao').innerText)+1;
+                        s1.children[6].children[0].outerHTML='<a class="btn btn-outline-dark btn-sm" onclick="thaotac('+id+', `Đã giao`, this)">Đã giao</a>';
+                        s1.children[6].removeChild(s1.children[6].children[1]);
+                        s1.children[5].innerHTML = '<p class="mb-0" style="font-weight: 500;">Đang giao</p>';
+                    }else if(act=='Đã giao'){
+                        document.getElementById('badge_danggiao').innerText=parseInt(document.getElementById('badge_danggiao').innerText)-1;
+                        document.getElementById('badge_dagiao').innerText=parseInt(document.getElementById('badge_dagiao').innerText)+1;
+                        s1.children[6].removeChild(s1.children[6].children[0]);
+                        s1.children[5].innerHTML = '<p class="mb-0 text-success" style="font-weight: 500;">Đã giao</p>';
+                    }else {
+                        s1.children[6].removeChild(s1.children[6].children[0]);
+                        s1.children[6].removeChild(s1.children[6].children[0]);
+                        s1.children[5].innerHTML = '<p class="mb-0 text-danger" style="font-weight: 500;">Đã hủy</p>';
+                    }
                     //table_donhang();
+                    console.log(this.responseText);
                 }
             }
             //cau hinh request
@@ -259,8 +242,31 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('cancelorder&id=' + id);
+            xhttp.send('thaotacdon&id=' + id+'&act='+act);
         }
+
+        // function confirm(id) {
+        //     let s1 = document.getElementById('id' + id).parentElement.parentElement;
+        //     console.log(s1.children[5]);
+        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
+        //     //Bat su kien thay doi trang thai cuar request
+        //     xhttp.onreadystatechange = function() {
+        //         //Kiem tra neu nhu da gui request thanh cong
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             //In ra data nhan duoc
+        //             s1.children[5].innerHTML = '<p class="mb-0 text-secondary" style="font-weight: 500;">Đã xác nhận</p>';
+        //             console.log(this.responseText);
+        //             // table_donhang();
+        //         }
+        //     }
+        //     //cau hinh request
+        //     xhttp.open('POST', './PHP_Function/donhang.php', true);
+        //     //cau hinh header cho request
+        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //     //gui request
+        //     xhttp.send('action=confirm&id=' + id);
+        // }
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

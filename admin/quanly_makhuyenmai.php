@@ -154,8 +154,8 @@
                     <td>' . number_format($code["giamgia"]) . '</td>
                     <td>' . $code["ngayhethan"] . '</td>
                     <td>
-                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">Xóa</button>
-                        <button type="button" id="btn' . $code["id_khuyenmai"] . '" value="' . $code["id_khuyenmai"] . '" class="btn btn-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+                        <button type="button" id="btn' . $code["id_khuyenmai"] . '" value="' . $code["id_khuyenmai"] . '" class="btn btn-outline-primary btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
                     </td>
                 </tr>';
                 } ?>

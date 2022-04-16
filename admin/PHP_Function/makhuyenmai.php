@@ -99,7 +99,7 @@ if(isset($_POST['search'])){
             <td>' . number_format($row["giamgia"]) . '</td>
             <td>' . $row["ngayhethan"] . '</td>
             <td>
-                <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">Xóa</button>
+                <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
                 <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
             </td>
         </tr>';

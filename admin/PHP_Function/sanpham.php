@@ -44,8 +44,8 @@ if (isset($_POST["action"])) {
         <td>' . number_format($sp['price'], 0, '.') . ' ₫</td>' .
             '<td>' . '<span>' . (($sp['state'] == 1) ?  "Còn hàng" : "Hết hàng") . '</span></td>' .
             '<td>
-            <button class="btn btn-danger btn-sm" name="xoa" id="xoa' . $sp['id'] . '" onclick="deleteproduct(' . $sp['id'] . ')">Xóa</button>
-            <button type="button" class="btn btn-info btn-sm" id="sua' . $sp['id'] . '" onclick="detail(' . $sp['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" id="sua' . $sp['id'] . '" onclick="detail(' . $sp['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+            <button class="btn btn-danger btn-sm" name="xoa" id="xoa' . $sp['id'] . '" onclick="deleteproduct(' . $sp['id'] . ')">X</button>
         </td>
     </tr>';
     }

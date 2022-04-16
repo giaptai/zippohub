@@ -72,6 +72,27 @@
     $sql10 = executeSingleResult("SELECT sum(total_money)as money FROM hoadon WHERE statuss='Đã xác nhận' AND (ngaymua >= '2022/10/01 00:00:00' and ngaymua <= '2022/10/31 23:59:59')");
     $sql11 = executeSingleResult("SELECT sum(total_money)as money FROM hoadon WHERE statuss='Đã xác nhận' AND (ngaymua >= '2022/11/01 00:00:00' and ngaymua <= '2022/11/30 23:59:59')");
     $sql12 = executeSingleResult("SELECT sum(total_money)as money FROM hoadon WHERE statuss='Đã xác nhận' AND (ngaymua >= '2022/12/01 00:00:00' and ngaymua <= '2022/12/31 23:59:59')");
+    
+    $sqlTuan=executeResult("select date_add('2022-04-16', interval  -WEEKDAY('2022-04-16')-1 day) FirstDayOfWeek, 
+    date_add(date_add('2022-04-16', interval  -WEEKDAY('2022-04-16')-1 day), interval 7 day) LastDayOfWeek,
+       week(curdate()) CurrentWeekNumber");
+
+//        SELECT *
+// FROM   your_table
+// WHERE  YEARWEEK(`date`, 1) = YEARWEEK(CURDATE(), 1)
+
+    foreach($sqlTuan as $row){
+        echo
+        '<div class="btn-group" role="group" aria-label="Basic example" style="display:none;">
+            <button type="button" class="btn btn-primary" id="n1" value="' . $sql1['money'] . '">Left</button>
+            <button type="button" class="btn btn-primary" id="n2" value="' . $sql2['money'] . '">Left</button>
+            <button type="button" class="btn btn-primary" id="n3" value="' . $sql3['money'] . '">Left</button>
+            <button type="button" class="btn btn-primary" id="n4" value="' . $sql4['money'] . '">Left</button>
+            <button type="button" class="btn btn-primary" id="n5" value="' . $sql5['money'] . '">Left</button>
+            <button type="button" class="btn btn-primary" id="n6" value="' . $sql6['money'] . '">Left</button>
+            <button type="button" class="btn btn-primary" id="n7" value="' . $sql7['money'] . '">Left</button>
+        </div>';
+    }
     echo
     '<div class="btn-group" role="group" aria-label="Basic example" style="display:none;">
         <button type="button" class="btn btn-primary" id="1" value="' . $sql1['money'] . '">Left</button>
@@ -174,11 +195,24 @@
 
         function monthOK() {
             myChart.destroy();
-
+            const labels = [
+                'Tuần 1',
+                'Tuần 2',
+                'Tháng 3',
+                'Tháng 4',
+                'Tháng 5',
+                'Tháng 6',
+                'Tháng 7',
+                'Tháng 8',
+                'Tháng 9',
+                'Tháng 10',
+                'Tháng 11',
+                'Tháng 12',
+            ];
             data = {
                 labels: labels,
                 datasets: [{
-                    label: 'Doanh thu năm 2021',
+                    label: 'Doanh thu tháng 1 năm 2021',
                     data: [ss[0], ss[1], ss[2], ss[3], ss[4], ss[5], ss[6],
                         ss[7], ss[8], ss[9], ss[10], ss[11], ss[12]
                     ],

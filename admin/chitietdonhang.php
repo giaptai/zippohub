@@ -45,7 +45,8 @@
         INNER JOIN sanpham on chitiethoadon.id_sanpham=sanpham.id";
 
 
-    $sql0 = "SELECT hoadon.fullname as name , hoadon.phone as phonee, hoadon.address as addresss, hoadon.ngaymua as datee FROM taikhoan 
+    $sql0 = "SELECT hoadon.id_hoadon as id_hoadon, hoadon.fullname as name , hoadon.phone as phonee, hoadon.address as addresss, 
+            hoadon.ngaymua as datee, hoadon.total_money as total FROM taikhoan 
         INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user={$_SESSION['iduser']} and hoadon.id_hoadon=$idd GROUP by hoadon.id_user";
     $result0 = executeSingleResult($sql0);
     $result = executeResult($sql);
@@ -56,16 +57,6 @@
     <h1 class="pt-4" style="text-align: center;">Chi tiết đơn hàng</h1>
     <div class="row row-cols-1 row-cols-md-3 pt-4 pb-4" style="width:95%; margin:auto">
         <div class="col">
-            <!-- <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Địa chỉ</h5>
-                    <b class="card-text pe-3">Nguyễn Vĩnh Tiến</b>
-                    <b class="card-text">0388874521</b>
-                </div>
-                <div class="card-header">
-                    <span class="text-muted">99 An Dương Vương, Phường 16, Quận 8, TP HCM</span>
-                </div>
-            </div> -->
             <?php
             echo '<div class="card h-100">
             <div class="card-body">
@@ -77,9 +68,7 @@
                 <span class="text-muted">' . $result0['addresss'] . '</span>
             </div>
         </div>';
-
             ?>
-
         </div>
         <div class="col">
             <div class="card h-100">
@@ -148,7 +137,7 @@
                             </tbody>
                         </table>
                     </div>
-<!-- 
+                    <!-- 
                     <div class="card w-25 mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Đơn hàng: #152458652 </h5>
@@ -189,7 +178,7 @@
                     <div class="card w-25 mb-3">
                         <div class="card-body row justify-content-md-center">
                             <div class="card-tilte col-md-auto">
-                                <h5 class="card-title">Đơn hàng: #152458652 </h5>
+                                <h5 class="card-title"> Đơn hàng: <?=$result0['id_hoadon']?> </h5>
                                 <hr class="dropdown-divider">
                             </div>
                         </div>
@@ -198,7 +187,7 @@
                                 <p>Tạm tính: </p>
                             </div>
                             <div class="col-md-auto">
-                                <p>2.000.000</p>
+                                <p><?=$result0['id_hoadon']?></p>
                             </div>
                         </div>
                         <div class="card-body row justify-content-between">
@@ -206,7 +195,7 @@
                                 <p>Phí ship: </p>
                             </div>
                             <div class="col-md-auto">
-                                <p>20.000</p>
+                                <p>30.000</p>
                             </div>
                         </div>
                         <div class="card-body row justify-content-between">
@@ -223,7 +212,7 @@
                                 <b class="fs-5">Tổng tiền: </b>
                             </div>
                             <div class="col-md-auto">
-                                <b class="fs-5">2.000.000 </b>
+                                <b class="fs-5"><?=number_format($result0['total']) ?></b>
                             </div>
                         </div>
                         <hr class="dropdown-divider">

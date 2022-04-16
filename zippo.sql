@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2022 at 04:21 PM
+-- Generation Time: Apr 16, 2022 at 05:42 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -39,12 +39,25 @@ CREATE TABLE `chitiethoadon` (
 --
 
 INSERT INTO `chitiethoadon` (`id_hoadon`, `id_sanpham`, `amount`, `total`) VALUES
-(983809017, 1172, 17, 25500),
-(983809017, 4246, 1, 2300),
-(983809017, 6142, 1, 1000),
-(1152101364, 1172, 17, 25500),
-(1152101364, 4246, 1, 2300),
-(1152101364, 6142, 1, 1000);
+(846361283, 866, 1, 1200),
+(846361283, 1172, 4, 6000),
+(846361283, 2102, 5, 10000),
+(846361283, 2397, 1, 1500),
+(846361283, 6221, 1, 1000),
+(847038860, 1172, 1, 1500),
+(847038860, 4246, 1, 2300),
+(847038860, 6142, 1, 1000),
+(847038860, 7150, 1, 100000),
+(1002835636, 866, 1, 1200),
+(1002835636, 1172, 16, 24000),
+(1002835636, 6221, 1, 1000),
+(1233344838, 1172, 1, 1500),
+(1233344838, 2102, 1, 2000),
+(1233344838, 4246, 7, 16100),
+(1233344838, 6142, 1, 1000),
+(1399365132, 6142, 1, 1000),
+(1399365132, 7008, 1, 10000),
+(1765725995, 866, 1, 1200);
 
 -- --------------------------------------------------------
 
@@ -85,7 +98,10 @@ CREATE TABLE `diachikhach` (
 --
 
 INSERT INTO `diachikhach` (`id_user`, `id_addr`, `name`, `phone`, `addr`) VALUES
-(2165, 5915, 'Trần Huỳnh Văn Phố', '0361152456', '99 An Dương Vương, Phường 16, Quận 8');
+(2165, 3883, 'Chong Jong Choo', '0921101528', '150 An Dương Vương, Phường 10, Quận 8'),
+(2165, 5846, 'Trần Như', '0152241451', '6 An Dương Vương, Phường 16, quận 8'),
+(2165, 7664, 'Lê Yến Như', '0361152456', '6 An Dương Vương, Phường 16, quận 8'),
+(2165, 8234, 'Ngô Quốc Đại', '0148854141', '6 An Dương Vương, Phường 16, quận 8');
 
 -- --------------------------------------------------------
 
@@ -96,7 +112,7 @@ INSERT INTO `diachikhach` (`id_user`, `id_addr`, `name`, `phone`, `addr`) VALUES
 CREATE TABLE `hoadon` (
   `id_hoadon` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `ngaymua` varchar(11) NOT NULL,
+  `ngaymua` datetime NOT NULL,
   `fullname` varchar(50) NOT NULL,
   `phone` varchar(11) NOT NULL,
   `address` varchar(100) NOT NULL,
@@ -111,18 +127,12 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`, `total_product`, `magiamgia`, `total_money`, `statuss`) VALUES
-(122902, 2165, '11-03-2022', 'Lê Thị Tuyết Sen', '0921114525', '99 An Dương Vương, Phường 16, quận 8', 4, NULL, 3101001, 'Đã xác nhận'),
-(183083, 2165, '18-03-2022', 'Chong Jong Choo', '0321121451', '99 An Dương Vương, Phường 16, Quận 8', 3, NULL, 3001001, 'Đã hủy'),
-(197662, 2165, '18-03-2022', 'Lê Thị Tuyết Sen', '0921114525', '99 An Dương Vương, Phường 16, quận 8', 11, NULL, 18013001, 'Đã hủy'),
-(226490, 2165, '28-03-2022', 'Lê Thị Tuyết Sen', '0921111222', '99 An Dương Vương, Phường 16, quận 8', 44, NULL, 52800, 'Chờ xác nhận'),
-(252542, 2165, '28-03-2022', 'Lê Thị Tuyết Sen', '0921111222', '99 An Dương Vương, Phường 16, quận 8', 0, NULL, 0, 'Chờ xác nhận'),
-(448474, 2165, '09-03-2022', 'Lee Ngot Toan ', '0921154215', '141Pham Ngu Lao,  Phường 10, Quận 8', 2, NULL, 3000001, 'Đã xác nhận'),
-(848300, 2165, '09-03-2022', 'Lê Thị Tuyết', '0923301452', '99 An Dương Vương, Phường 16, quận 8', 7, NULL, 8000004, 'Đã hủy'),
-(868250, 2165, '28-03-2022', 'Lê Thị Tuyết Sen', '0921111222', '99 An Dương Vương, Phường 16, quận 8', 0, NULL, 0, 'Chờ xác nhận'),
-(916584, 2165, '28-03-2022', 'Lê Thị Tuyết Sen', '0921111222', '99 An Dương Vương, Phường 16, quận 8', 13, NULL, 26000, 'Chờ xác nhận'),
-(949579938, 2165, '2022-04-06 ', 'Trần Huỳnh Văn Phố', '0361152456', '99 An Dương Vương, Phường 16, Quận 8', 19, '22bcee49lt', 26800, 'Chờ xác nhận'),
-(983809017, 2165, '2022-04-06 ', 'Trần Huỳnh Văn Phố', '0361152456', '99 An Dương Vương, Phường 16, Quận 8', 19, '22bcee49lt', 26800, 'Chờ xác nhận'),
-(1152101364, 2165, '2022-04-06 ', 'Trần Huỳnh Văn Phố', '0361152456', '99 An Dương Vương, Phường 16, Quận 8', 19, '22bcee49lt', 26800, 'Chờ xác nhận');
+(846361283, 2165, '2022-04-13 04:56:21', 'Lê Yến Như', '0361152456', '6 An Dương Vương, Phường 16, quận 8', 12, '22bcee49lt', 17700, 'Đã hủy'),
+(847038860, 2165, '2022-04-16 02:33:22', 'Lê Thị Tuyết Sen', '0921101525', '99 An Dương Vương, Phường 16, quận 8', 4, '22bcee49lt', 102800, 'Đã giao'),
+(1002835636, 2165, '0000-00-00 00:00:00', 'Trần Như', '0152241451', '6 An Dương Vương, Phường 16, quận 8', 18, '22bcee49lt', 24200, 'Chờ xác nhận'),
+(1233344838, 2397, '2022-04-16 02:57:53', 'Trần Đình Lâm', '0258121302', '120 Phạm Văn Đồng,tổ 10,  Phường 4, quận Bình Thạn', 10, '', 50600, 'Đang giao'),
+(1399365132, 2397, '2022-04-16 03:09:50', 'Trần Đình Lâm', '0258121302', '120 Phạm Văn Đồng,tổ 10,  Phường 4, quận Bình Thạn', 2, '', 41000, 'Chờ xác nhận'),
+(1765725995, 2165, '2022-03-08 06:06:48', 'Lê Thị Tuyết Sen', '0921101525', '99 An Dương Vương, Phường 16, quận 8', 1, '', 31200, 'Đã xác nhận');
 
 -- --------------------------------------------------------
 
@@ -145,7 +155,7 @@ INSERT INTO `makhuyenmai` (`id_khuyenmai`, `trangthai`, `ngayhethan`, `giamgia`)
 ('22bcee49lt', 1, '2022-03-19', 32000),
 ('7p2xkezib', 1, '2022-03-19', 33000),
 ('8qmd6zrpzl', 1, '2022-04-15', 50000),
-('96w8z319vz', 1, '2022-03-19', 21000),
+('96w8z319vz', 0, '2022-03-19', 21000),
 ('apw8rcst1i', 1, '2022-03-24', 12000),
 ('bm50k0nr4w', 1, '2022-03-19', 13000),
 ('ci8a89ecsp', 1, '2022-03-19', 52000),
@@ -156,6 +166,7 @@ INSERT INTO `makhuyenmai` (`id_khuyenmai`, `trangthai`, `ngayhethan`, `giamgia`)
 ('izg4cgle7d', 1, '2022-03-19', 22000),
 ('kbnbz8issj', 1, '2022-03-19', 32000),
 ('mdph8pxm7a', 1, '2022-03-19', 17000),
+('toankontum', 1, '2022-04-14', 15000),
 ('XUANHOAI', 1, '2022-04-14', 10);
 
 -- --------------------------------------------------------
@@ -180,7 +191,13 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`PaymentID`, `OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) VALUES
-(0, 949579938, 26800, 'Thanh toán đơn hàng', '00', '13720008', 'NCB', '2022-04-06 03:40:50');
+(3, 1002835636, 24200, 'Thanh toán đơn hàng', '00', '13723525', 'NCB', '2022-04-13 12:50:45'),
+(4, 846361283, 17700, 'Thanh toán đơn hàng', '00', '13723640', 'NCB', '2022-04-13 09:56:41'),
+(5, 846361283, 17700, 'Thanh toán đơn hàng', '00', '13723640', 'NCB', '2022-04-13 09:56:41'),
+(6, 1765725995, 31200, 'Thanh toán đơn hàng', '00', '13723742', 'NCB', '2022-04-13 11:07:15'),
+(7, 847038860, 102800, 'Thanh toán đơn hàng', '00', '13726456', 'NCB', '2022-04-16 07:33:47'),
+(8, 1233344838, 50600, 'Thanh toán đơn hàng', '00', '13726458', 'NCB', '2022-04-16 07:58:06'),
+(9, 1399365132, 41000, 'Thanh toán đơn hàng', '00', '13726461', 'NCB', '2022-04-16 08:10:07');
 
 -- --------------------------------------------------------
 
@@ -241,32 +258,9 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`id`, `fullname`, `email`, `password`, `phone`, `address`, `status`) VALUES
-(2165, 'Lê Thị Tuyết Sen', 'tuyet2002@gmail.com', '123456', '0921111222', '99 An Dương Vương, Phường 16, quận 8', 0),
+(2165, 'Lê Thị Tuyết Sen', 'tuyet2002@gmail.com', '123456', '0921101525', '99 An Dương Vương, Phường 16, quận 8', 0),
 (2397, 'Trần Đình Lâm', 'lamlonton2000@gmail.com', '123213123', '0258121302', '120 Phạm Văn Đồng,tổ 10,  Phường 4, quận Bình Thạn', 0),
-(3478, 'Phạm Ngọc Quang', 'quangqang123@gmail.com', '123456', '0215540201', '123 An Lạc, Phường 13, Quận 8', 0),
-(5739, 'Nguyễn Vĩnh Tiến', 'tiencute123@gmail.com', '123456', '0924418754', '99 An Dương Vương, Phường 16, quận 8', 0),
-(8550, 'Ngô Công Lâm', 'lam123@gmail.com', '123456', '0215584745', '99 An Dương Vương, Phường 16, Quận 8', 0),
-(8715, 'Lê Ngọc Toàn', 'toanocho321@gmail.com', '123456', '0152414854', '99 An Dương Vương, Phường 16, quận 8', 0),
-(28527, 'madeby08', 'made08@gmail.com', '123123', '0823456789', 'asasasadasd1', 1),
-(30197, 'madeby04', 'made04@gmail.com', '123123', '0423456789', 'asasasadasd1', 1),
-(30805, 'Ngô Công Lâm', 'lamlonton2000@gmail.com', '123456', '0921141215', '99 An Dương Vương, Phường 16, Quận 8', 1),
-(33168, 'madeby123123213', 't12312312319@gmail.com', '123123', '12312312323', 'asasa123123', 1),
-(39561, 'madeby123123213', 'toa123123123219@gmail.com', '123123', '12312312312', 'asasasasas', 1),
-(40919, 'madeby06', 'made06@gmail.com', '123123', '0623456789', 'asasasadasd1', 1),
-(46716, 'madeby123123213', 'toan232332n99@gmail.com', '123123', '03845521451', 'asasasasas', 1),
-(47757, 'madeby123', 'toanchodien99@gmail.com', '123123', '03845521451', 'asasasasas', 1),
-(50239, 'Chong Jong Cho', 'toanchodien@gmail.com', '123456', '0214412145', '12/3A Phan Chu Trinh', 1),
-(52035, 'madeby05', 'made05@gmail.com', '123123', '0523456789', 'asasasadasd1', 1),
-(56058, 'Nguyễn Giáp Tài', 'tridanchoi113@gmail.com', '123456', '0632251211', '12/4a An Duong Vuong, phuong 16, quan 8', 1),
-(57696, 'madeby09', 'made09@gmail.com', '123123', '0923456789', 'asasasadasd1', 1),
-(63731, 'madeby07', 'made07@gmail.com', '123123', '0723456789', 'asasasadasd1', 1),
-(68837, 'Nguyen Giap Tai', 'tuyet112@gmail.com', '123456', '0124414514', '12/4a An Duong Vuong, phuong 16, quan 8', 1),
-(71332, 'madeby03', 'made03@gmail.com', '123123', '0323456789', 'asasasadasd1', 1),
-(72905, 'Nguyen Giap Tai', 'tridanchoi@gmail.com', '123456', '0152214145', '12/4a An Duong Vuong, phuong 16, quan 8', 1),
-(77393, 'madeby01', 'made01@gmail.com', '123123', '0123456780', '22 Phạm Văn Đồng, phường lê lợi, thành phố kon tum', 1),
-(88177, 'Nguyen Giap Tai', 'tridanchoi113@gmail.com', '123456', '0321145214', '12/4a An Duong Vuong, phuong 16, quan 8', 1),
-(90290, 'madeby02', 'made02@gmail.com', '123123', '0223456789', 'asasasadasd1', 1),
-(92633, 'madeby123123213', 'toan232332n99@gmail.com', '123123', '32323232323', 'asasasasas', 1);
+(3478, 'Phạm Ngọc Quang', 'quangqang123@gmail.com', '123456', '0215540201', '123 An Lạc, Phường 13, Quận 8', 0);
 
 --
 -- Indexes for dumped tables
@@ -283,6 +277,13 @@ ALTER TABLE `chitiethoadon`
 --
 ALTER TABLE `danhmuc`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `diachikhach`
+--
+ALTER TABLE `diachikhach`
+  ADD PRIMARY KEY (`id_addr`),
+  ADD UNIQUE KEY `phone` (`phone`);
 
 --
 -- Indexes for table `hoadon`
@@ -323,6 +324,12 @@ ALTER TABLE `taikhoan`
 --
 ALTER TABLE `danhmuc`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `PaymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
