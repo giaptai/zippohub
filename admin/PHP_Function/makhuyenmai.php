@@ -113,20 +113,21 @@ if(isset($_GET['page'])){
     if(empty($val)){
         $sql="SELECT * FROM makhuyenmai limit $start, 10";
     }else $sql="SELECT * FROM makhuyenmai  WHERE id_khuyenmai='{$val}' limit $start, 10";
-    //die($sql);
+    // die($sql);
+    $start=$start+1;
     $result=executeResult($sql);
     foreach($result as $row){
         echo '<tr>
         <th scope="row">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="' . $row["id_khuyenmai"] . '">
-                <span>1</span>
+                <span>'.$start++.'</span>
             </div>
         </th>
         <td>
             <span>' . $row["id_khuyenmai"] . '</span>
         </td>
-        <td>' . $row["trangthai"] . '</td>
+        <td>' . ($row["trangthai"]==1 ? 'Còn hạn':'Hết hạn') . '</td>
         <td>' . number_format($row["giamgia"]) . '</td>
         <td>' . $row["ngayhethan"] . '</td>
         <td>

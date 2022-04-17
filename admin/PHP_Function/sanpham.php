@@ -5,8 +5,7 @@ require_once("../../query.php");
 //Code xử lý, lay dữ liệu tu database
 if (isset($_POST["action"])) {
     $arr = array('arr1' => '', 'pagin' => '', 'arr3' => 0);
-    $result=$result1=$temp='';
-    $sa = 0;
+    $result=$result1=$temp=$start='';
     if ($_POST["action"] == 'displaysanpham') {
         
         $sql = "SELECT * FROM sanpham LIMIT 0,5";
@@ -28,12 +27,11 @@ if (isset($_POST["action"])) {
     //die($result1);
     // in san pham
     foreach ($result as $sp) {
-        $sa = 1 + $sa;
         $arr['arr1'] .= '<tr>
         <th scope="row">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="'.$sp['id'].'">
-                <span>' . $sa . '</span>
+                <span>' . (++$start) . '</span>
             </div>
         </th>' .
             '<td>

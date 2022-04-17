@@ -92,7 +92,7 @@
     <!-- Modal chi tiet san pham -->
 
     <div class="d-block m-auto" style="width: 90%;">
-        <div class="container m-0 p-0 mt-3">
+        <div class="container m-0 p-0 mt-2">
             <div class="row justify-content-md-between">
 
                 <div class="col-md-auto">
@@ -113,8 +113,10 @@
         </div>
 
         <?php require_once("../query.php");
-        $codelist = executeResult("select * from makhuyenmai limit 0, 10");
-        $count = countRow("select * from makhuyenmai");
+            $page=isset($_GET['page']) ? $_GET['page']:1;
+            $start=($page-1)*10;
+            $codelist = executeResult("select * from makhuyenmai limit $start, 10");
+            $count = countRow("select * from makhuyenmai");
         ?>
         <table class="table align-middle caption-top">
             <caption>
@@ -144,13 +146,13 @@
                     <th scope="row">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="' . $code["id_khuyenmai"] . '">
-                            <span>1</span>
+                            <span>' . ++$start . '</span>
                         </div>
                     </th>
                     <td>
                         <span>' . $code["id_khuyenmai"] . '</span>
                     </td>
-                    <td>' .($code["trangthai"]==1 ? 'Còn hạn':'Hết hạn'). '</td>
+                    <td>' . ($code["trangthai"] == 1 ? 'Còn hạn' : 'Hết hạn') . '</td>
                     <td>' . number_format($code["giamgia"]) . '</td>
                     <td>' . $code["ngayhethan"] . '</td>
                     <td>
@@ -158,17 +160,17 @@
                         <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
                     </td>
                 </tr>';
-                } ?>
-
+                }
+                ?>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="6" style="text-align:center">
                         <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_makhuyenmai">
                             <?php
-                                for($i=0; $i<ceil($count/10); $i++){
-                                    echo  '<button type="button" class="btn btn-outline-secondary" onclick="phantrang('.($i+1).')">'.($i+1).'</button>';
-                                }
+                            for ($i = 0; $i < ceil($count / 10); $i++) {
+                                echo  '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . ($i + 1) . ')">' . ($i + 1) . '</button>';
+                            }
                             ?>
                     </td>
                 </tr>
@@ -205,7 +207,7 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     // Chèn phản hồi từ máy chủ vào một phần tử HTML
-                    document.getElementById('flexCheckDefault0').checked=false;
+                    document.getElementById('flexCheckDefault0').checked = false;
                     document.getElementById('table_tbody_makhuyenmai').innerHTML = this.responseText;
                     const nextURL = './quanly_makhuyenmai.php?page=' + page;
                     const nextTitle = 'My new page title';

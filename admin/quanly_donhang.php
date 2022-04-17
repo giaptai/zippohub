@@ -80,6 +80,13 @@
                 </div>
             </div>
         </div>
+        <?php
+        require_once('../query.php');
+            $page= isset($_GET['page']) ? $_GET['page'] : 1;
+            $start=($page-1)*10;
+            $result = executeResult("SELECT * FROM hoadon ORDER BY `hoadon`.`statuss` ASC  LIMIT $start, 10");
+            $count = countRow('SELECT * FROM hoadon');
+        ?>
         <table class="table align-middle caption-top">
             <caption>Quản lý đơn hàng</caption>
             <thead>
@@ -93,29 +100,82 @@
                     <th scope="col">Tổng sản phẩm</th>
                     <th scope="col">Tổng tiền</th>
                     <th scope="col">Trạng thái</th>
-                    <th scope="col" style="width:auto">Thao tác</th>
+                    <th scope="col" style="width:15%">Thao tác</th>
                 </tr>
             </thead>
             <tbody id="table_tbody_donhang">
-                <tr>
-                    <th scope="row">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                        </div>
-                    </th>
-                    <td>1254254</td>
-                    <td>22/02/2021</td>
-                    <td>111</td>
-                    <td>111</td>
-                    <td>Chờ xác nhận</td>
-                    <td>
-                        <a class="btn btn-success btn-sm">Xác nhận</a>
-                        <a class="btn btn-danger btn-sm">Hủy đơn</a>
-                        <a class="btn btn-info btn-sm" href="./chitietdonhang.php">Chi tiết</a>
-                    </td>
-                </tr>
+                <?php
+                $i = 1;
+                foreach ($result as $row) {
+                    echo '<tr>
+                        <th scope="row">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                <span>' . $i++ . '</span>
+                            </div>
+                        </th>
+                        <td>' . $row['id_hoadon'] . '</td>
+                        <td>' . $row['ngaymua'] . '</td>
+                        <td>' . number_format($row['total_product']) . '</td>
+                        <td>' . number_format($row['total_money']) . '</td>';
+                    if ($row['statuss'] == 'Đã xác nhận') {
+                        echo '<td><p class="mb-0 text-primary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                            <td>
+                                <a class="btn btn-outline-dark btn-sm" onclick="thaotac(' . $row["id_hoadon"] . ', `Đang giao`, this)">Đang giao</a>
+                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>
+                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
+                            </td>
+                        </tr>';
+                    }
 
+                    if ($row['statuss'] == 'Đã giao') {
+                        echo '<td><p class="mb-0 text-success" style="font-weight: 500;">' . $row['statuss'] . '</p></td><td>
+                            <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
+                            </td>
+                        </tr>';
+                    }
+
+                    if ($row['statuss'] == 'Chờ xác nhận') {
+                        echo '<td><p class="mb-0 text-secondary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                            <td>
+                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã xác nhận`, this)">Xác nhận</a>
+                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>
+                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
+                            </td>
+                        </tr>';
+                    }
+                    if ($row['statuss'] == 'Đang giao') {
+                        echo '<td><p class="mb-0" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                            <td>
+                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã giao`, this)">Đã giao</a>
+                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
+                            </td>
+                        </tr>';
+                    }
+
+                    if ($row['statuss'] == 'Đã hủy') {
+                        echo '<td><p class="mb-0 text-danger" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                            <td>
+                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
+                            </td>
+                        </tr>';
+                    }
+                }
+                ?>
             </tbody>
+            <tfoot>
+                <td colspan="7">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination pagination-sm justify-content-center m-0">
+                            <?php
+                                for($i=0; $i< ceil($count/10); $i++){
+                                    echo '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
+                                }
+                            ?>
+                        </ul>
+                    </nav>
+                </td>
+            </tfoot>
         </table>
     </div>
 
@@ -126,23 +186,22 @@
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    let s1 = JSON.parse(this.responseText).arr1;
+                    // In ra data nhan duoc
+                    // let s1 = JSON.parse(this.responseText).arr1;
+                    console.log(this.responseText);
                     let s2 = JSON.parse(this.responseText).tongdon;
                     let s3 = JSON.parse(this.responseText).choxacnhan;
                     let s4 = JSON.parse(this.responseText).daxacnhan;
                     let s5 = JSON.parse(this.responseText).danggiao;
                     let s6 = JSON.parse(this.responseText).dagiao;
                     let s7 = JSON.parse(this.responseText).dahuy;
-                    document.getElementById('table_tbody_donhang').innerHTML = s1;
+                    // document.getElementById('table_tbody_donhang').innerHTML = s1;
                     document.getElementById('badge_tongdon').innerHTML = s2;
                     document.getElementById('badge_choxacnhan').innerHTML = s3;
                     document.getElementById('badge_daxacnhan').innerHTML = s4;
-                    //console.log(s4)
                     document.getElementById('badge_danggiao').innerHTML = s5;
                     document.getElementById('badge_dagiao').innerHTML = s6;
                     document.getElementById('badge_dahuy').innerHTML = s7;
-                    //document.getElementById('table_tfoot_donhang').innerHTML = s2;
                     //console.log(this.responseText);
                 }
             }
@@ -151,7 +210,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('action=displaydonhang');
+            xhttp.send('displaydonhang');
         }
         table_donhang();
 
@@ -173,7 +232,7 @@
                 //cau hinh header cho request
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 //gui request
-                xhttp.send('status&value=' + val);
+                xhttp.send('trangthai&value=' + val);
             })
         }
 
@@ -201,39 +260,33 @@
             console.log(id, act, ele);
             let s1 = ele.parentElement.parentElement;
             var xhttp = new XMLHttpRequest() || ActiveXObject();
-                    // document.getElementById('badge_choxacnhan').innerHTML = s3;
-                    // document.getElementById('badge_daxacnhan').innerHTML = s4;
-                  
-                    // document.getElementById('badge_danggiao').innerHTML = s5;
-                    // document.getElementById('badge_dagiao').innerHTML = s6;
-                    // document.getElementById('badge_dahuy').innerHTML = s7;
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    if(act=='Đã xác nhận'){
-                        document.getElementById('badge_choxacnhan').innerText=parseInt(document.getElementById('badge_choxacnhan').innerText)-1;
-                        document.getElementById('badge_daxacnhan').innerText=parseInt(document.getElementById('badge_daxacnhan').innerText)+1;
-                        s1.children[6].children[0].outerHTML='<a class="btn btn-outline-dark btn-sm" onclick="thaotac('+id+', `Đang giao`, this)">Đang giao</a>';
+                    if (act == 'Đã xác nhận') {
+                        document.getElementById('badge_choxacnhan').innerText = parseInt(document.getElementById('badge_choxacnhan').innerText) - 1;
+                        document.getElementById('badge_daxacnhan').innerText = parseInt(document.getElementById('badge_daxacnhan').innerText) + 1;
+                        s1.children[6].children[0].outerHTML = '<a class="btn btn-outline-dark btn-sm" onclick="thaotac(' + id + ', `Đang giao`, this)">Đang giao</a>';
                         s1.children[5].innerHTML = '<p class="mb-0 text-primary" style="font-weight: 500;">Đã xác nhận</p>';
-                    }else if(act=='Đang giao'){
-                        document.getElementById('badge_daxacnhan').innerText=parseInt(document.getElementById('badge_daxacnhan').innerText)-1;
-                        document.getElementById('badge_danggiao').innerText=parseInt(document.getElementById('badge_danggiao').innerText)+1;
-                        s1.children[6].children[0].outerHTML='<a class="btn btn-outline-dark btn-sm" onclick="thaotac('+id+', `Đã giao`, this)">Đã giao</a>';
+                    } else if (act == 'Đang giao') {
+                        document.getElementById('badge_daxacnhan').innerText = parseInt(document.getElementById('badge_daxacnhan').innerText) - 1;
+                        document.getElementById('badge_danggiao').innerText = parseInt(document.getElementById('badge_danggiao').innerText) + 1;
+                        s1.children[6].children[0].outerHTML = '<a class="btn btn-outline-dark btn-sm" onclick="thaotac(' + id + ', `Đã giao`, this)">Đã giao</a>';
                         s1.children[6].removeChild(s1.children[6].children[1]);
                         s1.children[5].innerHTML = '<p class="mb-0" style="font-weight: 500;">Đang giao</p>';
-                    }else if(act=='Đã giao'){
-                        document.getElementById('badge_danggiao').innerText=parseInt(document.getElementById('badge_danggiao').innerText)-1;
-                        document.getElementById('badge_dagiao').innerText=parseInt(document.getElementById('badge_dagiao').innerText)+1;
+                    } else if (act == 'Đã giao') {
+                        document.getElementById('badge_danggiao').innerText = parseInt(document.getElementById('badge_danggiao').innerText) - 1;
+                        document.getElementById('badge_dagiao').innerText = parseInt(document.getElementById('badge_dagiao').innerText) + 1;
                         s1.children[6].removeChild(s1.children[6].children[0]);
                         s1.children[5].innerHTML = '<p class="mb-0 text-success" style="font-weight: 500;">Đã giao</p>';
-                    }else {
+                    } else {
                         s1.children[6].removeChild(s1.children[6].children[0]);
                         s1.children[6].removeChild(s1.children[6].children[0]);
                         s1.children[5].innerHTML = '<p class="mb-0 text-danger" style="font-weight: 500;">Đã hủy</p>';
                     }
-                    //table_donhang();
+                    table_donhang();
                     console.log(this.responseText);
                 }
             }
@@ -242,31 +295,41 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('thaotacdon&id=' + id+'&act='+act);
+            xhttp.send('thaotacdon&id=' + id + '&act=' + act);
         }
 
-        // function confirm(id) {
-        //     let s1 = document.getElementById('id' + id).parentElement.parentElement;
-        //     console.log(s1.children[5]);
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     //Bat su kien thay doi trang thai cuar request
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             //In ra data nhan duoc
-        //             s1.children[5].innerHTML = '<p class="mb-0 text-secondary" style="font-weight: 500;">Đã xác nhận</p>';
-        //             console.log(this.responseText);
-        //             // table_donhang();
-        //         }
-        //     }
-        //     //cau hinh request
-        //     xhttp.open('POST', './PHP_Function/donhang.php', true);
-        //     //cau hinh header cho request
-        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     //gui request
-        //     xhttp.send('action=confirm&id=' + id);
-        // }
-
+        function phantrang(p){
+            ss= document.querySelectorAll('input[type="radio"]');
+            var val;
+            for(i=0; i<ss.length; i++){
+                if(ss[i].checked==true){
+                    val=ss[i].value;
+                }
+            }
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    const nextURL = './quanly_donhang.php?page=' + p;
+                    const nextTitle = 'My new page title';
+                    const nextState = {
+                        additionalInformation: 'Updated the URL with JS'
+                    };
+                    console.log(this.responseText);
+                    //window.history.pushState(nextState, nextTitle, nextURL);
+                    window.history.replaceState(nextState, nextTitle, nextURL);
+                    document.getElementById('table_tbody_donhang').innerHTML = this.responseText;
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/donhang.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('phantrang&page=' +p+ '&val='+val);
+        }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

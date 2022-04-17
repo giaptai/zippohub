@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2022 at 05:42 PM
+-- Generation Time: Apr 17, 2022 at 06:48 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -98,8 +98,8 @@ CREATE TABLE `diachikhach` (
 --
 
 INSERT INTO `diachikhach` (`id_user`, `id_addr`, `name`, `phone`, `addr`) VALUES
-(2165, 3883, 'Chong Jong Choo', '0921101528', '150 An Dương Vương, Phường 10, Quận 8'),
-(2165, 5846, 'Trần Như', '0152241451', '6 An Dương Vương, Phường 16, quận 8'),
+(2165, 5483, 'Nguyễn Mai Như', '0921145124', '99 An Dương Vương, Phường 16, Quận 8'),
+(2165, 6673, 'Yên Như', '0321451252', '99 An Dương Vương, Phường 16, Quận 8'),
 (2165, 7664, 'Lê Yến Như', '0361152456', '6 An Dương Vương, Phường 16, quận 8'),
 (2165, 8234, 'Ngô Quốc Đại', '0148854141', '6 An Dương Vương, Phường 16, quận 8');
 
@@ -127,6 +127,20 @@ CREATE TABLE `hoadon` (
 --
 
 INSERT INTO `hoadon` (`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`, `total_product`, `magiamgia`, `total_money`, `statuss`) VALUES
+(1, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(2, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(3, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(4, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(5, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(6, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(7, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(8, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(9, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(10, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(11, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(12, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(13, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
+(14, 1, '2022-04-16 00:00:00', 'Tran Van Long', '0120125415', '12 Pham Ngu Lao,Phương 2, Quan 5', 5, '', 50000, 'Chờ xác nhận'),
 (846361283, 2165, '2022-04-13 04:56:21', 'Lê Yến Như', '0361152456', '6 An Dương Vương, Phường 16, quận 8', 12, '22bcee49lt', 17700, 'Đã hủy'),
 (847038860, 2165, '2022-04-16 02:33:22', 'Lê Thị Tuyết Sen', '0921101525', '99 An Dương Vương, Phường 16, quận 8', 4, '22bcee49lt', 102800, 'Đã giao'),
 (1002835636, 2165, '0000-00-00 00:00:00', 'Trần Như', '0152241451', '6 An Dương Vương, Phường 16, quận 8', 18, '22bcee49lt', 24200, 'Chờ xác nhận'),
@@ -223,9 +237,9 @@ CREATE TABLE `sanpham` (
 
 INSERT INTO `sanpham` (`id`, `img`, `name`, `amount`, `price`, `category`, `material`, `madeby`, `state`) VALUES
 (866, '49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg', 'zippo 8/3', 20, 1200, 'Zippo Sterling Silver', ' Bạc', 'Hàn Quốc', 1),
-(1172, '72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg', 'zippo hoang sa', 15, 1500, 'Zippo Armor', ' Đồng', 'Nhật Bản', 1),
+(1172, '72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg', 'zippo hoang sa', 17, 15000, 'Zippo Armor', ' Đồng', 'Nhật Bản', 1),
 (2102, '49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg', 'zippo 555', 15, 2000, 'Zippo Base Models', ' Vàng', 'Nhật Bản', 1),
-(2397, '49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg', 'zippo truong sa', 15, 1500, 'Zippo Sterling Silver', ' Bạc', 'Hàn Quốc', 1),
+(2397, '49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg', 'zippo truong sa', 15, 1200000, 'Zippo Sterling Silver', ' Bạc', 'Hàn Quốc', 1),
 (4246, 'nvt9hbyl6nlsaaa8kwsr_1024x1024-400x400.jpg', 'zippo 20/10', 0, 2300, 'Zippo Armor', ' Bạc', 'Hàn Quốc', 0),
 (6142, '49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg', 'zippo113', 25, 1000, 'Zippo Armor', 'Đồng', 'Nhật Bản', 1),
 (6221, '49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg', 'zippo14', 1, 1000, 'Zippo Sterling Silver', 'Đồng', 'Nhật Bản', 1),
