@@ -2,7 +2,7 @@
 $id = $_POST["id_address"];
 $sql = execute("delete from diachikhach where id_addr = {$id}");
 if ($sql) {
-    echo "thanh cong book";
+    echo "Xóa địa chỉ thành công !";
 } else {
     echo "em dep lam";
 }

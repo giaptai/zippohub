@@ -44,7 +44,7 @@ if (isset($_GET["id"])) {
             
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Ngày hết hạn:</label>
-                    <input type="text" class="form-control" placeholder="Ngày hết hạn" id="ngayhethan" value="'.$result['ngayhethan'].'">
+                    <input type="date" class="form-control" placeholder="Ngày hết hạn" id="ngayhethan" value="'.$result['ngayhethan'].'">
                 </div>
 
                 <div class="mb-3">
@@ -99,8 +99,8 @@ if(isset($_POST['search'])){
             <td>' . number_format($row["giamgia"]) . '</td>
             <td>' . $row["ngayhethan"] . '</td>
             <td>
+                <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-primary btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
                 <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
-                <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
             </td>
         </tr>';
         }
@@ -130,8 +130,8 @@ if(isset($_GET['page'])){
         <td>' . number_format($row["giamgia"]) . '</td>
         <td>' . $row["ngayhethan"] . '</td>
         <td>
-            <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">Xóa</button>
-            <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+            <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-primary btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+            <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
         </td>
     </tr>';
     }

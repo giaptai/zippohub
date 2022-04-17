@@ -46,7 +46,7 @@
     <!-- Modal Them san pham -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" id="modal-dialog">
-            <div class="modal-content">
+            <!-- <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -91,7 +91,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Thêm</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- Modal chi tiet san pham -->
@@ -108,7 +108,7 @@
                 <div class="col ">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Tên sản phẩm</span>
-                        <input type="text" class="form-control" placeholder="Tên sản phẩm" aria-label="Email" id="button-addon1">
+                        <input type="search" class="form-control" placeholder="Tên sản phẩm" aria-label="Email" id="button-addon1">
                     </div>
                 </div>
                 <div class="col-md-auto">
@@ -291,14 +291,15 @@
             row.children[1].children[1].innerText = s2;
             row.children[2].innerText = s3;
             row.children[3].innerHTML = formatter.format(s4);
-            row.children[4].children[0].value = s5
+            row.children[4].children[0].innerText = (s5==1 ? 'Còn hàng':'Hết hàng');
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc     
+                    //In ra data nhan duoc
+                    console.log( row.children[4].children[0]);     
                     alert(this.responseText);
                 }
             }

@@ -20,7 +20,7 @@
     } */
 </style>
 
-<body>
+<body style="background-color: #f2f2f2;">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,11 +37,11 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
                             Giỏ hàng <span class="badge bg-secondary">
-                                <?php  session_start(); echo  isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                                <?php session_start();
+                                echo  isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
                         </a>
                     </li>
                     <?php
-                   
                     if (isset($_SESSION['email'])) {
                         echo
                         '</span></a></li>
@@ -71,140 +71,227 @@
         </div>
     </nav>
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="./picture/zippovn.net-banner-3.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="./picture/zippovn.net-banner.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="./picture/zippovn.net-banner.jpg" class="d-block w-100" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+    <div class="container" s>
 
-    <div class="row " style="text-align: center; width: 80%; margin:2rem auto 1rem auto;">
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-footer">
-                        <small class="text-muted">30.000 VNĐ VẬN CHUYỂN<br>
-                            Giao hàng toàn quốc</small>
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="./picture/zippovn.net-banner-3.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="./picture/zippovn.net-banner.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="./picture/zippovn.net-banner.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon btn btn-secondary"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="btn btn-secondary carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="row " style="text-align: center; margin:2rem auto 1rem auto;">
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-footer">
+                            <small class="text-muted">30.000 VNĐ VẬN CHUYỂN<br>
+                                Giao hàng toàn quốc</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+
+                        <div class="card-footer">
+                            <small class="text-muted">BẢO HÀNH 1 THÁNG<br>
+                                Hỗ trợ bảo trì Zippo</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-footer">
+                            <small class="text-muted">TƯ VẤN <br>
+                                Hotline : 090 949 1932</small>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100">
+        </div>
+        <hr class="featurette-divider">
 
-                    <div class="card-footer">
-                        <small class="text-muted">BẢO HÀNH 1 THÁNG<br>
-                            Hỗ trợ bảo trì Zippo</small>
+        <div class="row row-md-2 justify-content-between " style="margin:2rem auto 1rem auto;">
+            <div class="col-12 mb-3 ">
+                <div class="d-flex slider-header justify-content-between bg-primary align-items-center" style="height: 3rem;">
+                    <h4 class="slider-title fw-bolder text-white ps-2 m-0">
+                        Zippo Armor
+                    </h4>
+                    <div class="sub-links pe-2">
+                        <form action="./cuahang.php" method="post">
+                            <button name="xemthem" value="Zippo Armor" class="btn btn-light btn-sm text-dark">Xem thêm</button>
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-footer">
-                        <small class="text-muted">TƯ VẤN <br>
-                            Hotline : 090 949 1932</small>
+
+                <!-- <div class="row row-cols-1 row-cols-md-6">
+                    <div class="col">
+                        <div class="card h-100">
+                            <img style="width:8rem; height:9rem;" src="./picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">1,500 VNĐ</p>
+                                <a class="btn btn-sm btn-outline-primary" id="id1172" onclick="buyproduct(1172)">Mua</a>
+                            </div>
+                        </div>
                     </div>
+                    <div class="col">
+                        <div class="card h-100">
+                        <img style="width:8rem; height:9rem;" src="./picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">1,500 VNĐ</p>
+                                <a class="btn btn-sm btn-outline-primary" id="id1172" onclick="buyproduct(1172)">Mua</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                        <img style="width:8rem; height:9rem;" src="./picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">1,500 VNĐ</p>
+                                <a class="btn btn-sm btn-outline-primary" id="id1172" onclick="buyproduct(1172)">Mua</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                        <img style="width:8rem; height:9rem;" src="./picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">1,500 VNĐ</p>
+                                <a class="btn btn-sm btn-outline-primary" id="id1172" onclick="buyproduct(1172)">Mua</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                        <img style="width:8rem; height:9rem;" src="./picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">1,500 VNĐ</p>
+                                <a class="btn btn-sm btn-outline-primary" id="id1172" onclick="buyproduct(1172)">Mua</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                        <img style="width:8rem; height:9rem;" src="./picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+
+                            </div>
+                            <div class="card-footer">
+                                <p class="card-text">1,500 VNĐ</p>
+                                <a class="btn btn-sm btn-outline-primary" id="id1172" onclick="buyproduct(1172)">Mua</a>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="row row-cols-md-6 gx-0" id="zippoarmor">
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <div class="d-flex slider-header justify-content-between bg-primary align-items-center" style="height: 3rem;">
+                    <h4 class="slider-title fw-bolder text-white ps-2 m-0">
+                        Zippo Sterling Silver
+                    </h4>
+                    <div class="sub-links pe-2">
+                        <form action="./cuahang.php" method="post">
+                            <button name="xemthem" value="Zippo Sterling Silver" class="btn btn-light btn-sm text-dark">Xem thêm</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row row-cols-md-6 gx-0" id="zipposterlingsilver">
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <div class="d-flex slider-header justify-content-between bg-primary align-items-center" style="height: 3rem;">
+                    <h4 class="slider-title fw-bolder text-white ps-2 m-0">
+                        Zippo Base Models
+                    </h4>
+                    <div class="sub-links pe-2">
+                        <form action="./cuahang.php" method="post">
+                            <button name="xemthem" value="Zippo Base Models" class="btn btn-light btn-sm text-dark">Xem thêm</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="row row-cols-md-6 gx-0" id="zippobasemodels">
+
                 </div>
             </div>
         </div>
-    </div>
-    <hr class="featurette-divider">
-    <div class="row row-md-2 justify-content-between " style="width: 80%;margin:2rem auto 1rem auto;">
-        <div class="col-12 mb-3">
-            <form action="./cuahang.php" method="post" class="p-3 mb-2 bg-light text-primary">
-                <span> Zippo Armor </span>
-                <button name="xemthem" value="Zippo Armor" class="btn btn-primary btn-sm see-more" style="float: right;">Xem thêm</button>
-            </form>
+        <hr class="featurette-divider">
+        <div class="container marketing bg-light" style="margin:2rem auto 1rem auto;text-align:center">
+            <!-- Three columns of text below the carousel -->
+            <div class="row">
+                <div class="col-lg-3 p-3">
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <h2>Nguyễn Vĩnh Tiến</h2>
+                    <p>111111</p>
+                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                </div>
+                <div class="col-lg-3 p-3">
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
 
-            <div class="row row-cols-md-6" id="zippoarmor">
-
+                    <h2>Nguyễn Giáp Tài</h2>
+                    <p>11111</p>
+                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                </div>
+                <div class="col-lg-3 p-3">
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/tri.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <h2>Bùi Trí</h2>
+                    <p>111111.</p>
+                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                </div>
+                <div class="col-lg-3 p-3">
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <h2>Lê Ngọc Toàn</h2>
+                    <p>111111</p>
+                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                </div>
             </div>
+
         </div>
-
-        <div class="col-12 mb-3">
-            <form action="./cuahang.php" method="post" class="p-3 mb-2 bg-light text-primary">
-                <span> Zippo Sterling Silver </span>
-                <button name="xemthem" value="Zippo Sterling Silver" class="btn btn-primary btn-sm see-more" style="float: right;">Xem thêm</button>
-            </form>
-            <div class="row row-cols-md-6" id="zipposterlingsilver">
-            </div>
-        </div>
-
-        <div class="col-12 mb-3">
-            <form action="./cuahang.php" method="post" class="p-3 mb-2 bg-light text-primary">
-                <span> Zippo Base Models </span>
-                <button name="xemthem" value="Zippo Base Models" class="btn btn-primary btn-sm see-more" style="float: right;">Xem thêm</button>
-            </form>
-            <div class="row row-cols-md-6" id="zippobasemodels">
-
-            </div>
-        </div>
-    </div>
-    <hr class="featurette-divider">
-    <div class="container marketing" style="width: 80%;margin:2rem auto 1rem auto;text-align:center">
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
-            <div class="col-lg-3">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-                </svg>
-
-                <h2>Nguyễn Vĩnh Tiến</h2>
-                <p>111111</p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
-            </div>
-            <div class="col-lg-3">
-                <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <!-- <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text> -->
-                </img>
-
-                <h2>Nguyễn Giáp Tài</h2>
-                <p>11111</p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
-            </div>
-            <div class="col-lg-3">
-                <img class="bd-placeholder-img rounded-circle" src="./picture/tri.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <!-- <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text> -->
-                </img>
-
-                <h2>Bùi Trí</h2>
-                <p>111111.</p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
-            </div>
-            <div class="col-lg-3">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-                </svg>
-
-                <h2>Lê Ngọc Toàn</h2>
-                <p>111111</p>
-                <p><a class="btn btn-secondary" href="#">View details »</a></p>
-            </div>
-        </div>
-
     </div>
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-dark text-muted">

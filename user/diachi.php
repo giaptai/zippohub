@@ -72,7 +72,9 @@
             <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
             <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
         </div>
+
         <!-- thong tin ca nhan -->
+
         <div id="manhinh" style="width:75%;">
             <div class="ttcanhan" style="padding:0 2rem;">
                 <div style="text-align: center;border: dotted;">
@@ -128,7 +130,7 @@
                                             <div class="phone"><span>Điện thoại: </span>' . $arr['phone'] . '</div>
                                         </div>
                                         <div><a class="text-primary text-decoration-none fs-6" >Chỉnh sửa</a>
-                                            <a class="btn btn-light text-danger btn-sm fs-6" onclick="xoaDiaChi(this, ' . $arr['id_addr'] . ')">Xóa</a>
+                                            <a class="btn text-danger btn-sm fs-6" onclick="xoaDiaChi(this, ' . $arr['id_addr'] . ')">X</a>
                                         </div>
                                     </div>
                                 </div>';
@@ -265,22 +267,26 @@
     <!-- Footer -->
     <script>
         function xoaDiaChi(p, idddr) {
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    alert(this.responseText);
-                    let element = p.parentNode.parentNode.parentNode
-                    element.remove()
+            let cf = confirm('xóa địa chỉ này ?');
+            console.log(cf);
+            if (cf == true) {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        alert(this.responseText);
+                        let element = p.parentNode.parentNode.parentNode
+                        element.remove()
+                    }
                 }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/xoa_dia_chi.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('id_address=' + idddr);
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/xoa_dia_chi.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('id_address=' + idddr);
+            } else return;
         }
 
         function addAr(id) {
@@ -311,7 +317,7 @@
                             '</div>' +
                             '<div>' +
                             '<a class="text-primary text-decoration-none fs-6">Chỉnh sửa </a>' +
-                            '<a class="btn btn-light text-danger btn-sm fs-6" onclick="xoaDiaChi(this, ' + s0 + ')">Xóa</a>' +
+                            '<a class="btn text-danger btn-sm fs-6" onclick="xoaDiaChi(this, ' + s0 + ')">X</a>' +
                             '</div>' +
                             '</div>'
                         document.getElementById("addruser").append(node);

@@ -59,7 +59,7 @@
                     <form class="form-floating" enctype="multipart/form-data" method="POST">
                         <!-- Name input -->
                         <div class="form-floating mb-4">
-                            <input type="text" id="namee" class="form-control" placeholder="1" name="namee" value="' . $hovaten . '">
+                            <input type="search" id="namee" class="form-control" placeholder="1" name="namee" value="' . $hovaten . '">
                             <label class="form-label" for="floatingInput">Họ và tên</label>
                         </div>
                         <!-- Email input -->
@@ -100,20 +100,20 @@
                 <div class="col-md-auto">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Email</span>
-                        <input type="text" class="form-control" placeholder="Email" aria-label="Email" id="button-addon1">
+                        <input type="search" class="form-control" placeholder="Email" aria-label="Email" id="button-addon1">
                     </div>
                 </div>
                 <div class="col-md-auto">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Số điện thoại</span>
-                        <input type="tel" class="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại" id="button-addon2">
+                        <input type="search" class="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại" id="button-addon2">
                     </div>
                 </div>
 
                 <div class="col col-lg-5">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Địa chỉ</span>
-                        <input type="tel" class="form-control" placeholder="Địa chỉ" id="button-addon3">
+                        <input type="search" class="form-control" placeholder="Địa chỉ" id="button-addon3">
                     </div>
                 </div>
 
