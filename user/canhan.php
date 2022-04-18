@@ -58,27 +58,30 @@
             </div>
         </div>
     </nav>
-    <div style="display: flex; width:90%; margin:3rem auto 3rem auto; justify-content: space-between;">
-        <div id="menu" class="list-group" style="width:16%;">
-            <h5>Nguyễn Tiến</h5>
-            <button type="button" class="list-group-item list-group-item-action active">Thông tin cá nhân</button>
-            <a type="button" class="list-group-item list-group-item-action" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
-            <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
-            <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
-        </div>
-        <!-- thong tin ca nhan -->
-        <div id="manhinh" style="width:75%;">
-            <form style="padding:0 2rem" class="ttcanhan" id="ttcanhan1113">
-                <?php
-                require_once('../query.php');
-                if ( isset($_GET['id']) ) {
-                    $id = $_GET['id'];
-                }else $id= $_SESSION['iduser'];
-                    $sql = "SELECT * FROM taikhoan WHERE id=$id";
-                    $result = executeSingleResult($sql);
-                    echo ' <h3>Thông tin cá nhân</h3>
+    <?php echo $_SESSION['iduser'] ?>
+    <div class="container mt-4 mb-4">
+        <div class="row justify-content-around">
+            <div class="col-md-2 p-0 mb-4">
+                <div id="menu" class="list-group" style="width:100%;">
+                    <h5>Nguyễn Tiến</h5>
+                    <button type="button" class="list-group-item list-group-item-action active">Thông tin cá nhân</button>
+                    <a type="button" class="list-group-item list-group-item-action" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
+                    <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
+                    <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
+                    <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
+                </div>
+            </div>
+            <div class="col-md-8 p-0">
+                <div id="manhinh" style="width:100%;">
+                    <form style="padding:0 2rem" class="ttcanhan" id="ttcanhan1113">
+                        <?php
+                        require_once('../query.php');
+                        if (isset($_GET['id'])) {
+                            $id = $_GET['id'];
+                        } else $id = $_SESSION['iduser'];
+                        $sql = "SELECT * FROM taikhoan WHERE id=$id";
+                        $result = executeSingleResult($sql);
+                        echo ' <h3>Thông tin cá nhân</h3>
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="hotencanhan" value="' . $result['fullname'] . '" placeholder="name@example.com">
                     <label for="floatingInput">Họ và tên</label>
@@ -98,10 +101,10 @@
                 <div class="form-floating mb-3">
                     <button type="button" class="btn btn-success" onclick="updateInfo(' . $_SESSION['iduser'] . ')">Cập nhật</button>
                 </div>';
-                // }
-                ?>
-            </form>
-
+                        ?>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 

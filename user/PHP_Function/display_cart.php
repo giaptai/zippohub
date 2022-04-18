@@ -67,10 +67,9 @@ if (isset($_POST['action'])) {
             $sumsoluong = $sumsoluong + $cart['soluong'];
             $dimemay['tbody'] .=
                 '<tr>
-                    <td scope="col"><input class="form-check-input mt-0" type="checkbox" value="" ></td>
                     <td scope="col">
                         <div class="d-flex align-items-center">
-                            <img src="../picture/' . $cart['imagee'] . '" class="img-fluid rounded-3" style="width: 100px;" alt="Book">
+                            <img src="../picture/' . $cart['imagee'] . '" class="img-fluid rounded-3" style="width: 90px;">
                             <div class="flex-column ms-4">
                                 <p class="mb-2">' . $cart['name'] . '</p>
                             </div>
@@ -80,18 +79,18 @@ if (isset($_POST['action'])) {
                     <td>
                         <div class="input-group">
                             <button class="subtract btn btn-outline-primary btn-sm" onclick="subtract(this)" value="' . $cart['id'] . '"><i class="bi bi-dash-lg"></i></button>
-                            <input type="text" min="1" max="99" step="1" disabled style="text-align: center; width: 3rem;" class="btn btn-outline-primary" id="ditmem' . $cart['id'] . '" value="' . number_format($cart['soluong']) . '">
+                            <input type="text" min="1" max="99" step="1" disabled style="text-align: center; width: 2.5rem;" class="btn btn-outline-primary btn-sm" id="ditmem' . $cart['id'] . '" value="' . number_format($cart['soluong']) . '">
                             <button class="add btn btn-outline-primary btn-sm" value="' . $cart['id'] . '" onclick="add(this)"><i class="bi bi-plus-lg"></i></button>
                         </div>
                     </td>
                     <td scope="col">' . number_format($cart['soluong'] * $cart['gia']) . '</td>
-                    <td scope="col"><button class="btn btn-danger btn-sm" id="id' . $cart["id"] . '" onclick="dele(' . $cart["id"] . ')">Xóa</button></td>
+                    <td scope="col"><button class="btn btn-danger btn-sm" id="id' . $cart["id"] . '" onclick="dele(' . $cart["id"] . ')">X</button></td>
                 </tr>';
         }
         $dimemay['tfooter'] = '<tr>
-            <td colspan="4" style="text-align: right;" class="fw-bolder">Tổng:</td>
-            <td>' . number_format($sumtien) . '</td>
-            <td><a class="btn btn-outline-warning" id="deletedall" onclick="deletedAll()">Xóa tất cả</a></td>
+            <td colspan="3" style="text-align: right;" class="fw-bolder fs-5">Tổng:</td>
+            <td class="fs-5">' . number_format($sumtien) . ' VND</td>
+            <td><a class="btn btn-outline-warning btn-sm" id="deletedall" onclick="deletedAll()">Xóa tất cả</a></td>
         </tr>';
         $dimemay['checkoutOK'] = '<p class="card-text">' . number_format($sumtien) . '</p>
         <b class="card-text">' . number_format($sumtien) . '</b>';

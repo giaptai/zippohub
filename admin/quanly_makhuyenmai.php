@@ -122,7 +122,7 @@
             <caption>
                 Quản lý mã khuyến mãi
                 <a type="button" class="btn btn-success btn-sm" href="./quanly_makhuyenmai_them.php">Thêm mã khuyến mãi</a>
-                <div type="button" class="btn btn-outline-primary m-2">
+                <div type="button" class="btn btn-outline-primary btn-sm m-2">
                     Tổng mã <span class="badge bg-danger" id="badge"><?= $count ?></span>
                 </div>
             </caption>

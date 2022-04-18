@@ -3,82 +3,71 @@ require_once("../../query.php");
 
 //Lay het tai khoan
 //Code xử lý, lay dữ liệu tu database
-if (isset($_POST["action"])) {
-    $arr = array('arr1' => '', 'arr2' => '', 'arr3'=>0);
-    $result=$result1=$sql='';
-    $sa = 0;
-    if ($_POST["action"] == 'displaytaikhoan') {
-       
-        $sql = "SELECT * FROM taikhoan LIMIT 0, 5";
-
-        $temp = "SELECT * FROM taikhoan";
-
-    }else if($_POST["action"] == "search"){
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        $page = isset($_POST['page']) ? $_POST['page'] : 1;
-        $start = ($page - 1) * 5;
-        $sql  = "SELECT * FROM taikhoan ";
-        if (!empty($email) && !empty($phone) && !empty($address)) {
-            $sql  .= "WHERE email LIKE '%$email%' and phone like '%$phone%' and `address` like '%$address%'";
-        }
-        if  (!empty($email) && empty($phone) && empty($address))  {
-            $sql  .= "WHERE email LIKE '%$email%' ";
-        }
-        if  (!empty($email) && !empty($phone) && empty($address))  {
-            $sql  .= "WHERE email LIKE '%$email%' and phone like '%$phone%'";
-        }
-        if  (!empty($email) && empty($phone) && !empty($address))  {
-            $sql  .= "WHERE email LIKE '%$email%' and `address` like '%$address%'";
-        }
-        if (empty($email) && !empty($phone) && empty($address))  {
-            $sql  .= "WHERE phone like '%$phone%' ";
-        }
-        if (empty($email) && !empty($phone) && !empty($address))  {
-            $sql  .= "WHERE phone like '%$phone%' and `address` like '%$address%'";
-        }
-        if  (empty($email) && empty($phone) && !empty($address))  {
-            $sql  .= "WHERE `address` like '%$address%' ";
-        }
-        $temp=$sql;
-        $sql.= "limit {$start},5";
-       
+if (isset($_POST["search_phantrang"])) {
+    $arr = array('arr1' => '', 'arr2' => '', 'arr3' => 0);
+    $result = $result1 = $sql = '';
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $address = $_POST['address'];
+    $page = isset($_POST['page']) ? $_POST['page'] : 1;
+    $start = ($page - 1) * 5;
+    $sql  = "SELECT * FROM taikhoan ";
+    if (!empty($email) && !empty($phone) && !empty($address)) {
+        $sql  .= "WHERE email LIKE '%$email%' and phone like '%$phone%' and `address` like '%$address%'";
     }
-   //die($sql);
+    if (!empty($email) && empty($phone) && empty($address)) {
+        $sql  .= "WHERE email LIKE '%$email%' ";
+    }
+    if (!empty($email) && !empty($phone) && empty($address)) {
+        $sql  .= "WHERE email LIKE '%$email%' and phone like '%$phone%'";
+    }
+    if (!empty($email) && empty($phone) && !empty($address)) {
+        $sql  .= "WHERE email LIKE '%$email%' and `address` like '%$address%'";
+    }
+    if (empty($email) && !empty($phone) && empty($address)) {
+        $sql  .= "WHERE phone like '%$phone%' ";
+    }
+    if (empty($email) && !empty($phone) && !empty($address)) {
+        $sql  .= "WHERE phone like '%$phone%' and `address` like '%$address%'";
+    }
+    if (empty($email) && empty($phone) && !empty($address)) {
+        $sql  .= "WHERE `address` like '%$address%' ";
+    }
+    $temp = $sql;
+    $sql .= "limit {$start},5";
+    // die($sql);
     $result = executeResult($sql);
     $result1 = countRow($temp);
 
     foreach ($result as $tk) {
-        $sa += 1;
         $arr['arr1'] .= '<tr>
-        <th scope="row"><label>'.$sa.'</label></th>
+        <th scope="row"><label>' . ++$start . '</label></th>
                 <td>' . $tk['fullname'] . '</td>
                 <td>' . $tk['email'] . '</td>
                 <td>' . $tk['phone'] . '</td>
                 <td>' . $tk['address'] . '</td>
             <td>
-                <button class="btn btn-warning btn-sm">Khóa</button>
-                <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button class="btn btn-outline-warning btn-sm">Khóa</button>
+                <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-outline-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Chi tiết
         </button>
                 </td>
             </tr>';
     }
     for ($i = 0; $i < ceil(($result1) / 5); $i++) {
-        $arr['arr2'] .= '<button type="button" class="btn btn-outline-secondary" onclick="search(' . $i+1 . ')">' . $i+1 . '</button>';
+        $arr['arr2'] .= '<button type="button" class="btn btn-outline-secondary" onclick="search(' . $i + 1 . ')">' . $i + 1 . '</button>';
     }
-        $arr['arr3']=$result1;
-        echo json_encode($arr);
-    }
+    $arr['arr3'] = $result1;
+    echo json_encode($arr);
+}
 
 if (isset($_POST["details"])) {
     // if ($_POST["action"] == 'details') {
-        $id = $_POST["id"];
-        $s = '';
-        $sql = "SELECT * FROM taikhoan where id=$id";
-        $result = executeSingleResult($sql);
-        $s = '
+    $id = $_POST["id"];
+    $s = '';
+    $sql = "SELECT * FROM taikhoan where id=$id";
+    $result = executeSingleResult($sql);
+    $s = '
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Chi tiết tài khoản</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -115,61 +104,38 @@ if (isset($_POST["details"])) {
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="updateCus(' . $result['id'] . ')">Cập nhật</button>
                 </div>';
-        echo $s;
-    }
+    echo $s;
+}
 // }
 
 if (isset($_POST["update"])) {
     // if ($_POST["action"] == 'update') {
-        if (isset($_POST['id'])) {
-            $idd = $_POST['id'];
-        }
-        if (isset($_POST['namee'])) {
-            $ten = $_POST['namee'];
-        }
-        if (isset($_POST['emaill'])) {
-            $email = $_POST['emaill'];
-        }
-        if (isset($_POST['passwordd'])) {
-            $matkhau = $_POST['passwordd'];
-        }
-        if (isset($_POST['phonee'])) {
-            $dienthoai = $_POST['phonee'];
-        }
-        if (isset($_POST['addresss'])) {
-            $diachi = $_POST['addresss'];
-        }
-        $sql  = "UPDATE taikhoan SET fullname='$ten', email='$email',
-        `password`='$matkhau', phone='$dienthoai',address='$diachi' WHERE id=$idd";
-        if (execute($sql)) {
-            echo 'success';
-        } else echo 'fail';
+    if (isset($_POST['id'])) {
+        $idd = $_POST['id'];
     }
-// }
+    if (isset($_POST['namee'])) {
+        $ten = $_POST['namee'];
+    }
+    if (isset($_POST['emaill'])) {
+        $email = $_POST['emaill'];
+    }
+    if (isset($_POST['passwordd'])) {
+        $matkhau = $_POST['passwordd'];
+    }
+    if (isset($_POST['phonee'])) {
+        $dienthoai = $_POST['phonee'];
+    }
+    if (isset($_POST['addresss'])) {
+        $diachi = $_POST['addresss'];
+    }
+    $sql  = "UPDATE taikhoan SET fullname='$ten', email='$email',
+        `password`='$matkhau', phone='$dienthoai',address='$diachi' WHERE id=$idd";
+    if (execute($sql)) {
+        echo 'success';
+    } else echo 'fail';
+}
 
-// if (isset($_GET["page"])) {
-//     $count = $_GET["page"];
-//     $start = ($count - 1) * 5;
-//     $sql = "SELECT * FROM taikhoan LIMIT $start, 5";
-//     $result = executeResult($sql);
-//     foreach ($result as $tk) {
-//         $start=$start+1;
-//         echo '<tr>
-//         <th scope="row"><label>'.$start.'</label></th>
-//                 <td>' . $tk['fullname'] . '</td>
-//                 <td>' . $tk['email'] . '</td>
-//                 <td>' . $tk['phone'] . '</td>
-//                 <td>' . $tk['address'] . '</td>
-//             <td>
-//               <button class="btn btn-warning btn-sm">Khóa</button>
-//               <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
-//              Chi tiết
-//          </button>
-//                  </td>
-//              </tr>';
-//     }
-// }
-if(isset($_POST["add"])){
+if (isset($_POST["add"])) {
     if ($_POST["add"] == 'them') {
         $idd = rand(10000, 99999);
         if (isset($_POST['namee'])) {
@@ -195,40 +161,4 @@ if(isset($_POST["add"])){
         die();
     }
 }
-
-// if (isset($_POST["action"])) {
-//     if ($_POST["action"] == 'search') {
-//         $email = $_POST['email'];
-//         $phone = $_POST['phone'];
-//         if (!empty($email) && !empty($phone)) {
-//             $sql  = "SELECT * FROM taikhoan WHERE email LIKE '%$email%' and phone like '%$phone%'";
-//         }
-//         if (!empty($email) && empty($phone)) {
-//             $sql  = "SELECT * FROM taikhoan WHERE email LIKE '%$email%'";
-//         }
-//         if (empty($email) && !empty($phone)) {
-//             $sql  = "SELECT * FROM taikhoan WHERE phone like '%$phone%'";
-//         }
-//         if (empty($email) && empty($phone)) {
-//             $sql  = "SELECT * FROM taikhoan limit 0,5";
-//         }
-//         if($result=executeResult($sql)){
-//             foreach ($result as $tk) {
-//                 echo  '<tr>
-//                 <th scope="row"><label>'.('#').'</label></th>
-//                         <td>' . $tk['fullname'] . '</td>
-//                         <td>' . $tk['email'] . '</td>
-//                         <td>' . $tk['phone'] . '</td>
-//                         <td>' . $tk['address'] . '</td>
-//                     <td>
-//                         <button class="btn btn-warning btn-sm">Khóa</button>
-//                         <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
-//                     Chi tiết
-//                 </button>
-//                         </td>
-//                     </tr>';
-//             }
-//         }else echo 'Không tìm thấy';
-//     }
-// }
 ?>

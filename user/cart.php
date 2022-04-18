@@ -56,90 +56,86 @@
             </div>
         </div>
     </nav>
-
-    <!-- step -->
-    <div class="step-container row justify-content-md-center align-items-center mt-4">
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm active">1</a>
-                <p><strong>Giỏ hàng</strong></p>
-            </div>
-        </div>
-
-        <hr class="bg-primary col-2 rounded-pill" size="10">
-
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm">2</a>
-                <p><strong>Kiểm tra thanh toán</strong></p>
-            </div>
-        </div>
-
-        <hr class="bg-primary col-2 rounded-pill" size="10">
-
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm">3</a>
-                <p><strong>Thanh toán</strong></p>
-            </div>
-        </div>
-
-        <hr class="bg-primary col-2 rounded-pill" size="10">
-
-        <div class="col-md-auto">
-            <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm">4</a>
-                <p><strong>Hoàn thành</strong>
-            </div>
-            </p>
-        </div>
-    </div>
-    <!-- step -->
-
-    <div style="width: 90%; margin:3rem auto 1rem auto;">
-        <table class="table align-middle">
-            <thead>
-                <tr>
-                    <th scope="col" style="width: 8rem;">
-                        <input type="checkbox" class="form-check-input mt-0" id="flexCheckDefault0">
-                        <span>Tất cả</span>
-                    </th>
-                    <th scope="col">Sản phẩm</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Số lượng</th>
-                    <th scope="col">Tổng tiền</th>
-                    <th scope="col">Xóa</th>
-                </tr>
-            </thead>
-
-            <tbody id="cartt">
-
-            </tbody>
-
-            <tfoot id="cartt2">
-
-            </tfoot>
-        </table>
-    </div>
-
-    <div id="checkout" style="width: 90%; margin: 1rem auto 2rem auto;" class="d-flex justify-content-end">
-        <div class="card" style="width: 18rem;">
-            <h5 class="card-title" style="padding: 1rem 0 0 1rem;">Thanh toán</h5>
-            <div class="card-body d-flex justify-content-between">
-                <div>
-                    <p class="card-text">Tạm tính:</p>
-                    <b class="card-text">Tổng:</b>
-                </div>
-                <div id="checkoutttt">
-                    <p class="card-text">0</p>
-                    <b class="card-text">0</b>
+    <div class="container">
+        <!-- step -->
+        <div class="step-container row justify-content-md-center align-items-center mt-4">
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm active">1</a>
+                    <p><strong>Giỏ hàng</strong></p>
                 </div>
             </div>
-            <a class="btn btn-primary" onclick="checkout()">Thanh toán</a>
-        </div>
-    </div>
-    <!-- Chi tiet san pham -->
 
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm">2</a>
+                    <p><strong>Kiểm tra thanh toán</strong></p>
+                </div>
+            </div>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm">3</a>
+                    <p><strong>Thanh toán</strong></p>
+                </div>
+            </div>
+
+            <hr class="bg-primary col-2 rounded-pill" size="10">
+
+            <div class="col-md-auto">
+                <div class="text-center">
+                    <a type="button" class="btn btn-outline-primary btn-sm">4</a>
+                    <p><strong>Hoàn thành</strong>
+                </div>
+                </p>
+            </div>
+        </div>
+        <!-- step -->
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">Sản phẩm</th>
+                        <th scope="col">Giá</th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Tổng tiền</th>
+                        <th scope="col">Xóa</th>
+                    </tr>
+                </thead>
+
+                <tbody id="cartt">
+
+                </tbody>
+
+                <tfoot id="cartt2">
+
+                </tfoot>
+            </table>
+        </div>
+
+        <div id="checkout" style="width: 90%; margin: 1rem auto 2rem auto;" class="d-flex justify-content-end">
+            <div class="card" style="width: 18rem;">
+                <h5 class="card-title" style="padding: 1rem 0 0 1rem;">Thanh toán</h5>
+                <div class="card-body d-flex justify-content-between">
+                    <div>
+                        <p class="card-text">Tạm tính:</p>
+                        <b class="card-text">Tổng:</b>
+                    </div>
+                    <div id="checkoutttt">
+                        <p class="card-text">0</p>
+                        <b class="card-text">0</b>
+                    </div>
+                </div>
+                <a class="btn btn-primary" onclick="checkout()">Thanh toán</a>
+            </div>
+        </div>
+        <!-- Chi tiet san pham -->
+    </div>
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-dark text-muted">
         <!-- Section: Social media -->
@@ -382,17 +378,17 @@
             xhttp.send('action=deletedall');
         }
 
-        function checkout(){
+        function checkout() {
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     console.log(this.responseText);
-                    if(this.responseText=='fail'){
+                    if (this.responseText == 'fail') {
                         alert('Bạn cần đăng nhập để thanh toán !');
-                    }else{
-                        window.location.href="./checkout.php";
+                    } else {
+                        window.location.href = "./checkout.php";
                     }
                 }
             }

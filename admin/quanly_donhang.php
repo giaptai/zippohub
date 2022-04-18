@@ -86,6 +86,7 @@
             $start=($page-1)*10;
             $result = executeResult("SELECT * FROM hoadon ORDER BY `hoadon`.`statuss` ASC  LIMIT $start, 10");
             $count = countRow('SELECT * FROM hoadon');
+            // die("SELECT * FROM hoadon ORDER BY `hoadon`.`statuss` ASC  LIMIT $start, 10");
         ?>
         <table class="table align-middle caption-top">
             <caption>Quản lý đơn hàng</caption>

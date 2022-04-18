@@ -52,6 +52,6 @@ if (isset($_POST["action"]) || isset($_SESSION["xemthem"])) {
         for ($i = 0; $i < ceil(($result1) / 12); $i++) {
             $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
         }
-    } else $arr['arr1'] = "Không tim thấy sản phẩm !";
+    } else $arr['arr1'] = "Không tìm thấy sản phẩm !";
     echo json_encode($arr);
 }

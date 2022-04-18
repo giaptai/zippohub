@@ -35,7 +35,7 @@ if (isset($_POST["action"])) {
             </div>
         </th>' .
             '<td>
-            <img src="../picture/' . $sp["img"] . '"width="auto" height="100">
+            <img src="../picture/' . $sp["img"] . '"width="auto" height="80">
             <span>' . $sp['name'] . '</span>
         </td>' .
             '<td>' . $sp['amount'] . '</td>

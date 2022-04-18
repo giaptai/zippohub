@@ -73,7 +73,7 @@
 
     <div class="container" s>
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" class="carousel slide mt-3" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -99,39 +99,33 @@
                 <span class="visually-hidden">Next</span>
             </button>
         </div>
-
-        <div class="row " style="text-align: center; margin:2rem auto 1rem auto;">
-            <div class="row row-cols-1 row-cols-md-3">
+        <div class="row " style="text-align: center; margin:1rem auto 1rem auto;">
+            <div class="row row-cols-1 row-cols-md-3 bg-white">
                 <div class="col">
-                    <div class="card h-100">
-                        <div class="card-footer">
-                            <small class="text-muted">30.000 VNĐ VẬN CHUYỂN<br>
-                                Giao hàng toàn quốc</small>
-                        </div>
+                    <div class="card-footer bg-white">
+                        <small class="fs-5 text-muted">30.000 VNĐ VẬN CHUYỂN<br>
+                            Giao hàng toàn quốc</small>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card h-100">
 
-                        <div class="card-footer">
-                            <small class="text-muted">BẢO HÀNH 1 THÁNG<br>
-                                Hỗ trợ bảo trì Zippo</small>
-                        </div>
+                <div class="col">
+                    <div class="card-footer bg-white">
+                        <small class="fs-5 text-muted">BẢO HÀNH 1 THÁNG<br>
+                            Hỗ trợ bảo trì Zippo</small>
                     </div>
                 </div>
+
                 <div class="col">
-                    <div class="card h-100">
-                        <div class="card-footer">
-                            <small class="text-muted">TƯ VẤN <br>
-                                Hotline : 090 949 1932</small>
-                        </div>
+                    <div class="card-footer bg-white">
+                        <small class="fs-5 text-muted">TƯ VẤN <br>
+                            Hotline : 090 949 1932</small>
                     </div>
                 </div>
             </div>
         </div>
         <hr class="featurette-divider">
 
-        <div class="row row-md-2 justify-content-between " style="margin:2rem auto 1rem auto;">
+        <div class="row row-md-2 justify-content-between " style="margin:1rem auto 1rem auto;">
             <div class="col-12 mb-3 ">
                 <div class="d-flex slider-header justify-content-between bg-primary align-items-center" style="height: 3rem;">
                     <h4 class="slider-title fw-bolder text-white ps-2 m-0">

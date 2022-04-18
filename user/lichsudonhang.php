@@ -58,74 +58,74 @@
             </div>
         </div>
     </nav>
+    <?php echo $_SESSION['iduser'] ?>
 
-
-    <?php
-    echo $_SESSION['iduser'] ?>
-    <div style="display: flex; width:90%; margin:3rem auto 3rem auto; justify-content: space-between;">
-        <div id="menu" class="list-group" style="width:16%;">
-            <h5>Nguyễn Tiến</h5>
-            <a type="button" class="list-group-item list-group-item-action" href='./canhan.php?id=<?= $_SESSION['iduser'] ?>'>Thông tin cá nhân</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
-            <a type="button" class="list-group-item list-group-item-action active">Lịch sử đơn hàng</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
-            <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
-            <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
-        </div>
-        <!-- thong tin ca nhan -->
-        <div id="manhinh" style="width:75%;">
-            <div style="padding:0 1rem 1rem 1rem;" id="lichsudonhang">
-                <div class="btn-group justify-content-between p-1" style="width:100%; ">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="" onclick="trangthai(this, 1)" autocomplete="off" checked>
-                    <label class="btn btn-outline-primary" for="btnradio1">Tất cả đơn</label>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="Chờ xác nhận" onclick="trangthai(this, 1)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio2">Chờ xác nhận</label>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="Đã xác nhận" onclick="trangthai(this, 1)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio3">Đã xác nhận</label>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" value="Đang giao" onclick="trangthai(this, 1)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio4">Đang giao</label>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" value="Đã giao" onclick="trangthai(this, 1)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio5">Đã giao</label>
-
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" value="Đã hủy" onclick="trangthai(this, 1)" autocomplete="off">
-                    <label class="btn btn-outline-primary" for="btnradio6">Đã hủy</label>
+    <div class="container mt-4 mb-4">
+        <div class="row justify-content-around">
+            <div class="col-md-2 p-0 mb-4">
+                <div id="menu" class="list-group" style="width:100%;">
+                    <h5>Nguyễn Tiến</h5>
+                    <a type="button" class="list-group-item list-group-item-action" href="./canhan.php?id=<?= $_SESSION['iduser'] ?>">Thông tin cá nhân</a>
+                    <a type="button" class="list-group-item list-group-item-action" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
+                    <a type="button" class="list-group-item list-group-item-action active">Lịch sử đơn hàng</a>
+                    <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
+                    <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
                 </div>
-                <div class="input-group">
+            </div>
+            <div class="col-md-9 p-0">
+                <div id="manhinh">
+                    <div style="padding:0 1rem 1rem 1rem;" id="lichsudonhang">
+                        <div class="btn-group justify-content-between p-1" style="width:100%; ">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="" onclick="trangthai(this, 1)" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btnradio1">Tất cả đơn</label>
 
-                    <input type="text" aria-label="First name" class="form-control">
-                    <input type="date" onclick="console.log(this.value)" aria-label="Last name" class="form-control">
-                    <span class="input-group-text">Tìm kiếm</span>
-                </div>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="Chờ xác nhận" onclick="trangthai(this, 1)" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio2">Chờ xác nhận</label>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Mã đơn hàng</th>
-                            <th scope="col">Ngày đặt</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Tổng tiền</th>
-                            <th scope="col">Trạng thái</th>
-                            <th scope="col">Chi tiết</th>
-                        </tr>
-                    </thead>
-                    <tbody id="orderlist">
-                        <?php require_once('../query.php');
-                        if (isset($_GET['lichsu'])) {
-                            $trangthai = isset($_GET['val']) ? $_GET['val'] : "";
-                            if (empty($trangthai)) {
-                                $sql = "SELECT * FROM hoadon LIMIT 0, 10";
-                            } else $sql = "SELECT * FROM hoadon WHERE statuss='{$trangthai}' LIMIT 0, 10";
-                            $s = array('arr1' => '', 'arr2' => '');
-                            //die($sql);
-                            $result = executeResult($sql);
-                            $resul1t = countRow($sql);
-                            if ($resul1t > 0) {
-                                foreach ($result as $row) {
-                                    $s['arr1'] .= '<tr>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="Đã xác nhận" onclick="trangthai(this, 1)" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio3">Đã xác nhận</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" value="Đang giao" onclick="trangthai(this, 1)" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio4">Đang giao</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" value="Đã giao" onclick="trangthai(this, 1)" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio5">Đã giao</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio6" value="Đã hủy" onclick="trangthai(this, 1)" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio6">Đã hủy</label>
+                        </div>
+                        <div class="input-group">
+
+                            <input type="text" aria-label="First name" class="form-control">
+                            <input type="date" onclick="console.log(this.value)" aria-label="Last name" class="form-control">
+                            <span class="input-group-text">Tìm kiếm</span>
+                        </div>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mã đơn hàng</th>
+                                    <th scope="col">Ngày đặt</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col">Chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderlist">
+                                <?php require_once('../query.php');
+                                if (isset($_GET['lichsu'])) {
+                                    $trangthai = isset($_GET['val']) ? $_GET['val'] : "";
+                                    if (empty($trangthai)) {
+                                        $sql = "SELECT * FROM hoadon LIMIT 0, 10";
+                                    } else $sql = "SELECT * FROM hoadon WHERE statuss='{$trangthai}' LIMIT 0, 10";
+                                    $s = array('arr1' => '', 'arr2' => '');
+                                    //die($sql);
+                                    $result = executeResult($sql);
+                                    $resul1t = countRow($sql);
+                                    if ($resul1t > 0) {
+                                        foreach ($result as $row) {
+                                            $s['arr1'] .= '<tr>
                             <th class="align-middle">
                                 <p class="mb-0">' . $row['id_hoadon'] . '</p>
                             </th>
@@ -138,57 +138,58 @@
                             <td class="align-middle">
                                 <p class="mb-0" style="font-weight: 500;">' . number_format($row['total_money']) . '</p>
                             </td>';
-                                    if ($row['statuss'] == 'Chờ xác nhận') {
-                                        $s['arr1'] .= '<td class="align-middle">
+                                            if ($row['statuss'] == 'Chờ xác nhận') {
+                                                $s['arr1'] .= '<td class="align-middle">
                                 <p class="mb-0 text-secondary" style="font-weight: 500;">' . $row['statuss'] . '</p>
                             </td>';
-                                    }
-                                    if ($row['statuss'] == 'Đã xác nhận') {
-                                        $s['arr1'] .= '<td class="align-middle">
+                                            }
+                                            if ($row['statuss'] == 'Đã xác nhận') {
+                                                $s['arr1'] .= '<td class="align-middle">
                                 <p class="mb-0 text-primary" style="font-weight: 500;">' . $row['statuss'] . '</p>
                             </td>';
-                                    }
-                                    if ($row['statuss'] == 'Đang giao') {
-                                        $s['arr1'] .= '<td class="align-middle">
+                                            }
+                                            if ($row['statuss'] == 'Đang giao') {
+                                                $s['arr1'] .= '<td class="align-middle">
                                 <p class="mb-0" style="font-weight: 500;">' . $row['statuss'] . '</p>
                             </td>';
-                                    }
-                                    if ($row['statuss'] == 'Đã hủy') {
-                                        $s['arr1'] .= '<td class="align-middle">
+                                            }
+                                            if ($row['statuss'] == 'Đã hủy') {
+                                                $s['arr1'] .= '<td class="align-middle">
                                 <p class="mb-0 text-danger" style="font-weight: 500;">' . $row['statuss'] . '</p>
                             </td>';
-                                    }
-                                    if ($row['statuss'] == 'Đã giao') {
-                                        $s['arr1'] .= '<td class="align-middle">
+                                            }
+                                            if ($row['statuss'] == 'Đã giao') {
+                                                $s['arr1'] .= '<td class="align-middle">
                                 <p class="mb-0 text-success" style="font-weight: 500;">' . $row['statuss'] . '</p>
                             </td>';
-                                    }
-                                    $s['arr1'] .= '<td class="align-middle">
-                                <a class="mb-0 btn btn-primary" href="./chitietdonhang_user.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
+                                            }
+                                            $s['arr1'] .= '<td class="align-middle">
+                                <a class="mb-0 btn btn-sm btn-primary" href="./chitietdonhang_user.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
                             </td>
                         </tr>';
+                                        }
+                                        for ($i = 0; $i < ceil($resul1t / 10); $i++) {
+                                            $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">1</a></li>';
+                                        }
+                                    } else {
+                                        $s['arr1'] = 'Không tìm thấy';
+                                        $s['arr2'] = 'Không tìm thấy';
+                                    };
+                                    echo ($s['arr1']);
                                 }
-                                for ($i = 0; $i < ceil($resul1t / 10); $i++) {
-                                    $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">1</a></li>';
-                                }
-                            } else {
-                                $s['arr1'] = 'Không tìm thấy';
-                                $s['arr2'] = 'Không tìm thấy';
-                            };
-                            echo ($s['arr1']);
-                        }
-                        ?>
-                    </tbody>
-                </table>
-                <nav aria-label="...">
-                    <ul class="pagination pagination-sm justify-content-center" id="phantrang">
-                        <?php
-                        echo ($s['arr2']);
-                        ?>
-                    </ul>
-                </nav>
+                                ?>
+                            </tbody>
+                        </table>
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-sm justify-content-center" id="phantrang">
+                                <?php
+                                echo ($s['arr2']);
+                                ?>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 
@@ -337,7 +338,7 @@
         //     xhttp.send('trangthai');
         // }
 
-        function trangthai(val, p) {// chọn tình trạng đơn hàng 
+        function trangthai(val, p) { // chọn tình trạng đơn hàng 
             //console.log(val.value, p);
             let s = val.value;
             var xhttp = new XMLHttpRequest() || ActiveXObject();

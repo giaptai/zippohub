@@ -122,22 +122,22 @@
                 </div>
             </div>
         </div>
+        <?php
+        require_once('../query.php');
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $start = ($page - 1) * 5;
+        $result = executeResult("SELECT * FROM taikhoan LIMIT $start, 5");
+        $count = countRow("SELECT * FROM taikhoan");
+        ?>
         <table class="table align-middle caption-top" id="table_taikhoan">
             <caption>
                 Quản lý tài khoản
                 <a class="btn btn-success btn-sm" href="./quanly_taikhoan_them.php">Thêm tài khoản</a>
-                <div type="button" class="btn btn-outline-primary m-2">
+                <div type="button" class="btn btn-sm btn-outline-primary m-2">
                     Tổng tài khoản <span class="badge bg-danger" id="badge">4</span>
                 </div>
             </caption>
-            <!-- <thead>
-                <tr>
-                    <th scope="col" colspan="2"><input type="text" class="form-control" placeholder="Email" aria-label="Email" id="button-addon1"></th>
-                    <th scope="col" colspan="1"> <input type="tel" class="form-control" placeholder="Số điện thoại" aria-label="Số điện thoại" id="button-addon2"></th>
-                    <th scope="col" colspan="2"> <input type="tel" class="form-control" placeholder="Địa chỉ" id="button-addon3"></th>
-                    <th scope="col" colspan="3"> <button class="btn btn-outline-secondary" type="button" id="" onclick="search(1)">Tìm kiếm</button></th>
-                </tr>
-            </thead> -->
+
             <thead>
                 <tr>
                     <th scope="col" style="width:8%">
@@ -151,12 +151,32 @@
                 </tr>
             </thead>
             <tbody id="table_tbody_taikhoan">
-
+                <?php
+                foreach ($result as $tk) {
+                    echo '<tr>
+                        <th scope="row"><label>' . ++$start . '</label></th>
+                                <td>' . $tk['fullname'] . '</td>
+                                <td>' . $tk['email'] . '</td>
+                                <td>' . $tk['phone'] . '</td>
+                                <td>' . $tk['address'] . '</td>
+                            <td>
+                                <button class="btn btn-outline-warning btn-sm">Khóa</button>
+                                <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-outline-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Chi tiết
+                        </button>
+                                </td>
+                            </tr>';
+                }
+                ?>
             </tbody>
             <tfoot>
                 <td colspan="6" style="text-align:center">
                     <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_taikhoan">
-
+                        <?php
+                        for ($i = 0; $i < ceil(($count) / 5); $i++) {
+                            echo '<button type="button" class="btn btn-outline-secondary" onclick="search(' . $i + 1 . ')">' . $i + 1 . '</button>';
+                        }
+                        ?>
                     </div>
                 </td>
             </tfoot>
@@ -165,45 +185,43 @@
         <!-- <div id="chart" style="width: 70%; height: 100px"></div> -->
     </div>
     <script>
-        var table_taikhoan = function() {
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    let s1 = JSON.parse(this.responseText).arr1;
-                    let s2 = JSON.parse(this.responseText).arr2;
-                    let s3 = JSON.parse(this.responseText).arr3;
-                    document.getElementById('table_tbody_taikhoan').innerHTML = s1;
-                    document.getElementById('table_tfoot_taikhoan').innerHTML = s2;
-                    document.getElementById('badge').innerHTML = s3;
-                    //console.log((this.responseText));
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/taikhoan.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=displaytaikhoan');
-        }
-        table_taikhoan();
+        // var table_taikhoan = function() {
+        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
+        //     //Bat su kien thay doi trang thai cuar request
+        //     xhttp.onreadystatechange = function() {
+        //         //Kiem tra neu nhu da gui request thanh cong
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             //In ra data nhan duoc
+        //             let s1 = JSON.parse(this.responseText).arr1;
+        //             let s2 = JSON.parse(this.responseText).arr2;
+        //             let s3 = JSON.parse(this.responseText).arr3;
+        //             document.getElementById('table_tbody_taikhoan').innerHTML = s1;
+        //             document.getElementById('table_tfoot_taikhoan').innerHTML = s2;
+        //             document.getElementById('badge').innerHTML = s3;
+        //             //console.log((this.responseText));
+        //         }
+        //     }
+        //     //cau hinh request
+        //     xhttp.open('POST', './PHP_Function/taikhoan.php', true);
+        //     //cau hinh header cho request
+        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //     //gui request
+        //     xhttp.send('action=displaytaikhoan');
+        // }
+        // table_taikhoan();
 
         function search(p) {
             s1 = document.getElementById('button-addon1').value;
             s2 = document.getElementById('button-addon2').value;
             s3 = document.getElementById('button-addon3').value;
-
-            //console.log(s1, s2, s3);
-
+            console.log(s1, s2, s3);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    //console.log((this.responseText));
+                    console.log((this.responseText));
                     let s1 = JSON.parse(this.responseText).arr1;
                     let s2 = JSON.parse(this.responseText).arr2;
                     let s3 = JSON.parse(this.responseText).arr3;
@@ -218,7 +236,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('action=search' +
+            xhttp.send('search_phantrang' +
                 '&page=' + p +
                 '&email=' + s1 +
                 '&phone=' + s2 +

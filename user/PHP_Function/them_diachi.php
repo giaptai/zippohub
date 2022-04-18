@@ -15,5 +15,5 @@ if (isset($_POST['id_user'])) {
         if ($result) {
             echo 'Thêm địa chỉ thành công';
         } else echo 'fail';
-    }else echo 'Mỗi tài khoản chỉ được tối đa 5 địa chỉ';
+    }else echo 'fail1';
 }

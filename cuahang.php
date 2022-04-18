@@ -74,15 +74,95 @@ if (isset($_POST["xemthem"])) {
         </div>
     </nav>
 
-    <div class="container mt-4 mb-4">
+    <div class="container mt-5 mb-4">
         <div class="row justify-content-between">
-            <div class="col-sm-3 p-0">
-                <div class="col-sm-9 p-0">
-                    <button class="btn btn-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+            <div class="col-md-3 p-0">
+                <div class="col-md-10 p-0">
+                    <button class="btn btn-primary w-100 mb-3" type="button">
                         Tìm kiếm nâng cao
                     </button>
                     <!-- collapse -->
-                    <div class="collapseeeesss" id="collapseExample">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <div class="list-group">
+                                <h5>Danh mục sản phẩm</h5>
+                                <label class="list-group-item ">
+                                    <input class="form-check-input" type="checkbox" checked value="" onclick="uncheck()">Tất cả sản phẩm
+                                </label>
+                                <label class="list-group-item">
+                                    <input class="form-check-input" type="checkbox" value="Zippo Armor" onclick="uncheck1()">Zippo Armor
+                                </label>
+                                <label class="list-group-item ">
+                                    <input class="form-check-input" type="checkbox" value="Zippo Sterling Silver" onclick="uncheck1()">Zippo Sterling Silver
+                                </label>
+                                <label class="list-group-item">
+                                    <input class="form-check-input" type="checkbox" value="Zippo Base Models" onclick="uncheck1()">Zippo Base Models
+                                </label>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row ">
+                                <h5>Nhập giá</h5>
+                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Từ</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control form-control-sm" id="pricefrom" placeholder="0" value="">
+                                </div>
+                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Đến</label>
+                                <div class="col-sm-9">
+                                    <input type="number" min="0" max="999999999" value="" class="form-control form-control-sm" id="priceto" placeholder="0">
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <!-- <h5>Chất liệu</h5>
+                                <select class="form-select form-select-sm w-75" aria-label=".form-select-sm example" id="material">
+                                    <option value="" selected>Tất cả</option>
+                                    <option value="Đồng">Đồng</option>
+                                    <option value="Bạc">Bạc</option>
+                                    <option value="Vàng">Vàng</option>
+                                </select> -->
+                                <div class="d-flex bd-highlight">
+                                    <div class="flex-sm-grow-1 bd-highlight">
+                                        <h5>Chất liệu</h5>
+                                    </div>
+                                    <select class="form-select form-select-sm w-50 flex-sm-grow-1 bd-highlight" aria-label=".form-select-sm example" id="material">
+                                        <option value="" selected>Tất cả</option>
+                                        <option value="Đồng">Đồng</option>
+                                        <option value="Bạc">Bạc</option>
+                                        <option value="Vàng">Vàng</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <!-- <h5>Xuất xứ</h5> -->
+                                <!-- <select class="form-select form-select-sm w-75" aria-label=".form-select-sm example" id="madeby">
+                                    <option value="" selected>Tất cả</option>
+                                    <option value="Nhật Bản">Nhật Bản</option>
+                                    <option value="Hàn Quốc">Hàn Quốc</option>
+                                </select> -->
+                                <div class="d-flex bd-highlight">
+                                    <div class="flex-sm-grow-1 bd-highlight">
+                                        <h5>Xuất xứ</h5>
+                                    </div>
+                                    <select class="form-select form-select-sm w-50 flex-sm-grow-1 bd-highlight" aria-label=".form-select-sm example" id="madeby">
+                                        <option value="" selected>Tất cả</option>
+                                        <option value="Nhật Bản">Nhật Bản</option>
+                                        <option value="Hàn Quốc">Hàn Quốc</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <button type="button" class="btn btn-primary btn-sm mb-2" onclick="timkiem(1)">Xem kết quả</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="huyhet()">Hủy</button>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- <div class="collapseeeesss" id="collapseExample">
                         <div class="card card-body">
                             <div class="list-group">
                                 <h5>Danh mục sản phẩm</h5>
@@ -134,11 +214,10 @@ if (isset($_POST["xemthem"])) {
                             <button type="button" class="btn btn-primary btn-sm mb-2" onclick="timkiem(1)">Xem kết quả</button>
                             <button type="button" class="btn btn-danger btn-sm" onclick="huyhet()">Hủy</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-md-9 p-0">
-
                 <div class="row row-cols-1 row-cols-md-4 g-0" id="sanpham">
 
                 </div>
@@ -150,6 +229,7 @@ if (isset($_POST["xemthem"])) {
                 </nav>
             </div>
         </div>
+        
     </div>
 
     <!-- Footer -->

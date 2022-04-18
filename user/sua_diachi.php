@@ -8,8 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .card:hover {
+        border: 1px ridge;
+    }
+</style>
 
-<body style="background-color: #f2f2f2;">
+<body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav nav-pills align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link text-dark bg-light" aria-current="page" href="../index.php">Trang chủ</a>
+                        <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
@@ -36,89 +42,64 @@
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
+                                <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
                                 <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
                                 <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-light" href="./login_user.php">Đăng nhập</a>
+                            <a class="nav-link text-light" href="./filephp/user/login_resgin/login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
                 </ul>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
-                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
-            </form>
         </div>
     </nav>
-    <?php
-    require_once('../query.php');
-    if (isset($_GET['id'])) {
-        $result = executeSingleResult("SELECT * FROM sanpham WHERE id='{$_GET['id']}'");
-    }
-    ?>
-
-    <!-- Chi tiet san pham -->
-    <div class="container">
-        <h1 style="text-align: center; color: red; font-style: italic;" class="pt-4">Chi tiết sản phẩm</h1>
-        <div class="row mb-5 bg-white">
-            <div class="col-lg-auto mb-5 mt-3 m-auto">
-                <div class="text-center mb-3 border"> <img id="main-image" src="../picture/49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg" width="320"> </div>
-                <div class="thumbnail text-center pt-2">
-                    <img class="border" onclick="change_image(this)" src="../picture/49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg" width="100">
-                    <img class="border" onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="100">
-                    <img class="border" onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="100">
+    <div style="display: flex; width:90%; margin:3rem auto 3rem auto; justify-content: space-between;">
+        <div id="menu" class="list-group" style="width:16%;">
+            <h5>Nguyễn Tiến</h5>
+            <button type="button" class="list-group-item list-group-item-action">Thông tin cá nhân</button>
+            <a type="button" class="list-group-item list-group-item-action active" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
+            <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
+            <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
+            <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
+            <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
+        </div>
+        <!-- thong tin ca nhan -->
+        <div id="manhinh" style="width:75%;">
+            <form style="padding:0 2rem" class="ttcanhan" id="ttcanhan1113">
+                <?php
+                require_once('../query.php');
+                    $id_user = $_GET['id_user'];
+                    $id_addr = $_GET['id_addr'];
+                    $sql = "SELECT * FROM diachikhach WHERE id_user=$id_user and id_addr=$id_addr";
+                    //die($sql);
+                     $result = executeSingleResult($sql);
+                echo ' <h3>Sửa địa chỉ</h3>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="hotencanhan" value="' . $result['name'] . '" placeholder="name@example.com">
+                    <label for="floatingInput">Họ và tên</label>
                 </div>
-            </div>
-            <div class="col col-lg-6">
-                <div class="product p-1">
-                    <div class="mb-2">
-                        <h2 class="fw-bolder"><?= $result['name'] ?></h2>
-                        <h4 class="text-danger fw-bolder"><?= number_format($result['price']) ?> VND</h4>
-                        <p class="mb-2">Mã sản phẩm: <span class="fw-bold"><?= $result['id'] ?><span></p>
-                        <ul class="">
-                            <li>
-                                <p class="m-0">Tình trạng: <span class="fw-bold"><?= $result['state'] == 1 ? 'Còn hàng' : 'Hết hàng' ?></span></p>
-                            </li>
-                            <li>
-                                <p class="m-0">Thương hiệu: <span class="fw-bold"><?= $result['category'] ?></span></p>
-                            </li>
-                            <li>
-                                <p class="m-0">Chất liệu: <span class="fw-bold"><?= $result['material'] ?></span></p>
-                            </li>
-                            <li>
-                                <p class="m-0">Xuất xứ: <span class="fw-bold"><?= $result['madeby'] ?></span></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <hr class="bg-dark border-dark">
-                    <div class="">
-                        <h5 class="fw-bolder">GIỚI THIỆU: </h5>
-                        <span class="fs-6">Zippo Mèo Khắc Nổi 3D Tuổi Mẹo Tuổi Mão màu vàng chất liệu đồng nguyên khối.
-                            Khắc nổi hiệu ứng 3D cao cấp bền, đẹp, không phai.
-                            Mẫu Zippo độc quyền chỉ có tại ZippoStore.vn hợp làm quà cho bạn trai, bạn bè, anh trai, chú bác, bố, người yêu, sếp nam tuổi mèo, tuổi mẹo, tuổi mão.
-                        </span>
-                    </div>
-                    <hr class="bg-dark border-dark">
-                    <!-- <div class="col-12"> -->
-                        <?php
-                        if (!isset($_SESSION["cart"][$result['id']])) {
-                            echo '<button class="btn btn-primary btn-lg w-100" onclick="buyproduct(' . $result['id'] . ')" id="id' . $result['id'] . '">Mua sản phẩm</button>';
-                        } else {
-                            echo '<button class="btn btn-primary btn-lg disabled w-100" onclick="buyproduct(' . $result['id'] . ')" id="id' . $result['id'] . '">Đã thêm vào giỏ</button>';
-                        }
-                        ?>
-                    <!-- </div> -->
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="sdtcanhan" value="' . $result['phone'] . '" placeholder="name@example.com">
+                    <label for="floatingInput">Số điện thoại</label>
                 </div>
-            </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="diachicanhan" value="' . $result['addr'] . '" placeholder="name@example.com">
+                    <label for="floatingInput">Địa chỉ</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <button type="button" class="btn btn-success" onclick="updateInfo(' . $_SESSION['iduser'] . ')">Cập nhật</button>
+                    <a class="btn btn-secondary" href="./diachi.php?diachi&id='.$_SESSION['iduser'].'">Quay lại</a>
+                </div>';
+                // }
+                ?>
+            </form>
         </div>
     </div>
-    <!-- Chi tiet san pham -->
 
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-dark text-muted">
@@ -242,37 +223,34 @@
     </footer>
     <!-- Footer -->
     <script>
-        function change_image(image) {
-            var container = document.getElementById("main-image");
-            container.src = image.src;
-        }
-
-        function buyproduct(e) {
+        function updateInfo(id) {
+            s1 = document.getElementById('hotencanhan').value;
+            s2 = document.getElementById('sdtcanhan').value;
+            s3 = document.getElementById('emailcanhan').value;
+            s4 = document.getElementById('diachicanhan').value;
+            console.log(s1, s2, s3, s4);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    if (this.responseText != '') {
-                        alert(this.responseText)
-                    } else {
-                        let btn = document.getElementById("id" + e)
-                        btn.innerText = "Đã thêm vào giỏ"
-                        btn.classList.add('disabled')
-                        btn.classList.add('btn-primary')
-                        btn.classList.remove('btn-outline-primary')
-                    }
+                    alert(this.responseText);
                 }
             }
             //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_cart.php', true);
+            xhttp.open('POST', './PHP_Function/sua_taikhoan_canhan.php', true);
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('data=' + e + '&mua');
+            xhttp.send('id=' + id +
+                '&name=' + s1 +
+                '&phone=' + s2 +
+                '&email=' + s3 +
+                '&addr=' + s4
+            );
         }
     </script>
+    <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 

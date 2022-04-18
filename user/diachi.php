@@ -59,88 +59,88 @@
         </div>
     </nav>
 
+    <?php echo $_SESSION['iduser'] ?>
 
-    <?php
-    echo $_SESSION['iduser'] ?>
-    <div style="display: flex; width:90%; margin:3rem auto 3rem auto; justify-content: space-between;">
-        <div id="menu" class="list-group" style="width:16%;">
-            <h5>Nguyễn Tiến</h5>
-            <a type="button" class="list-group-item list-group-item-action" href='./canhan.php?id=<?= $_SESSION['iduser'] ?>'>Thông tin cá nhân</a>
-            <button type="button" class="list-group-item list-group-item-action active">Địa chỉ</button>
-            <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
-            <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
-            <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
-        </div>
-
-        <!-- thong tin ca nhan -->
-
-        <div id="manhinh" style="width:75%;">
-            <div class="ttcanhan" style="padding:0 2rem;">
-                <div style="text-align: center;border: dotted;">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Thêm địa chỉ
-                    </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Địa chỉ mới</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="formAddr">
-                                        <div class="form-floating mb-4">
-                                            <input type="text" class="form-control" id="dc_hoten" placeholder="Nguyen Van A">
-                                            <label for="floatingInput">Họ và tên</label>
+    <div class="container mt-4 mb-4">
+        <div class="row justify-content-around">
+            <div class="col-md-2 p-0 mb-4">
+                <div id="menu" class="list-group" style="width:100%;">
+                    <h5>Nguyễn Tiến</h5>
+                    <a type="button" class="list-group-item list-group-item-action" href="./canhan.php?id=<?= $_SESSION['iduser'] ?>">Thông tin cá nhân</a>
+                    <a type="button" class="list-group-item list-group-item-action active">Địa chỉ</a>
+                    <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
+                    <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
+                    <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
+                </div>
+            </div>
+            <div class="col-md-9 p-0">
+                <div id="manhinh" >
+                    <div class="ttcanhan" style="padding:0 2rem;">
+                        <div style="text-align: center;border: dotted;">
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Thêm địa chỉ
+                            </button>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Địa chỉ mới</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="form-floating mb-4">
-                                            <input type="text" class="form-control" id="dc_sdt" placeholder="09001201">
-                                            <label for="floatingInput">Số điện thoại</label>
+                                        <div class="modal-body">
+                                            <form id="formAddr">
+                                                <div class="form-floating mb-4">
+                                                    <input type="text" class="form-control" id="dc_hoten" placeholder="Nguyen Van A">
+                                                    <label for="floatingInput">Họ và tên</label>
+                                                </div>
+                                                <div class="form-floating mb-4">
+                                                    <input type="text" class="form-control" id="dc_sdt" placeholder="09001201">
+                                                    <label for="floatingInput">Số điện thoại</label>
+                                                </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="dc_diachi" placeholder="Enter password">
+                                                    <label for="floatingInput">Địa chỉ</label>
+                                                </div>
+                                            </form>
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="text" class="form-control" id="dc_diachi" placeholder="Enter password">
-                                            <label for="floatingInput">Địa chỉ</label>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" onclick="addAr(<?php echo $_SESSION['iduser'] ?>)">Thêm</button>
                                         </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" onclick="addAr(<?php echo $_SESSION['iduser'] ?>)">Thêm</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- Modal -->
-                <div id="addruser">
-                    <?php
-                    require_once('../query.php');
-                    if (isset($_GET['diachi'])) {
-                        $s = '';
-                        $id = $_GET['id'];
-                        $sql = "SELECT * FROM diachikhach where id_user={$id}";
-                        $result = executeResult($sql);
-                        foreach ($result as $arr) {
-                            $s .= '<div class="item mt-3" style="border: 1px ridge">
+                        <!-- Modal -->
+                        <div id="addruser">
+                            <?php
+                            require_once('../query.php');
+                            if (isset($_GET['diachi'])) {
+                                $s = '';
+                                $id = $_GET['id'];
+                                $sql = "SELECT * FROM diachikhach where id_user={$id}";
+                                $result = executeResult($sql);
+                                foreach ($result as $arr) {
+                                    $s .= '<div class="item mt-3" style="border: 1px ridge">
                                     <div class="d-flex justify-content-between p-2">
                                         <div class="info">
                                             <div class="name">' . $arr['name'] . '</div>
                                             <div class="address"><span>Địa chỉ: </span>' . $arr['addr'] . '</div>
                                             <div class="phone"><span>Điện thoại: </span>' . $arr['phone'] . '</div>
                                         </div>
-                                        <div><a class="text-primary text-decoration-none fs-6" >Chỉnh sửa</a>
+                                        <div><a class="text-primary text-decoration-none fs-6" href="./sua_diachi.php?id_user=' . $_SESSION['iduser'] . '&id_addr=' . $arr['id_addr'] . '">Chỉnh sửa</a>
                                             <a class="btn text-danger btn-sm fs-6" onclick="xoaDiaChi(this, ' . $arr['id_addr'] . ')">X</a>
                                         </div>
                                     </div>
                                 </div>';
-                        }
-                        echo $s;
-                    }
-                    ?>
+                                }
+                                echo $s;
+                            }
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -304,6 +304,8 @@
                         alert('Thêm địa chỉ lỗi, có thể do:\n' +
                             '1. Trùng số điện thoại.\n' +
                             '2. Tên người nhận lỗi');
+                    } else if (this.responseText == 'fail1') {
+                        alert('Mỗi tài khoản tối đa 5 địa chỉ');
                     } else {
                         alert(this.responseText);
                         node = document.createElement("div");

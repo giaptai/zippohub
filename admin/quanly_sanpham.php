@@ -97,9 +97,8 @@
     <!-- Modal chi tiet san pham -->
 
     <div class="d-block m-auto" style="width: 90%;">
-        <div class="container m-0 p-0 mt-3">
+        <div class="container m-0 p-0 mt-2">
             <div class="row justify-content-md-between">
-
                 <div class="col-md-auto">
                     <div class="input-group mb-3">
                         <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="xoa1trang()">Xóa tất cả</button>
@@ -116,22 +115,22 @@
                 </div>
             </div>
         </div>
+        <?php
+            require_once('../query.php');
+            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+            $start = ($page - 1) * 5;
+            $result = executeResult("SELECT * FROM sanpham LIMIT $start,5");
+            $count = countRow("SELECT * FROM sanpham");
+        ?>
         <table class="table align-middle caption-top">
             <caption>
                 Quản lý sản phẩm
                 <a type="button" class="btn btn-success btn-sm" href="./quanly_sanpham_them.php">Thêm sản phẩm</a>
-                <div type="button" class="btn btn-outline-primary m-2">
+                <div type="button" class="btn btn-outline-primary btn-sm m-2">
                     Tổng sản phẩm <span class="badge bg-danger" id="badge">4</span>
                 </div>
             </caption>
-            <!-- <thead>
-                <tr>
-                <th scope="col" colspan="1"> <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="xoa1trang()">Xóa tất cả</button></th>
 
-                    <th scope="col" colspan="4"><input type="text" class="form-control" placeholder="Tên sản phẩm" aria-label="Email" id="button-addon1"></th>
-                    <th scope="col" colspan="1"> <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search(1)">Tìm kiếm</button></th>
-                </tr>
-            </thead> -->
             <thead>
                 <tr>
                     <th scope="col" class="w-auto">
@@ -146,18 +145,45 @@
                 </tr>
             </thead>
             <tbody id="table_tbody_sanpham">
-
+                <?php
+                foreach ($result as $sp) {
+                    echo '<tr>
+                        <th scope="row">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="' . $sp['id'] . '">
+                                <span>' . (++$start) . '</span>
+                            </div>
+                        </th>' .
+                        '<td>
+                            <img src="../picture/' . $sp["img"] . '"width="auto" height="80">
+                            <span>' . $sp['name'] . '</span>
+                        </td>' .
+                        '<td>' . $sp['amount'] . '</td>
+                        <td>' . number_format($sp['price'], 0, '.') . ' ₫</td>' .
+                        '<td>' . '<span>' . (($sp['state'] == 1) ?  "Còn hàng" : "Hết hàng") . '</span></td>' .
+                        '<td>
+                            <button type="button" class="btn btn-outline-primary btn-sm" id="sua' . $sp['id'] . '" onclick="detail(' . $sp['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+                            <button class="btn btn-danger btn-sm" name="xoa" id="xoa' . $sp['id'] . '" onclick="deleteproduct(' . $sp['id'] . ')">X</button>
+                        </td>
+                    </tr>';
+                }
+                ?>
             </tbody>
             <tfoot>
                 <td colspan="6" style="text-align:center">
                     <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_sanpham">
-
+                        <?php
+                        // in nut phan trang
+                        for ($i = 0; $i < ceil(($count) / 5); $i++) {
+                            echo '<button type="button" class="btn btn-outline-secondary" onclick="search(' . $i + 1 . ')">' . $i + 1 . '</button>';
+                        }
+                        ?>
                     </div>
                 </td>
             </tfoot>
         </table>
     </div>
-    <!--  -->
+
     <script>
         function uploadd() {
             var s = document.getElementById("inputGroupFile02");
@@ -166,31 +192,31 @@
         }
 
         // danh sach san pham va phan trang
-        var table_sanpham = function() {
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    let s1 = JSON.parse(this.responseText).arr1;
-                    let s2 = JSON.parse(this.responseText).pagin;
-                    let s3 = JSON.parse(this.responseText).arr3;
+        // var table_sanpham = function() {
+        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
+        //     //Bat su kien thay doi trang thai cuar request
+        //     xhttp.onreadystatechange = function() {
+        //         //Kiem tra neu nhu da gui request thanh cong
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             //In ra data nhan duoc
+        //             let s1 = JSON.parse(this.responseText).arr1;
+        //             let s2 = JSON.parse(this.responseText).pagin;
+        //             let s3 = JSON.parse(this.responseText).arr3;
 
-                    document.getElementById('table_tbody_sanpham').innerHTML = s1;
-                    document.getElementById('table_tfoot_sanpham').innerHTML = s2;
-                    document.getElementById('badge').innerText = s3;
-                    //console.log(JSON.parse(this.responseText).arr2);
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/sanpham.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=displaysanpham');
-        }
-        table_sanpham();
+        //             document.getElementById('table_tbody_sanpham').innerHTML = s1;
+        //             document.getElementById('table_tfoot_sanpham').innerHTML = s2;
+        //             document.getElementById('badge').innerText = s3;
+        //             //console.log(JSON.parse(this.responseText).arr2);
+        //         }
+        //     }
+        //     //cau hinh request
+        //     xhttp.open('POST', './PHP_Function/sanpham.php', true);
+        //     //cau hinh header cho request
+        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //     //gui request
+        //     xhttp.send('action=displaysanpham');
+        // }
+        // table_sanpham();
 
 
         function search(p) {
@@ -297,7 +323,7 @@
             row.children[1].children[1].innerText = s2;
             row.children[2].innerText = s3;
             row.children[3].innerHTML = formatter.format(s4);
-            row.children[4].children[0].innerText = (s5==1 ? 'Còn hàng':'Hết hàng');
+            row.children[4].children[0].innerText = (s5 == 1 ? 'Còn hàng' : 'Hết hàng');
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
@@ -305,7 +331,7 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    console.log( row.children[4].children[0]);     
+                    console.log(row.children[4].children[0]);
                     alert(this.responseText);
                 }
             }

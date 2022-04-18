@@ -15,7 +15,6 @@
 </style>
 
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,55 +58,55 @@
         </div>
     </nav>
 
+    <?php echo $_SESSION['iduser'] ?>
 
-    <?php
-    echo $_SESSION['iduser'] ?>
-    <div style="display: flex; width:90%; margin:3rem auto 3rem auto; justify-content: space-between;">
-        <div id="menu" class="list-group" style="width:16%;">
-            <h5>Nguyễn Tiến</h5>
-            <a type="button" class="list-group-item list-group-item-action" href='./canhan.php?id=<?= $_SESSION['iduser'] ?>'>Thông tin cá nhân</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
-            <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
-            <a type="button" class="list-group-item list-group-item-action active">Mã khuyến mãi</a>
-            <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
-            <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
-        </div>
-        <!-- thong tin ca nhan -->
-        <div id="manhinh" style="width:75%;">
-            <div style="padding:0 1rem 1rem 1rem;" id="lichsudonhang">
-                <div class="input-group">
-
-                    <input type="text" placeholder="Tìm mã khuyến mãi" class="form-control">
-                    <input type="text" onclick="console.log(this.value)" placeholder="Thêm mã khuyến mãi" class="form-control">
-                    <span class="input-group-text">Thêm mã</span>
+    <div class="container mt-4 mb-4">
+        <div class="row justify-content-around">
+            <div class="col-md-2 p-0 mb-4">
+                <div id="menu" class="list-group" style="width:100%;">
+                    <h5>Nguyễn Tiến</h5>
+                    <a type="button" class="list-group-item list-group-item-action" href="./canhan.php?id=<?= $_SESSION['iduser'] ?>">Thông tin cá nhân</a>
+                    <a type="button" class="list-group-item list-group-item-action " href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
+                    <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
+                    <a type="button" class="list-group-item list-group-item-action active">Mã khuyến mãi</a>
+                    <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
                 </div>
+            </div>
+            <div class="col-md-9 p-0">
+                <div id="manhinh">
+                    <div style="padding:0 1rem 1rem 1rem;" id="lichsudonhang">
+                        <div class="input-group">
+                            <input type="text" placeholder="Tìm mã khuyến mãi" class="form-control">
+                            <input type="text" onclick="console.log(this.value)" placeholder="Thêm mã khuyến mãi" class="form-control">
+                            <span class="input-group-text">Thêm mã</span>
+                        </div>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Mã khuyến mãi</th>
-                            <th scope="col">Giảm giá</th>
-                            <th scope="col">Ngày hết hạn</th>
-                            <th scope="col">Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody id="orderlist">
-                        <?php require_once('../query.php');
-                        if (isset($_GET['makhuyenmai'])) {
-                            $sql = "SELECT * from makhuyenmai LIMIT 0, 10";
-                            $s = array('arr1' => '', 'arr2' => '');
-                            //die($sql);
-                            $result = executeResult($sql);
-                            $resul1t = countRow($sql);
-                            if ($resul1t > 0) {
-                                $count=1;
-                                foreach ($result as $row) {
-                                    $s['arr1'] .= '<tr>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Mã khuyến mãi</th>
+                                    <th scope="col">Giảm giá</th>
+                                    <th scope="col">Ngày hết hạn</th>
+                                    <th scope="col">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderlist">
+                                <?php require_once('../query.php');
+                                if (isset($_GET['makhuyenmai'])) {
+                                    $sql = "SELECT * from makhuyenmai LIMIT 0, 10";
+                                    $s = array('arr1' => '', 'arr2' => '');
+                                    //die($sql);
+                                    $result = executeResult($sql);
+                                    $resul1t = countRow($sql);
+                                    if ($resul1t > 0) {
+                                        $count = 1;
+                                        foreach ($result as $row) {
+                                            $s['arr1'] .= '<tr>
                                     <th scope="row">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="' . $row["id_khuyenmai"] . '">
-                                            <span>'.$count++.'</span>
+                                            <span>' . $count++ . '</span>
                                         </div>
                                     </th>
                                     <td>
@@ -115,33 +114,34 @@
                                     </td>
                                     <td>' . number_format($row["giamgia"]) . '</td>
                                     <td>' . $row["ngayhethan"] . '</td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">Xóa</button>
-                                        <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+                                    <td>  
+                                        <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+                                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
                                     </td>
                                 </tr>';
+                                        }
+                                        for ($i = 0; $i < ceil($resul1t / 10); $i++) {
+                                            $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">1</a></li>';
+                                        }
+                                    } else {
+                                        $s['arr1'] = 'Không tìm thấy';
+                                        $s['arr2'] = 'Không tìm thấy';
+                                    };
+                                    echo ($s['arr1']);
                                 }
-                                for ($i = 0; $i < ceil($resul1t / 10); $i++) {
-                                    $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">1</a></li>';
-                                }
-                            } else {
-                                $s['arr1'] = 'Không tìm thấy';
-                                $s['arr2'] = 'Không tìm thấy';
-                            };
-                            echo ($s['arr1']);
-                        }
-                        ?>
-                    </tbody>
-                </table>
-                <nav aria-label="...">
-                    <ul class="pagination pagination-sm justify-content-center" id="phantrang">
-                        <?php
-                        echo ($s['arr2']);
-                        ?>
-                    </ul>
-                </nav>
+                                ?>
+                            </tbody>
+                        </table>
+                        <nav aria-label="...">
+                            <ul class="pagination pagination-sm justify-content-center" id="phantrang">
+                                <?php
+                                echo ($s['arr2']);
+                                ?>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 
@@ -290,7 +290,7 @@
         //     xhttp.send('trangthai');
         // }
 
-        function trangthai(val, p) {// chọn tình trạng đơn hàng 
+        function trangthai(val, p) { // chọn tình trạng đơn hàng 
             //console.log(val.value, p);
             let s = val.value;
             var xhttp = new XMLHttpRequest() || ActiveXObject();
@@ -313,7 +313,7 @@
             xhttp.send('trangthai&val=' + s);
         }
 
-        function phantrang(p) { 
+        function phantrang(p) {
             //console.log(document.getElementById('lichsudonhang').children[0].querySelectorAll("input[type='radio']"));
             // let s = document.getElementById('lichsudonhang').children[0].querySelectorAll("input[type='radio']");
             // var ss;
