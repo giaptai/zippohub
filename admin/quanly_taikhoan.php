@@ -133,7 +133,7 @@
             <caption>
                 Quản lý tài khoản
                 <a class="btn btn-success btn-sm" href="./quanly_taikhoan_them.php">Thêm tài khoản</a>
-                <div type="button" class="btn btn-sm btn-outline-primary m-2">
+                <div type="button" class="btn btn-sm btn-outline-primary m-2" onclick="sendMail()">
                     Tổng tài khoản <span class="badge bg-danger" id="badge">4</span>
                 </div>
             </caption>
@@ -185,6 +185,25 @@
         <!-- <div id="chart" style="width: 70%; height: 100px"></div> -->
     </div>
     <script>
+        function sendMail() {
+            console.log('mail');
+     
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        console.log((this.responseText));
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/taikhoan.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('sendmail');
+        }
         // var table_taikhoan = function() {
         //     var xhttp = new XMLHttpRequest() || ActiveXObject();
         //     //Bat su kien thay doi trang thai cuar request

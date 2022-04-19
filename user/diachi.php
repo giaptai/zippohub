@@ -128,7 +128,7 @@
                                             <div class="address"><span>Địa chỉ: </span>' . $arr['addr'] . '</div>
                                             <div class="phone"><span>Điện thoại: </span>' . $arr['phone'] . '</div>
                                         </div>
-                                        <div><a class="text-primary text-decoration-none fs-6" href="./sua_diachi.php?id_user=' . $_SESSION['iduser'] . '&id_addr=' . $arr['id_addr'] . '">Chỉnh sửa</a>
+                                        <div><a class="text-primary text-decoration-none fs-6" href="./sua_diachi.php?id_addr=' . $arr['id_addr'] . '">Chỉnh sửa</a>
                                             <a class="btn text-danger btn-sm fs-6" onclick="xoaDiaChi(this, ' . $arr['id_addr'] . ')">X</a>
                                         </div>
                                     </div>

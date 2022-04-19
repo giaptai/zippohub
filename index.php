@@ -259,29 +259,24 @@
             <!-- Three columns of text below the carousel -->
             <div class="row">
                 <div class="col-lg-3 p-3">
-                    <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/toan3.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
                     <h2>Nguyễn Vĩnh Tiến</h2>
-                    <p>111111</p>
-                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                    <p>3119560059</p>
                 </div>
                 <div class="col-lg-3 p-3">
-                    <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
-
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/toan4.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
                     <h2>Nguyễn Giáp Tài</h2>
-                    <p>11111</p>
-                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                    <p>3119560059</p>
                 </div>
                 <div class="col-lg-3 p-3">
-                    <img class="bd-placeholder-img rounded-circle" src="./picture/tri.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/toan2.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
                     <h2>Bùi Trí</h2>
-                    <p>111111.</p>
-                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                    <p>3119560059</p>
                 </div>
                 <div class="col-lg-3 p-3">
-                    <img class="bd-placeholder-img rounded-circle" src="./picture/tai.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <img class="bd-placeholder-img rounded-circle" src="./picture/toan.jpg" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false">
                     <h2>Lê Ngọc Toàn</h2>
-                    <p>111111</p>
-                    <p><a class="btn btn-secondary" href="#">View details »</a></p>
+                    <p>3119560059</p>
                 </div>
             </div>
 

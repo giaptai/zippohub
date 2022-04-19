@@ -87,6 +87,10 @@
                     <div class="divider d-flex align-items-center my-4">
                         <p class="text-center fs-3 fw-bold mx-3 mb-0">Đăng nhập</p>
                     </div>
+                    <div class="align-items-center my-2">
+                        <p class="text-danger fw-bold mb-0" id="thongbao">
+                        </p>
+                    </div>
                     <!-- Email input -->
                     <div class="form-floating mb-4">
                         <input type="email" class="form-control" id="emaill" placeholder="name@example.com">
@@ -128,11 +132,11 @@
                         <label for="floatingInput">Địa chỉ email</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="matkhau" placeholder="Mật khẩu" >
+                        <input type="password" class="form-control" id="matkhau" placeholder="Mật khẩu">
                         <label for="floatingInput">Mật khẩu</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" >
+                        <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ">
                         <label for="floatingInput">Địa chỉ</label>
                     </div>
                     <div class="text-center text-lg-start mt-4 pt-2">
@@ -338,10 +342,10 @@
                     if (this.responseText == 'success') {
                         alert(this.responseText);
                         window.location.href = '../index.php';
-                    } else alert('Không tìm thấy tài khoản, có thể do:\n' +
-                        '1. Tài khoản đã bị khóa.\n' +
-                        '2. Sai email hoặc mật khẩu.\n' +
-                        '3. Tài khoản chưa đăng ký.');
+                    } else document.getElementById('thongbao').innerHTML = ( '<small>Không tìm thấy tài khoản, có thể do:<br>'+
+                                '1. Chưa nhập thông tin.<br>'+
+                                '2. Sai email hoặc mật khẩu.<br>'+
+                                '3. Tài khoản chưa đăng ký.<br></small>');
                     //console.log(this.responseText);
                 }
             }

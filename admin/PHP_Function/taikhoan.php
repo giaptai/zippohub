@@ -161,4 +161,19 @@ if (isset($_POST["add"])) {
         die();
     }
 }
-?>
+
+// if (isset($_POST["sendmail"])) {
+    // ini_set('SMTP', 'smtp.gmail.com');
+    // ini_set('smtp_port', '587');
+    // ini_set('sendmail_from', "hentaiktvn321@gmail.com");
+
+    // $to_email = 'gtainguyenk19@gmail.com';
+    // $subject = 'Testing PHP Mail';
+    // $message = 'This mail is sent using the PHP mail function';
+    // $header = "From: hentaiktvn321@gmail.com";
+
+    // mail($to_email, $subject, $message, $header);
+//     if ($sss) {
+//         echo 'thanh cong';
+//     } else 'that bai';
+// }

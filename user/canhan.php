@@ -249,7 +249,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('id=' + id +
+            xhttp.send('canhan'+
                 '&name=' + s1 +
                 '&phone=' + s2 +
                 '&email=' + s3 +

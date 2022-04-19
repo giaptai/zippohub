@@ -18,32 +18,37 @@ if (isset($_POST['email']) && isset($_POST['pass'])) {
 
 if (isset($_POST['dangky'])) {
     $id = rand(1, 99999);
+    $id_adr = rand(1000, 9999);
     $hovaten = $_POST['hovaten'];
     $sodienthoai = $_POST['sodienthoai'];
     $email = $_POST['email'];
     $matkhau = $_POST['matkhau'];
     $diachi = $_POST['diachi'];
 
-    if (!preg_match('/^[0-9]{10,11}$/', $sodienthoai)){
+    if (!preg_match('/^[0-9]{10,11}$/', $sodienthoai)) {
         echo 'Số điện thoại lỗi';
         die();
     }
 
-    if (!preg_match('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email)){
+    if (!preg_match('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email)) {
         echo 'Email không hợp lệ';
         die();
     }
 
-    if (!preg_match('/^[a-zA-Z0-9]{3,20}$/', $matkhau)){
+    if (!preg_match('/^[a-zA-Z0-9]{3,20}$/', $matkhau)) {
         echo 'Mật khẩu không hợp lệ';
         die();
     }
 
     $sql = "INSERT INTO taikhoan(id, fullname, email, `password`, `phone`, `address`, `status`) 
         VALUES ('$id','$hovaten','$email','$matkhau','$sodienthoai','$diachi',1)";
+
+    $sql1 = "INSERT INTO diachikhach(id_user, id_addr, `name`, `phone`, addr) 
+        VALUES ('$id','$id_adr','$hovaten','$sodienthoai','$diachi')";
     $result = execute($sql);
     if ($result) {
         echo 'success';
+        execute($sql1);
     } else echo 'fail';
 }
 

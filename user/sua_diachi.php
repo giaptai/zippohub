@@ -65,7 +65,6 @@
             <a type="button" class="list-group-item list-group-item-action active" href="./diachi.php?diachi&id=<?= $_SESSION['iduser'] ?>">Địa chỉ</a>
             <a type="button" class="list-group-item list-group-item-action" href="./lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>">Lịch sử đơn hàng</a>
             <a type="button" class="list-group-item list-group-item-action" href="./makhuyenmai.php?makhuyenmai&id=<?= $_SESSION['iduser'] ?>">Mã khuyến mãi</a>
-            <button type="button" class="list-group-item list-group-item-action">Đơn đang giao</button>
             <button type="button" class="list-group-item list-group-item-action list-group-item-danger">Đăng xuất</button>
         </div>
         <!-- thong tin ca nhan -->
@@ -73,7 +72,7 @@
             <form style="padding:0 2rem" class="ttcanhan" id="ttcanhan1113">
                 <?php
                 require_once('../query.php');
-                    $id_user = $_GET['id_user'];
+                    $id_user = $_SESSION['iduser'];
                     $id_addr = $_GET['id_addr'];
                     $sql = "SELECT * FROM diachikhach WHERE id_user=$id_user and id_addr=$id_addr";
                     //die($sql);
@@ -92,7 +91,7 @@
                     <label for="floatingInput">Địa chỉ</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <button type="button" class="btn btn-success" onclick="updateInfo(' . $_SESSION['iduser'] . ')">Cập nhật</button>
+                    <button type="button" class="btn btn-success" onclick="updateAdr(' .$id_addr. ')">Cập nhật</button>
                     <a class="btn btn-secondary" href="./diachi.php?diachi&id='.$_SESSION['iduser'].'">Quay lại</a>
                 </div>';
                 // }
@@ -223,12 +222,11 @@
     </footer>
     <!-- Footer -->
     <script>
-        function updateInfo(id) {
+        function updateAdr(id) {
             s1 = document.getElementById('hotencanhan').value;
             s2 = document.getElementById('sdtcanhan').value;
-            s3 = document.getElementById('emailcanhan').value;
             s4 = document.getElementById('diachicanhan').value;
-            console.log(s1, s2, s3, s4);
+            console.log(s1, s2, s4);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
@@ -242,10 +240,10 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('id=' + id +
+            xhttp.send('update_diachi'+
+                '&id=' + id +
                 '&name=' + s1 +
                 '&phone=' + s2 +
-                '&email=' + s3 +
                 '&addr=' + s4
             );
         }
