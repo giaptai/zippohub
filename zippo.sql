@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2022 at 02:38 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.9
+-- Generation Time: Apr 22, 2022 at 07:39 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 7.3.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -267,6 +267,20 @@ INSERT INTO `payments` (`PaymentID`, `OrderID`, `Total`, `Note`, `vnp_response_c
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `resetpassword`
+--
+
+CREATE TABLE `resetpassword` (
+  `ResetID` int(11) NOT NULL,
+  `ResetEmail` varchar(50) COLLATE utf8_vietnamese_ci NOT NULL,
+  `ResetSelector` varchar(16) COLLATE utf8_vietnamese_ci NOT NULL,
+  `ResetToken` varchar(60) COLLATE utf8_vietnamese_ci NOT NULL,
+  `ResetExpire` varchar(50) COLLATE utf8_vietnamese_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sanpham`
 --
 
@@ -329,7 +343,7 @@ INSERT INTO `taikhoan` (`id`, `fullname`, `email`, `password`, `phone`, `address
 (2397, 'Trần Đình Lâm', 'lamlonton2000@gmail.com', '123213123', '0258121302', '120 Phạm Văn Đồng,tổ 10,  Phường 4, quận Bình Thạn', 0),
 (3478, 'Phạm Ngọc Quang', 'quangqang123@gmail.com', '123456', '0215540201', '123 An Lạc, Phường 13, Quận 8', 0),
 (22211, 'Lê Yến Như', 'tuyet2001@gmail.com', '123456', '0361152456', '99 An Duong Vuong, Phuong 16, Quan 8, TP HCM', 1),
-(22659, 'Le Ngoc Toan', 'toansgu@gmail.com', '123456', '0921141215', '23 Pham Ngu Lao, Phuong 4, Quan 3, TP HCM', 1),
+(22659, 'Le Ngoc Toan', 'tien23851@gmail.com', 'tiendaide', '0921141215', '23 Pham Ngu Lao, Phuong 4, Quan 3, TP HCM', 1),
 (28539, 'Lê Yến Như', 'tuyet2001@gmail.com', '123456', '0361152456', '99 An Duong Vuong', 1),
 (32583, 'Lê Yến Như', 'tuyet2001@gmail.com', '123456', '0361152456', '99 An Duong Vuong', 1),
 (50521, 'Lê Yến Như', 'tuyet2001@gmail.com', '123456', '0361152456', '99 An Duong Vuong', 1),
@@ -379,6 +393,12 @@ ALTER TABLE `payments`
   ADD PRIMARY KEY (`PaymentID`);
 
 --
+-- Indexes for table `resetpassword`
+--
+ALTER TABLE `resetpassword`
+  ADD PRIMARY KEY (`ResetID`);
+
+--
 -- Indexes for table `sanpham`
 --
 ALTER TABLE `sanpham`
@@ -405,6 +425,12 @@ ALTER TABLE `danhmuc`
 --
 ALTER TABLE `payments`
   MODIFY `PaymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `resetpassword`
+--
+ALTER TABLE `resetpassword`
+  MODIFY `ResetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

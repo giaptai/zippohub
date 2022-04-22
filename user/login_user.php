@@ -43,6 +43,19 @@
                         <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
                     </li>
                     <?php
+                    if (isset($_GET["reset"])) {
+                        switch ($_GET["reset"]) {
+                            case "success":
+                                echo "<script>alert('Đổi mật khẩu thành công nhá địt mẹ mày')</script>";
+                                break;
+                            case "wrongtoken":
+                                echo "<script>alert('Sai token')</script>";
+                                break;
+                            case "expired":
+                                echo "<script>alert('Token đã hết hạn sử dụng')</script>";
+                                break;
+                        }
+                    }
                     session_start();
                     if (isset($_SESSION['email'])) {
                         echo '
@@ -107,7 +120,7 @@
                             <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
                             <label class="form-check-label" for="form2Example3">Remember me</label>
                         </div>
-                        <a href="#!" class="text-body">Quên mật khẩu?</a>
+                        <a href="../reset_password/reset-index.php" class="text-body">Quên mật khẩu?</a>
                     </div>
                     <div class="text-center text-lg-start mt-3">
                         <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" id="login">Login</button>
@@ -342,10 +355,10 @@
                     if (this.responseText == 'success') {
                         alert(this.responseText);
                         window.location.href = '../index.php';
-                    } else document.getElementById('thongbao').innerHTML = ( '<small>Không tìm thấy tài khoản, có thể do:<br>'+
-                                '1. Chưa nhập thông tin.<br>'+
-                                '2. Sai email hoặc mật khẩu.<br>'+
-                                '3. Tài khoản chưa đăng ký.<br></small>');
+                    } else document.getElementById('thongbao').innerHTML = ('<small>Không tìm thấy tài khoản, có thể do:<br>' +
+                        '1. Chưa nhập thông tin.<br>' +
+                        '2. Sai email hoặc mật khẩu.<br>' +
+                        '3. Tài khoản chưa đăng ký.<br></small>');
                     //console.log(this.responseText);
                 }
             }
