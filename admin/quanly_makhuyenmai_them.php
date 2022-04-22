@@ -88,13 +88,11 @@
     <!--  -->
     <script>
         function addPromo() {
-
             var s1 = document.getElementById('khuyenmai').value;
             var s2 = document.getElementById('trangthai').value;
             var s3 = document.getElementById('ngayhethan').value;
             var s4 = document.getElementById('giagiam').value;
             console.log(s1, s2, s3, s4);
-
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
@@ -110,7 +108,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('them' +
+            xhttp.send('action=them' +
                 "&khuyenmai=" + s1 +
                 '&trangthai=' + s2 +
                 "&ngayhethan=" + s3 +

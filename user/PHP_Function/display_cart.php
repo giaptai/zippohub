@@ -18,7 +18,7 @@ if (isset($_POST['data']) && isset($_POST['mua'])) {
     
     if (isset($_SESSION["cart"])) {
         if (count($_SESSION["cart"]) == 5) {
-            die("Đã đạt giới hạn mua hàng vui lòng đạt vip 15 để mua thêm");
+            die("Mỗi tài khoản tối đa 5 sản phẩm, ý kiến thì cút");
         }
 
         if (isset($_SESSION['cart'][$id])) {

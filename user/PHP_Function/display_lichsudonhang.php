@@ -70,15 +70,16 @@ session_start();
 // }
 
 if (isset($_POST['phantrang']) || isset($_POST['trangthai'])) {
+    $id=$_POST['id'];
     $page = isset($_POST['page']) ? $_POST['page']:1; // số trang
     $start = ($page - 1) * 10;
     $trangthai = $_POST['val'];
-    if (empty($trangthai)) {
-        $sql = "SELECT * FROM hoadon LIMIT $start, 10";
-        $sql0 = "SELECT * FROM hoadon";
+    if ($trangthai=='Tất cả đơn') {
+        $sql = "SELECT * FROM hoadon WHERE id_user=$id LIMIT $start, 10";
+        $sql0 = "SELECT * FROM hoadon WHERE id_user=$id";
     } else {
-        $sql = "SELECT * FROM hoadon WHERE statuss='{$trangthai}' LIMIT $start, 10";
-        $sql0 = "SELECT * FROM hoadon WHERE statuss='{$trangthai}'";
+        $sql = "SELECT * FROM hoadon WHERE id_user=$id AND statuss='{$trangthai}' LIMIT $start, 10";
+        $sql0 = "SELECT * FROM hoadon WHERE id_user=$id AND statuss='{$trangthai}'";
     }
     $s = array('arr1' => '', 'arr2' => '');
     //die($sql);
@@ -91,7 +92,7 @@ if (isset($_POST['phantrang']) || isset($_POST['trangthai'])) {
                     <p class="mb-0">' . $row['id_hoadon'] . '</p>
                 </th>
                 <td class="align-middle">
-                    <p class="mb-0" style="font-weight: 500;">' . $row['ngaymua'] . '</p>
+                    <p class="mb-0" style="font-weight: 500;">' . date("d-m-Y H:i:s", strtotime($row['ngaymua'])) . '</p>
                 </td>
                 <td class="align-middle">
                     <p class="mb-0" style="font-weight: 500;">' . number_format($row['total_product']) . '</p>
@@ -130,7 +131,10 @@ if (isset($_POST['phantrang']) || isset($_POST['trangthai'])) {
             </tr>';
         }
         for ($i = 0; $i < ceil($resul1t / 10); $i++) {
-            $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).', '.$_SESSION['iduser'].')">'.($i+1).'</a></li>';
+            if($i==$page-1){
+                $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang('.($i+1).', '.$_SESSION['iduser'].')">'.($i+1).'</a></li>';
+            }else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).', '.$_SESSION['iduser'].')">'.($i+1).'</a></li>';
+            
         }
     } else {
         $s['arr1'] = 'Không tìm thấy';

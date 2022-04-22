@@ -91,95 +91,110 @@
             <button type="button" class="btn btn-primary" onclick="addproduct()">Thêm</button>
         </div>
     </div> -->
+    <div class="container-md ">
+        <form class="m-auto">
+            <h4>Thêm sản phẩm</h4>
+            <div class="row ">
+                <div class="col-md-6 offset-md-3">
+                    <img style="object-fit: cover;" src="../picture/" class="rounded" alt="..." width="auto" height="200">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" name="inputGroupFile02" id="inputGroupFile02" value="">
+                        <button onclick="uploadd()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 offset-md-3">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" disabled placeholder="1" name="codez" id="codez" value="<?php echo rand(1, 10000) ?>">
+                        <label for="floatingInput">Mã sản phẩm</label>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="namee" id="namee" placeholder="1" value="">
+                        <label for="floatingInput">Tên sản phẩm</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="mb-3">
+                        <label class="form-label">Giới thiệu:</label>
+                        <textarea name="gioithieu" id="gioithieu" class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                </div>
 
-    <form class="container">
-        <h4>Thêm sản phẩm</h4>
-        <div class="row">
-            <div class="col-md-auto">
-                <img src="../picture/" class="rounded" alt="..." width="auto" height="200">
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" name="inputGroupFile02" id="inputGroupFile02" value="">
-                    <button onclick="uploadd()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>
+            <div class="row">
+                <div class="col-md-2 offset-md-3">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Thể loại:</label>
+                        <select class="form-select" name="theloai" id="theloai">
+                            <option value="Zippo Armor">Zippo Armor</option>
+                            <option value="Zippo Sterling Silver">Zippo Sterling Silver</option>
+                            <option value="Zippo Base Models">Zippo Base Models</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Chất liệu:</label>
+                        <select class="form-select" name="chatlieu" id="chatlieu">
+                            <option value="Đồng">Đồng</option>
+                            <option value="Bạc">Bạc</option>
+                            <option value="Vàng">Vàng</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Xuất xứ:</label>
+                        <select class="form-select" name="xuatxu" id="xuatxu">
+                            <option value="Nhật Bản">Nhật Bản</option>
+                            <option value="Hàn Quốc">Hàn Quốc</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-auto">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" disabled placeholder="1" name="codez" id="codez" value="<?php echo rand(1, 10000) ?>">
-                    <label for="floatingInput">Mã sản phẩm</label>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="namee" id="namee" placeholder="1" value="">
-                    <label for="floatingInput">Tên sản phẩm</label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-auto">
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Thể loại:</label>
-                    <select class="form-select" name="theloai" id="theloai">
-                        <option value="Zippo Armor">Zippo Armor</option>
-                        <option value="Zippo Sterling Silver">Zippo Sterling Silver</option>
-                        <option value="Zippo Base Models">Zippo Base Models</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-auto">
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Chất liệu:</label>
-                    <select class="form-select" name="chatlieu" id="chatlieu">
-                        <option value="Đồng">Đồng</option>
-                        <option value="Bạc">Bạc</option>
-                        <option value="Vàng">Vàng</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-auto">
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Xuất xứ:</label>
-                    <select class="form-select" name="xuatxu" id="xuatxu">
-                        <option value="Nhật Bản">Nhật Bản</option>
-                        <option value="Hàn Quốc">Hàn Quốc</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-auto">
-                <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Tình trạng:</label>
-                    <select class="form-select" name="tinhtrang" id="tinhtrang">
-                        <option value="1">Còn hàng</option>
-                        <option value="0">Hết hàng</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-auto">
-                <div class=" mb-3">
-                    <label for="" class="form-label">Số lượng:</label>
-                    <input type="number" class="form-control" name="amountt" id="amountt" placeholder="1" value="">
-                </div>
-            </div>
-            <div class="col-sm-auto">
-                <div class="mb-3">
-                    <label class="form-label">Giá:</label>
-                    <input type="number" class="form-control" name="prices" id="prices" placeholder="1" value="">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-            <a class="btn btn-secondary" href="./quanly_sanpham.php">Quay lại</a>
-            <button type="button" class="btn btn-primary" onclick="addproduct()">Thêm</button>
-        </div>
-    </form>
 
+            <div class="row">
+                <div class="col-md-2 offset-md-3">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Tình trạng:</label>
+                        <select class="form-select" name="tinhtrang" id="tinhtrang">
+                            <option value="1">Còn hàng</option>
+                            <option value="0">Hết hàng</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class=" mb-3">
+                        <label for="" class="form-label">Số lượng:</label>
+                        <input type="number" class="form-control" name="amountt" id="amountt" placeholder="1" value="">
+                    </div>
+                </div>
+                <div class="col-md-2 ">
+                    <div class="mb-3">
+                        <label class="form-label">Giá:</label>
+                        <input type="number" class="form-control" name="prices" id="prices" placeholder="1" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-md-6 offset-md-3">
+                    <a class="btn btn-secondary" href="./quanly_sanpham.php">Quay lại</a>
+                    <button type="button" class="btn btn-primary" onclick="addproduct()">Thêm</button>
+                </div>
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            </div>
+        </form>
+    </div>
     <!-- Modal chi tiet san pham -->
     <!--  -->
     <script>
@@ -200,7 +215,7 @@
             var s6 = document.getElementById('amountt').value;
             var s7 = document.getElementById('prices').value;
             var s8 = document.getElementById('tinhtrang').value;
-
+            var s9 = document.getElementById('gioithieu').value;
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
@@ -209,13 +224,17 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc     
                     //if(confirm(this.responseText)) 
-                    if (window.confirm(this.responseText)) {
-                        location.reload();
-                    } else {
-                        alert('Lỗi khi thêm sản phẩm: \n' +
+                    console.log(this.responseText);
+                    if(confirm('Thêm sản phẩm ?')){
+                        if(this.responseText='success'){
+                            alert('thành công');
+                            location.reload();
+                        }else {
+                            alert('Lỗi khi thêm sản phẩm: \n' +
                             '- Trùng mã sản phẩm\n ' +
                             '- Trùng tên sản phẩm\n ' +
                             '- Số lượng, giá để âm hoặc trống\n ');
+                        }
                     }
                 }
             }
@@ -233,7 +252,8 @@
                 "&xuatxu=" + s5 +
                 "&amountt=" + s6 +
                 "&prices=" + s7 +
-                "&tinhtrang=" + s8
+                "&tinhtrang=" + s8+
+                "&gioithieu=" + s9
             );
         }
     </script>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php session_start(); ?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,35 +27,40 @@
                         <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
+                        <a class="nav-link text-light">Cửa hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../user/cart.php">
+                            Giỏ hàng <span class="badge bg-secondary">
+                                <?= isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                        </a>
                     </li>
                     <?php
-                    session_start();
+
                     if (isset($_SESSION['email'])) {
-                        echo '
-                        <li class="nav-item">
-                        <a class="nav-link text-light" href="../user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
-                    </li>
+                        echo
+                        '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
+                                <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-light" href="./filephp/user/login_resgin/login_user.php">Đăng nhập</a>
+                            <a class="nav-link text-light" href="./user/login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
                 </ul>
             </div>
+            <form class="d-flex">
+                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
+                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
+            </form>
         </div>
     </nav>
 
@@ -77,36 +82,27 @@
                 <div id="manhinh">
                     <div style="padding:0 1rem 1rem 1rem;" id="lichsudonhang">
                         <div class="btn-group justify-content-between p-1" style="width:100%; ">
-                            <?php
-                            if (!isset($_GET['trangthai']) || empty($_GET['trangthai'])) {
-                                echo '
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="" onclick="trangthai(this, ' . $_SESSION['iduser'] . ')" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btnradio1">Tất cả đơn</label>';
-                            } else {
-                                echo '
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="" onclick="trangthai(this, ' . $_SESSION['iduser'] . ')" autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary" for="btnradio1">Tất cả đơn</label>';
-                            }
-                            ?>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="Tất cả đơn" autocomplete="off" <?= ((isset($_GET['trangthai']) && $_GET['trangthai'] == 'Tất cả đơn') || !isset($_GET['trangthai'])) ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-primary" for="btnradio1" onclick="window.location.href = './lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>&trangthai=Tất cả đơn'"><span>Tất cả đơn</span></label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="Chờ xác nhận" onclick="trangthai(this, <?= $_SESSION['iduser'] ?>)" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Chờ xác nhận') ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-primary" for="btnradio2">Chờ xác nhận</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" value="Chờ xác nhận" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Chờ xác nhận') ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-primary" for="btnradio2" onclick="window.location.href = './lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>&trangthai=Chờ xác nhận'"><span>Chờ xác nhận</span></label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="Đã xác nhận" onclick="trangthai(this, <?= $_SESSION['iduser'] ?>)" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã xác nhận') ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-primary" for="btnradio3">Đã xác nhận</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" value="Đã xác nhận" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã xác nhận') ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-primary" for="btnradio3" onclick="window.location.href = './lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>&trangthai=Đã xác nhận'"><span>Đã xác nhận</span></label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" value="Đang giao" onclick="trangthai(this, <?= $_SESSION['iduser'] ?>)" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đang giao') ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-primary" for="btnradio4">Đang giao</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" value="Đang giao" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đang giao') ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-primary" for="btnradio4" onclick="window.location.href = './lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>&trangthai=Đang giao'"><span>Đang giao</span></label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" value="Đã giao" onclick="trangthai(this, <?= $_SESSION['iduser'] ?>)" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã giao') ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-primary" for="btnradio5">Đã giao</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" value="Đã giao" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã giao') ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-primary" for="btnradio5" onclick="window.location.href = './lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>&trangthai=Đã giao'"><span>Đã giao</span></label>
 
-                            <input type="radio" class="btn-check" name="btnradio" id="btnradio6" value="Đã hủy" onclick="trangthai(this, <?= $_SESSION['iduser'] ?>)" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã hủy') ? 'checked' : '' ?>>
-                            <label class="btn btn-outline-primary" for="btnradio6">Đã hủy</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio6" value="Đã hủy" autocomplete="off" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã hủy') ? 'checked' : '' ?>>
+                            <label class="btn btn-outline-primary" for="btnradio6" onclick="window.location.href = './lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>&trangthai=Đã hủy'"><span>Đã hủy</span></label>
                         </div>
-                        <div class="input-group">
-                            <input type="text" id='madon' placeholder="Nhập mã đơn hàng" class="form-control">
-                            <button class="input-group-text" onclick="searchID(document.getElementById('madon').value)">Tìm kiếm</button>
+                        <div class="input-group w-50" style="float: right;">
+                            <input type="search" id='madon' placeholder="Nhập mã đơn hàng" class="form-control" onchange="searchID(document.getElementById('madon').value, <?= $_SESSION['iduser'] ?>)">
+                            <button class="input-group-text">Tìm kiếm</button>
                         </div>
 
                         <table class="table table-hover">
@@ -123,16 +119,16 @@
                             <tbody id="orderlist">
                                 <?php require_once('../query.php');
                                 if (isset($_GET['lichsu'])) {
-                                    //echo $_GET['trangthai'];
+                                    $id = $_SESSION['iduser'];
                                     $trangthai = isset($_GET['trangthai']) ? $_GET['trangthai'] : "";
                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                     $start = ($page - 1) * 10;
-                                    if (empty($trangthai)) {
-                                        $sql = "SELECT * FROM hoadon LIMIT $start, 10";
-                                        $sql0 = "SELECT * FROM hoadon";
+                                    if ($trangthai == '' || $trangthai == 'Tất cả đơn') {
+                                        $sql = "SELECT * FROM hoadon WHERE id_user='$id' LIMIT $start, 10";
+                                        $sql0 = "SELECT * FROM hoadon  WHERE id_user='$id' ";
                                     } else {
-                                        $sql = "SELECT * FROM hoadon WHERE statuss='{$trangthai}' LIMIT $start, 10";
-                                        $sql0 = "SELECT * FROM hoadon WHERE statuss='{$trangthai}'";
+                                        $sql = "SELECT * FROM hoadon WHERE id_user='$id' AND statuss='{$trangthai}' LIMIT $start, 10";
+                                        $sql0 = "SELECT * FROM hoadon WHERE id_user='$id' and statuss='{$trangthai}'";
                                     }
                                     //die($sql);
                                     $result = executeResult($sql);
@@ -182,7 +178,9 @@
                                                 </td>
                                         </tr>';
                                         }
-                                    }
+                                    } else echo '<td class="align-middle" colspan="6">
+                                                   Không tìm thấy
+                                                </td>';
                                 }
                                 ?>
                             </tbody>
@@ -191,7 +189,9 @@
                             <ul class="pagination pagination-sm justify-content-center" id="phantrang">
                                 <?php
                                 for ($i = 0; $i < ceil($resul1t / 10); $i++) {
-                                    echo '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
+                                    if ($i == $page - 1) {
+                                        echo '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
+                                    } else  echo '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
                                 }
                                 ?>
                             </ul>
@@ -334,67 +334,42 @@
             }
         }
 
-        function searchID(dt) {
-            console.log(dt);
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    // const nextURL = './lichsudonhang.php?lichsu&id=' + id + '&trangthai=' + s + '&page=' + 1;
-                    // const nextTitle = 'My new page title';
-                    // const nextState = {
-                    //     additionalInformation: 'Updated the URL with JS'
-                    // };
-                    // window.history.pushState(nextState, nextTitle, nextURL);
-                    //window.history.replaceState(nextState, nextTitle, nextURL);
-                    let ds = JSON.parse(this.responseText).arr1;
-                    let ptr = JSON.parse(this.responseText).arr2;
-                    document.getElementById('orderlist').innerHTML = ds;
-                    document.getElementById('phantrang').innerHTML = ptr;
+        function searchID(dt, iduser) {
+            // console.log(dt);
+            if (dt == '') {
+                ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                if (ss == -1) {
+                    phantrang(1, iduser);
+                } else {
+                    page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                    page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                    phantrang(page, iduser);
                 }
+            } else {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        let ds = JSON.parse(this.responseText).arr1;
+                        let ptr = JSON.parse(this.responseText).arr2;
+                        document.getElementById('orderlist').innerHTML = ds;
+                        document.getElementById('phantrang').innerHTML = ptr;
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('searchID&id=' + dt);
             }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('searchID&id=' + dt);
         }
 
-        function trangthai(val, id) { // chọn tình trạng đơn hàng 
-            //console.log(val.value, p);
-            let s = val.value;
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    const nextURL = './lichsudonhang.php?lichsu&id=' + id + '&trangthai=' + s + '&page=' + 1;
-                    const nextTitle = 'My new page title';
-                    const nextState = {
-                        additionalInformation: 'Updated the URL with JS'
-                    };
-                    window.history.pushState(nextState, nextTitle, nextURL);
-                    //window.history.replaceState(nextState, nextTitle, nextURL);
-                    let ds = JSON.parse(this.responseText).arr1;
-                    let ptr = JSON.parse(this.responseText).arr2;
-                    document.getElementById('orderlist').innerHTML = ds;
-                    document.getElementById('phantrang').innerHTML = ptr;
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('trangthai&val=' + s);
-        }
-
-        function phantrang(p, id) { // phân trang trong dơn hàng
+        // phân trang trong dơn hàng
+        function phantrang(p, id) {
             let s = document.getElementById('lichsudonhang').children[0].querySelectorAll("input[type='radio']");
             var ss;
-            const urll = (window.location.search).split('&');
             console.log(id);
             for (let i = 0; i < s.length; i++) {
                 if (s[i].checked) {
@@ -406,9 +381,8 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    if (ss == '') {
-                        nextURL = './lichsudonhang.php?lichsu&id=' + id + '&page=' + p;
-                    } else nextURL = './lichsudonhang.php?lichsu&id=' + id + '&trangthai=' + ss + '&page=' + p;
+
+                    nextURL = './lichsudonhang.php?lichsu&id=' + id + '&trangthai=' + ss + '&page=' + p;
                     const nextTitle = 'My new page title';
                     const nextState = {
                         additionalInformation: 'Updated the URL with JS'
@@ -426,31 +400,8 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('phantrang&val=' + ss + '&page=' + p);
+            xhttp.send('phantrang&id=' + id + '&val=' + ss + '&page=' + p);
         }
-
-                // hien dnah sach don hang
-        // displayOrder();
-
-        // function displayOrder() {
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             //In ra data nhan duoc
-        //             let ds = JSON.parse(this.responseText).arr1;
-        //             let ptr = JSON.parse(this.responseText).arr2;
-        //             document.getElementById('orderlist').innerHTML = ds;
-        //             document.getElementById('phantrang').innerHTML = ptr;
-        //         }
-        //     }
-        //     //cau hinh request
-        //     xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
-        //     //cau hinh header cho request
-        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     //gui request
-        //     xhttp.send('trangthai');
-        // }
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

@@ -47,10 +47,10 @@ if (isset($_POST['action'])) {
         $sql = "SELECT * FROM diachikhach WHERE `id_user`={$_SESSION['iduser']}";
         $result = executeResult($sql);
         foreach ($result as $arr) {
-            echo ' <a onclick="clickaddr(' . $arr['id_addr'] . ')" id="addr' . $arr['id_addr'] . '" class="list-group-item list-group-item-action" aria-current="true">
+            echo ' <a onclick="clickaddr('.$arr['id_addr'].'); document.getElementById(`flexRadioDefault'.($arr['id_addr']).'`).checked=true" id="addr' . $arr['id_addr'] . '" class="list-group-item list-group-item-action" aria-current="true">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="">' . $arr["name"] . '</h6>
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault'.$arr['id_addr'].'">
             </div>
             <p class="mb-1">' . $arr["phone"] . '</p>
             <small>' . $arr["addr"] . '</small>

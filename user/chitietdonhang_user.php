@@ -37,8 +37,6 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                             </ul>

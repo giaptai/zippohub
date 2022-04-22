@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php session_start(); ?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +15,7 @@
 </style>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,35 +26,40 @@
                         <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
+                        <a class="nav-link text-light">Cửa hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../user/cart.php">
+                            Giỏ hàng <span class="badge bg-secondary">
+                                <?= isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                        </a>
                     </li>
                     <?php
-                    session_start();
+
                     if (isset($_SESSION['email'])) {
-                        echo '
-                        <li class="nav-item">
-                        <a class="nav-link text-light" href="../user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
-                    </li>
+                        echo
+                        '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
+                                <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-light" href="./filephp/user/login_resgin/login_user.php">Đăng nhập</a>
+                            <a class="nav-link text-light" href="./user/login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
                 </ul>
             </div>
+            <form class="d-flex">
+                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
+                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
+            </form>
         </div>
     </nav>
 
@@ -75,13 +80,11 @@
             <div class="col-md-9 p-0">
                 <div id="manhinh">
                     <div style="padding:0 1rem 1rem 1rem;" id="lichsudonhang">
-                        <div class="input-group">
-                            <input type="text" placeholder="Tìm mã khuyến mãi" class="form-control">
-                            <input type="text" onclick="console.log(this.value)" placeholder="Thêm mã khuyến mãi" class="form-control">
-                            <span class="input-group-text">Thêm mã</span>
+                        <div class="input-group w-50" style="float: right;">
+                            <input type="search" placeholder="Tìm mã" class="form-control" onchange="timma(this.parentElement.children[0].value)">
+                            <button class="input-group-text">Tìm mã</button>
                         </div>
-
-                        <table class="table">
+                        <table class="table table align-middle">
                             <thead>
                                 <tr>
                                     <th scope="col">STT</th>
@@ -94,38 +97,37 @@
                             <tbody id="orderlist">
                                 <?php require_once('../query.php');
                                 if (isset($_GET['makhuyenmai'])) {
-                                    $sql = "SELECT * from makhuyenmai LIMIT 0, 10";
+                                    $id_user = $_SESSION['iduser'];
+                                    $page=isset($_POST['page']) ? $_POST['page']:1;
+                                    $start=($page-1)*10;
+                                    $sql = "SELECT * from makhuyenmai where id_user='$id_user' LIMIT $start, 10";
                                     $s = array('arr1' => '', 'arr2' => '');
                                     //die($sql);
                                     $result = executeResult($sql);
-                                    $resul1t = countRow($sql);
+                                    $resul1t = countRow("SELECT * from makhuyenmai where id_user='$id_user'");
                                     if ($resul1t > 0) {
                                         $count = 1;
                                         foreach ($result as $row) {
                                             $s['arr1'] .= '<tr>
-                                    <th scope="row">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="' . $row["id_khuyenmai"] . '">
-                                            <span>' . $count++ . '</span>
-                                        </div>
-                                    </th>
-                                    <td>
-                                        <span>' . $row["id_khuyenmai"] . '</span>
-                                    </td>
-                                    <td>' . number_format($row["giamgia"]) . '</td>
-                                    <td>' . $row["ngayhethan"] . '</td>
-                                    <td>  
-                                        <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
-                                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
-                                    </td>
-                                </tr>';
-                                        }
-                                        for ($i = 0; $i < ceil($resul1t / 10); $i++) {
-                                            $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">1</a></li>';
+                                            <th scope="row">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="' . $row["id_khuyenmai"] . '">
+                                                    <span>' . $count++ . '</span>
+                                                </div>
+                                            </th>
+                                            <td>
+                                                <span>' . $row["id_khuyenmai"] . '</span>
+                                            </td>
+                                            <td>' . number_format($row["giamgia"]) . '</td>
+                                            <td>' . $row["ngayhethan"] . '</td>
+                                            <td>  
+                                                <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
+                                            </td>
+                                        </tr>';
                                         }
                                     } else {
-                                        $s['arr1'] = 'Không tìm thấy';
-                                        $s['arr2'] = 'Không tìm thấy';
+                                        $s['arr1'] = '<td colspan="5">Không tìm thấy</td>  ';
+                                        $s['arr2'] = '';
                                     };
                                     echo ($s['arr1']);
                                 }
@@ -135,7 +137,13 @@
                         <nav aria-label="...">
                             <ul class="pagination pagination-sm justify-content-center" id="phantrang">
                                 <?php
-                                echo ($s['arr2']);
+                                for ($i = 0; $i < ceil($resul1t / 10); $i++) {
+                                    if($i==$page-1){
+                                        $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', '.$_SESSION['iduser'].')">' . ($i + 1) . '</a></li>';
+                                    }else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', '.$_SESSION['iduser'].')">' . ($i + 1) . '</a></li>';
+                                    
+                                }
+                                echo $s['arr2'];
                                 ?>
                             </ul>
                         </nav>
@@ -267,68 +275,54 @@
     </footer>
     <!-- Footer -->
     <script>
-        // hien dnah sach don hang
-        // displayOrder();
-
-        // function displayOrder() {
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             //In ra data nhan duoc
-        //             let ds = JSON.parse(this.responseText).arr1;
-        //             let ptr = JSON.parse(this.responseText).arr2;
-        //             document.getElementById('orderlist').innerHTML = ds;
-        //             document.getElementById('phantrang').innerHTML = ptr;
-        //         }
-        //     }
-        //     //cau hinh request
-        //     xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
-        //     //cau hinh header cho request
-        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     //gui request
-        //     xhttp.send('trangthai');
-        // }
-
-        function trangthai(val, p) { // chọn tình trạng đơn hàng 
-            //console.log(val.value, p);
-            let s = val.value;
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    console.log(this.responseText);
-                    let ds = JSON.parse(this.responseText).arr1;
-                    let ptr = JSON.parse(this.responseText).arr2;
-                    document.getElementById('orderlist').innerHTML = ds;
-                    document.getElementById('phantrang').innerHTML = ptr;
+        function timma(val) {
+            console.log(val);
+            if (val == '') {
+                ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                if (ss == -1) {
+                    phantrang(1);
+                } else {
+                    page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                    page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                    phantrang(page);
                 }
+            } else {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        // console.log(this.responseText);
+                        let ds = JSON.parse(this.responseText).arr1;
+                        let ptr = JSON.parse(this.responseText).arr2;
+                        document.getElementById('orderlist').innerHTML = ds;
+                        document.getElementById('phantrang').innerHTML = ptr;
+
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/display_makhuyenmai.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=search&val=' + val);
             }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('trangthai&val=' + s);
         }
 
-        function phantrang(p) {
-            //console.log(document.getElementById('lichsudonhang').children[0].querySelectorAll("input[type='radio']"));
-            // let s = document.getElementById('lichsudonhang').children[0].querySelectorAll("input[type='radio']");
-            // var ss;
-            // for (let i = 0; i < s.length; i++) {
-            //     if (s[i].checked) {
-            //         ss = s[i].value;
-            //     }
-            // }
-            //console.log(ss);
+        function phantrang(p, id) {
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     console.log(this.responseText);
+                    const nextURL = './makhuyenmai.php?makhuyenmai&id='+id+'&page=' + p;
+                    const nextTitle = 'My new page title';
+                    const nextState = {
+                        additionalInformation: 'Updated the URL with JS'
+                    };
+                    //window.history.pushState(nextState, nextTitle, nextURL);
+                    window.history.replaceState(nextState, nextTitle, nextURL);
                     let ds = JSON.parse(this.responseText).arr1;
                     let ptr = JSON.parse(this.responseText).arr2;
                     document.getElementById('orderlist').innerHTML = ds;
@@ -340,8 +334,31 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('phantrang&val=' + ss + '&page=' + p);
+            xhttp.send('action=phantrang&page=' + p);
         }
+        // chọn tình trạng đơn hàng 
+        // function trangthai(val, p) {
+        //     //console.log(val.value, p);
+        //     let s = val.value;
+        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
+        //     xhttp.onreadystatechange = function() {
+        //         //Kiem tra neu nhu da gui request thanh cong
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             //In ra data nhan duoc
+        //             console.log(this.responseText);
+        //             let ds = JSON.parse(this.responseText).arr1;
+        //             let ptr = JSON.parse(this.responseText).arr2;
+        //             document.getElementById('orderlist').innerHTML = ds;
+        //             document.getElementById('phantrang').innerHTML = ptr;
+        //         }
+        //     }
+        //     //cau hinh request
+        //     xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
+        //     //cau hinh header cho request
+        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //     //gui request
+        //     xhttp.send('action=trangthai&val=' + s);
+        // }
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

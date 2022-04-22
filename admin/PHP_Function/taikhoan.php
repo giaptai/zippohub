@@ -1,46 +1,61 @@
 <?php
 require_once("../../query.php");
 
-//Lay het tai khoan
-//Code xử lý, lay dữ liệu tu database
-if (isset($_POST["search_phantrang"])) {
+chucnang();
+function chucnang()
+{
+    $action = $_POST['action'];
+    $sql  = "SELECT * FROM taikhoan ";
+    switch ($action) {
+        case 'search':
+            display($sql, 1);
+            break;
+        case 'phantrang':
+            display($sql, 1);
+            break;
+
+        default:
+            break;
+    }
+}
+
+function display($query, $start){
     $arr = array('arr1' => '', 'arr2' => '', 'arr3' => 0);
-    $result = $result1 = $sql = '';
+    $result = $result1 = $temp = '';
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $address = $_POST['address'];
     $page = isset($_POST['page']) ? $_POST['page'] : 1;
     $start = ($page - 1) * 5;
-    $sql  = "SELECT * FROM taikhoan ";
     if (!empty($email) && !empty($phone) && !empty($address)) {
-        $sql  .= "WHERE email LIKE '%$email%' and phone like '%$phone%' and `address` like '%$address%'";
+        $query  .= "WHERE email LIKE '%$email%' or phone like '%$phone%' or `address` like '%$address%'";
     }
     if (!empty($email) && empty($phone) && empty($address)) {
-        $sql  .= "WHERE email LIKE '%$email%' ";
+        $query  .= "WHERE email LIKE '%$email%' ";
     }
     if (!empty($email) && !empty($phone) && empty($address)) {
-        $sql  .= "WHERE email LIKE '%$email%' and phone like '%$phone%'";
+        $query  .= "WHERE email LIKE '%$email%' or phone like '%$phone%'";
     }
     if (!empty($email) && empty($phone) && !empty($address)) {
-        $sql  .= "WHERE email LIKE '%$email%' and `address` like '%$address%'";
+        $query  .= "WHERE email LIKE '%$email%' or `address` like '%$address%'";
     }
     if (empty($email) && !empty($phone) && empty($address)) {
-        $sql  .= "WHERE phone like '%$phone%' ";
+        $query  .= "WHERE phone like '%$phone%' ";
     }
     if (empty($email) && !empty($phone) && !empty($address)) {
-        $sql  .= "WHERE phone like '%$phone%' and `address` like '%$address%'";
+        $query  .= "WHERE phone like '%$phone%' or `address` like '%$address%'";
     }
     if (empty($email) && empty($phone) && !empty($address)) {
-        $sql  .= "WHERE `address` like '%$address%' ";
+        $query  .= "WHERE `address` like '%$address%'";
     }
-    $temp = $sql;
-    $sql .= "limit {$start},5";
-    // die($sql);
-    $result = executeResult($sql);
+    $temp .= $query;
+    $query .= " limit {$start},5";
+    //die($query);
+    $result = executeResult($query);
     $result1 = countRow($temp);
-
-    foreach ($result as $tk) {
-        $arr['arr1'] .= '<tr>
+    if ($result > 0) {
+        foreach ($result as $tk) {
+            $arr['arr1'] .= '<tr>
         <th scope="row"><label>' . ++$start . '</label></th>
                 <td>' . $tk['fullname'] . '</td>
                 <td>' . $tk['email'] . '</td>
@@ -53,11 +68,17 @@ if (isset($_POST["search_phantrang"])) {
         </button>
                 </td>
             </tr>';
+        }
+        for ($i = 0; $i < ceil(($result1) / 5); $i++) {
+            if($i==$_POST['page']-1){
+                $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+            }else $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+            
+        }
+        $arr['arr3'] = $result1;
+    } else {
+        $arr['arr1'] .= '<td colspan="6">Không tìm thấy</td>';
     }
-    for ($i = 0; $i < ceil(($result1) / 5); $i++) {
-        $arr['arr2'] .= '<button type="button" class="btn btn-outline-secondary" onclick="search(' . $i + 1 . ')">' . $i + 1 . '</button>';
-    }
-    $arr['arr3'] = $result1;
     echo json_encode($arr);
 }
 

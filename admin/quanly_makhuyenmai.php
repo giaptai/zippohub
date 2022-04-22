@@ -107,16 +107,16 @@
                     </div>
                 </div>
                 <div class="col-md-auto">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search()">Tìm kiếm</button>
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search( document.getElementById('button-addon1').value)">Tìm kiếm</button>
                 </div>
             </div>
         </div>
 
         <?php require_once("../query.php");
-            $page=isset($_GET['page']) ? $_GET['page']:1;
-            $start=($page-1)*10;
-            $codelist = executeResult("select * from makhuyenmai limit $start, 10");
-            $count = countRow("select * from makhuyenmai");
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $start = ($page - 1) * 10;
+        $codelist = executeResult("select * from makhuyenmai limit $start, 10");
+        $count = countRow("select * from makhuyenmai");
         ?>
         <table class="table align-middle caption-top">
             <caption>
@@ -154,10 +154,10 @@
                     </td>
                     <td>' . ($code["trangthai"] == 1 ? 'Còn hạn' : 'Hết hạn') . '</td>
                     <td>' . number_format($code["giamgia"]) . '</td>
-                    <td>' . $code["ngayhethan"] . '</td>
+                    <td>' . date("d-m-Y H:i:s", strtotime($code["ngayhethan"])) . '</td>
                     <td>
                         <button type="button" id="btn' . $code["id_khuyenmai"] . '" value="' . $code["id_khuyenmai"] . '" class="btn btn-outline-primary btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
-                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deleteproduct(866)">X</button>
+                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deletepromo(`' . $code["id_khuyenmai"] . '`)">X</button>
                     </td>
                 </tr>';
                 }
@@ -169,7 +169,9 @@
                         <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_makhuyenmai">
                             <?php
                             for ($i = 0; $i < ceil($count / 10); $i++) {
-                                echo  '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . ($i + 1) . ')">' . ($i + 1) . '</button>';
+                                if($i==$page-1){
+                                    echo  '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang('.($i + 1).', this)">' . ($i + 1) . '</button>'; 
+                                }else echo  '<button type="button" class="btn btn-outline-secondary" onclick="phantrang('.($i + 1).', this)">' . ($i + 1) . '</button>';
                             }
                             ?>
                     </td>
@@ -179,29 +181,43 @@
     </div>
     <!--  -->
     <script>
-        function search() {
-            s1 = document.getElementById('button-addon1').value;
-            console.log(s1);
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    console.log(this.responseText)
-                    document.getElementById('table_tbody_makhuyenmai').innerHTML = this.responseText;
-
+        // tìm kiếm
+        function search(val) {
+            console.log(val);
+            if (val == '') {
+                ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                if (ss == -1) {
+                    phantrang(1);
+                } else {
+                    page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                    page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                    phantrang(page);
                 }
+            } else {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        console.log(this.responseText);
+                        let arr1 = JSON.parse(this.responseText).arr1;
+                        let arr2 = JSON.parse(this.responseText).arr2;
+                        document.getElementById('table_tbody_makhuyenmai').innerHTML = arr1;
+                        document.getElementById('table_tfoot_makhuyenmai').innerHTML = arr2;
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=search&val=' + val);
             }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('search&val=' + s1);
         }
-
+        // phân trang
         function phantrang(page) {
+           console.log(page);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
@@ -216,15 +232,24 @@
                     };
                     //window.history.pushState(nextState, nextTitle, nextURL);
                     window.history.replaceState(nextState, nextTitle, nextURL);
+                    console.log(JSON.parse(this.responseText).arr2);
+                    let arr1 = JSON.parse(this.responseText).arr1;
+                    let arr2 = JSON.parse(this.responseText).arr2;
+                    document.getElementById('table_tbody_makhuyenmai').innerHTML = arr1;
+                    document.getElementById('table_tfoot_makhuyenmai').innerHTML = arr2;
 
                 }
             };
-            xhttp.open('GET', './PHP_Function/makhuyenmai.php?page=' + page, true);
-            xhttp.send();
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=phantrang&page=' + page);
         }
-
-        function detail(e) {
-            console.log(e);
+        // chi tiết
+        function detail(id) {
+            console.log(id);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
@@ -233,8 +258,80 @@
                     document.getElementById('modal-dialog').innerHTML = this.responseText;
                 }
             };
-            xhttp.open('GET', './PHP_Function/makhuyenmai.php?id=' + e, true);
-            xhttp.send();
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=detail&id=' + id);
+        }
+        // chỉnh sửa
+        function editpromo(p) {
+            var khuyenmai = document.getElementById("khuyenmai").value;
+            var trangthai = document.getElementById("trangthai").value;
+            var ngayhethan = document.getElementById("ngayhethan").value;
+            var giamgia = document.getElementById("giamgia").value;
+            var s = document.getElementById('btn' + p).parentNode.parentNode;
+            console.log(s.children[2], s.children[3], s.children[4]);
+
+            var formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                separator: ','
+            })
+
+            //Khoi tao doi tuong
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc     
+                    alert(this.responseText);
+                    s.children[2].innerText = (trangthai == 1 ? 'Còn hạn' : 'Hết hạn')
+                    s.children[3].innerText = formatter.format(giamgia);
+                    s.children[4].innerText = ngayhethan + ' 00:00:00';
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=edit' +
+                '&khuyenmai=' + khuyenmai +
+                '&trangthai=' + trangthai +
+                "&ngayhethan=" + ngayhethan +
+                "&giamgia=" + giamgia
+            );
+        }
+        // xóa 1 mã khuyến mãi
+        function deletepromo(id) {
+            console.log(id);
+            if (confirm('Xóa mã này ?')) {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Chèn phản hồi từ máy chủ vào một phần tử HTML
+                        console.log(this.responseText);
+                        ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                        if (ss == -1) {
+                            phantrang(1);
+                        } else {
+                            page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                            page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                            phantrang(page);
+                        }
+                    }
+                };
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=deletedd&id=' + id);
+            } else return;
         }
 
         document.getElementById('flexCheckDefault0').addEventListener('click', function() {
@@ -267,7 +364,6 @@
 
                     //console.log(JSON.parse(this.responseText)[0]);
                     console.log(this.responseText);
-                    table_sanpham();
                 }
             }
             //cau hinh request
@@ -277,81 +373,6 @@
             //gui request
             xhttp.send('deleted1page&data=' + arr);
         }
-
-        function editpromo(p) {
-            var khuyenmai = document.getElementById("khuyenmai").value;
-            var trangthai = document.getElementById("trangthai").value;
-            var ngayhethan = document.getElementById("ngayhethan").value;
-            var giamgia = document.getElementById("giamgia").value;
-            var s = document.getElementById('btn' + p).parentNode.parentNode;
-            console.log(s.children[2], s.children[3], s.children[4]);
-
-            var formatter = new Intl.NumberFormat('vi-VN', {
-                style: 'currency',
-                currency: 'VND',
-                separator: ','
-            })
-
-            //Khoi tao doi tuong
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc     
-                    alert(this.responseText);
-                    s.children[2].innerText = trangthai
-                    s.children[3].innerText = formatter.format(giamgia);
-                    s.children[4].innerText = ngayhethan
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('edit' +
-                '&khuyenmai=' + khuyenmai +
-                '&trangthai=' + trangthai +
-                "&ngayhethan=" + ngayhethan +
-                "&giamgia=" + giamgia
-            );
-        }
-
-        let deleteproduct = function(id) {
-            //Khoi tao doi tuong
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    var del = document.getElementById("xoa" + id);
-                    del.parentElement.parentElement.remove();
-                    //In ra data nhan duoc
-                    alert(this.responseText);
-                    table_sanpham(); // load lai san pham va nut phan trang
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('deleted&id=' + id);
-        }
-
-        // function add() {
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             // Chèn phản hồi từ máy chủ vào một phần tử HTML
-        //             document.getElementById('modal-dialog').innerHTML = this.responseText;
-        //         }
-        //     };
-        //     xhttp.open('GET', '../filephp/admin/sanpham/laydanhsach_sanpham.php?action=add', true);
-        //     xhttp.send();
-        // }
 
         // function addproduct() {
         //     var s = document.getElementById("inputGroupFile02");

@@ -13,13 +13,17 @@ if (isset($_POST["xemthem"])) {
     <title>Document</title>
 </head>
 <style>
-    .card:hover {
+.a{
+    object-fit: cover;
+}
+/* .card:hover {
         border: 1px ridge;
-        /* transform: scale(1.1) */
+        transform: scale(1.1)
     }
 
-    /* .card {
+    .card {
         transition: 0.5s ease-in-out;
+        margin: 0 1rem 0 0;
     } */
 </style>
 
@@ -54,8 +58,6 @@ if (isset($_POST["xemthem"])) {
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
@@ -128,29 +130,23 @@ if (isset($_POST["xemthem"])) {
                                     </div>
                                     <select class="form-select form-select-sm w-50 flex-sm-grow-1 bd-highlight" aria-label=".form-select-sm example" id="material">
                                         <option value="" selected>Tất cả</option>
-                                        <option value="Đồng">Đồng</option>
-                                        <option value="Bạc">Bạc</option>
-                                        <option value="Vàng">Vàng</option>
+                                        <option value="Đồng">Đồng</option>
+                                        <option value="Bạc">Bạc</option>
+                                        <option value="Vàng">Vàng</option>
                                     </select>
                                 </div>
                             </div>
                         </li>
                         <li class="list-group-item">
                             <div class="row">
-                                <!-- <h5>Xuất xứ</h5> -->
-                                <!-- <select class="form-select form-select-sm w-75" aria-label=".form-select-sm example" id="madeby">
-                                    <option value="" selected>Tất cả</option>
-                                    <option value="Nhật Bản">Nhật Bản</option>
-                                    <option value="Hàn Quốc">Hàn Quốc</option>
-                                </select> -->
                                 <div class="d-flex bd-highlight">
                                     <div class="flex-sm-grow-1 bd-highlight">
                                         <h5>Xuất xứ</h5>
                                     </div>
                                     <select class="form-select form-select-sm w-50 flex-sm-grow-1 bd-highlight" aria-label=".form-select-sm example" id="madeby">
                                         <option value="" selected>Tất cả</option>
-                                        <option value="Nhật Bản">Nhật Bản</option>
-                                        <option value="Hàn Quốc">Hàn Quốc</option>
+                                        <option value="Nhật Bản">Nhật Bản</option>
+                                        <option value="Hàn Quốc">Hàn Quốc</option>
                                     </select>
                                 </div>
                             </div>
@@ -162,59 +158,6 @@ if (isset($_POST["xemthem"])) {
                             </div>
                         </li>
                     </ul>
-                    <!-- <div class="collapseeeesss" id="collapseExample">
-                        <div class="card card-body">
-                            <div class="list-group">
-                                <h5>Danh mục sản phẩm</h5>
-                                <label class="list-group-item ">
-                                    <input class="form-check-input" type="checkbox" checked value="" onclick="uncheck()">Tất cả sản phẩm
-                                </label>
-                                <label class="list-group-item">
-                                    <input class="form-check-input" type="checkbox" value="Zippo Armor" onclick="uncheck1()">Zippo Armor
-                                </label>
-                                <label class="list-group-item ">
-                                    <input class="form-check-input" type="checkbox" value="Zippo Sterling Silver" onclick="uncheck1()">Zippo Sterling Silver
-                                </label>
-                                <label class="list-group-item">
-                                    <input class="form-check-input" type="checkbox" value="Zippo Base Models" onclick="uncheck1()">Zippo Base Models
-                                </label>
-                            </div>
-                            <hr class="bg-secondary">
-                            <div class="row ">
-                                <h5>Nhập giá</h5>
-                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Từ</label>
-                                <div class="col-sm-9">
-                                    <input type="number" class="form-control form-control-sm" id="pricefrom" placeholder="0" value="">
-                                </div>
-                                <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Đến</label>
-                                <div class="col-sm-9">
-                                    <input type="number" min="0" max="999999999" value="" class="form-control form-control-sm" id="priceto" placeholder="0">
-                                </div>
-                            </div>
-                            <hr class="bg-secondary">
-                            <div class="row">
-                                <h5>Chất liệu</h5>
-                                <select class="form-select form-select-sm w-75" aria-label=".form-select-sm example" id="material">
-                                    <option value="" selected>Tất cả</option>
-                                    <option value="Đồng">Đồng</option>
-                                    <option value="Bạc">Bạc</option>
-                                    <option value="Vàng">Vàng</option>
-                                </select>
-                            </div>
-                            <hr class="bg-secondary">
-                            <div class="row">
-                                <h5>Xuất xứ</h5>
-                                <select class="form-select form-select-sm w-75" aria-label=".form-select-sm example" id="madeby">
-                                    <option value="" selected>Tất cả</option>
-                                    <option value="Nhật Bản">Nhật Bản</option>
-                                    <option value="Hàn Quốc">Hàn Quốc</option>
-                                </select>
-                            </div>
-                            <hr class="bg-secondary">
-                            <button type="button" class="btn btn-primary btn-sm mb-2" onclick="timkiem(1)">Xem kết quả</button>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="huyhet()">Hủy</button>
-                        </div>
-                    </div> -->
                 </div>
             </div>
             <div class="col-md-9 p-0">

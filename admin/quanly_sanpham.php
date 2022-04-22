@@ -45,7 +45,7 @@
 
     <!-- Modal Them san pham -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" id="modal-dialog">
+        <div class="modal-dialog modal-lg" id="modal-dialog">
             <!-- <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
@@ -106,8 +106,8 @@
                 </div>
                 <div class="col ">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Tên sản phẩm</span>
-                        <input type="search" class="form-control" placeholder="Tên sản phẩm" aria-label="Email" id="button-addon1">
+                        <span class="input-group-text" id="basic-addon1">Mã sản phẩm</span>
+                        <input type="search" class="form-control" placeholder="Mã sản phẩm" aria-label="Email" id="button-addon1">
                     </div>
                 </div>
                 <div class="col-md-auto">
@@ -116,18 +116,18 @@
             </div>
         </div>
         <?php
-            require_once('../query.php');
-            $page = isset($_GET['page']) ? $_GET['page'] : 1;
-            $start = ($page - 1) * 5;
-            $result = executeResult("SELECT * FROM sanpham LIMIT $start,5");
-            $count = countRow("SELECT * FROM sanpham");
+        require_once('../query.php');
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $start = ($page - 1) * 5;
+        $result = executeResult("SELECT * FROM sanpham LIMIT $start,5");
+        $count = countRow("SELECT * FROM sanpham");
         ?>
         <table class="table align-middle caption-top">
             <caption>
                 Quản lý sản phẩm
                 <a type="button" class="btn btn-success btn-sm" href="./quanly_sanpham_them.php">Thêm sản phẩm</a>
                 <div type="button" class="btn btn-outline-primary btn-sm m-2">
-                    Tổng sản phẩm <span class="badge bg-danger" id="badge">4</span>
+                    Tổng sản phẩm <span class="badge bg-danger" id="badge"><?= $count ?></span>
                 </div>
             </caption>
 
@@ -151,7 +151,7 @@
                         <th scope="row">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="' . $sp['id'] . '">
-                                <span>' . (++$start) . '</span>
+                                <span>'.(++$start).' #'.$sp['id'] .'</span>
                             </div>
                         </th>' .
                         '<td>
@@ -175,7 +175,10 @@
                         <?php
                         // in nut phan trang
                         for ($i = 0; $i < ceil(($count) / 5); $i++) {
-                            echo '<button type="button" class="btn btn-outline-secondary" onclick="search(' . $i + 1 . ')">' . $i + 1 . '</button>';
+                            if($i==$page-1){
+                                echo '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+                            }else  echo '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+                           
                         }
                         ?>
                     </div>
@@ -183,7 +186,6 @@
             </tfoot>
         </table>
     </div>
-
     <script>
         function uploadd() {
             var s = document.getElementById("inputGroupFile02");
@@ -191,37 +193,41 @@
             document.getElementsByClassName("rounded")[0].src = "../picture/" + ss;
         }
 
-        // danh sach san pham va phan trang
-        // var table_sanpham = function() {
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     //Bat su kien thay doi trang thai cuar request
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             //In ra data nhan duoc
-        //             let s1 = JSON.parse(this.responseText).arr1;
-        //             let s2 = JSON.parse(this.responseText).pagin;
-        //             let s3 = JSON.parse(this.responseText).arr3;
-
-        //             document.getElementById('table_tbody_sanpham').innerHTML = s1;
-        //             document.getElementById('table_tfoot_sanpham').innerHTML = s2;
-        //             document.getElementById('badge').innerText = s3;
-        //             //console.log(JSON.parse(this.responseText).arr2);
-        //         }
-        //     }
-        //     //cau hinh request
-        //     xhttp.open('POST', './PHP_Function/sanpham.php', true);
-        //     //cau hinh header cho request
-        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     //gui request
-        //     xhttp.send('action=displaysanpham');
-        // }
-        // table_sanpham();
-
-
         function search(p) {
             s1 = document.getElementById('button-addon1').value;
-            console.log(s1);
+            if (s1 == '') {
+                ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                if (ss == -1) {
+                    phantrang(1);
+                } else {
+                    page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                    page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                    phantrang(page);
+                }
+            } else {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        let arr1 = JSON.parse(this.responseText).arr1;
+                        let pagin = JSON.parse(this.responseText).pagin;
+                        document.getElementById('table_tbody_sanpham').innerHTML = arr1;
+                        document.getElementById('table_tfoot_sanpham').innerHTML = pagin;
+                        document.getElementById('flexCheckDefault0').checked = false;
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/sanpham.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=search&id=' + s1);
+            }
+        }
+
+        function phantrang(p) {
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
@@ -247,7 +253,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('action=search&name=' + s1 + '&page=' + p);
+            xhttp.send('action=phantrang&page=' + p);
         }
 
         function detail(e) {
@@ -260,8 +266,12 @@
                     document.getElementById('modal-dialog').innerHTML = this.responseText;
                 }
             };
-            xhttp.open('GET', './PHP_Function/sanpham.php?id=' + e, true);
-            xhttp.send();
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/sanpham.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=detail&id=' + e);
         }
 
         document.getElementById('flexCheckDefault0').addEventListener('click', function() {
@@ -291,10 +301,14 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-
                     //console.log(JSON.parse(this.responseText)[0]);
+                    if (this.responseText == 'success') {
+                        alert('Xóa 1 trang thành công');
+                        table_sanpham();
+                    } else {
+                        alert('xóa thất bại');
+                    }
                     console.log(this.responseText);
-                    table_sanpham();
                 }
             }
             //cau hinh request
@@ -318,12 +332,11 @@
             var s3 = document.getElementById('amountt').value;
             var s4 = document.getElementById('prices').value;
             var s5 = document.getElementById('tinhtrang').value;
+            var s6 = document.getElementById('theloai').value;
+            var s7 = document.getElementById('chatlieu').value;
+            var s8 = document.getElementById('xuatxu').value;
+            var s9 = document.getElementById('gioithieu').value;
             let row = document.getElementById("sua" + id).parentElement.parentElement;
-            row.children[1].children[0].src = "../picture/" + img[img.length - 1];
-            row.children[1].children[1].innerText = s2;
-            row.children[2].innerText = s3;
-            row.children[3].innerHTML = formatter.format(s4);
-            row.children[4].children[0].innerText = (s5 == 1 ? 'Còn hàng' : 'Hết hàng');
             //Khoi tao doi tuong
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
@@ -331,8 +344,12 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    console.log(row.children[4].children[0]);
                     alert(this.responseText);
+                    row.children[1].children[0].src = "../picture/" + img[img.length - 1];
+                    row.children[1].children[1].innerText = s2;
+                    row.children[2].innerText = s3;
+                    row.children[3].innerHTML = formatter.format(s4);
+                    row.children[4].children[0].innerText = (s5 == 1 ? 'Còn hàng' : 'Hết hàng');
                 }
             }
             //cau hinh request
@@ -340,13 +357,17 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('edit' +
+            xhttp.send('action=edit' +
                 '&inputGroupFile02=' + img[img.length - 1] +
                 '&codez=' + s1 +
                 "&namee=" + s2 +
                 "&amountt=" + s3 +
                 "&prices=" + s4 +
-                "&tinhtrang=" + s5
+                "&tinhtrang=" + s5 +
+                "&theloai=" + s6 +
+                "&chatlieu=" + s7 +
+                "&xuatxu=" + s8 +
+                "&gioithieu=" + s9
             );
         }
 

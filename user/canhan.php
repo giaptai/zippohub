@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php session_start(); ?>
 
 <head>
     <meta charset="UTF-8">
@@ -27,35 +28,40 @@
                         <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
+                        <a class="nav-link text-light">Cửa hàng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="../user/cart.php">
+                            Giỏ hàng <span class="badge bg-secondary">
+                                <?= isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                        </a>
                     </li>
                     <?php
-                    session_start();
+
                     if (isset($_SESSION['email'])) {
-                        echo '
-                        <li class="nav-item">
-                        <a class="nav-link text-light" href="../user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
-                    </li>
+                        echo
+                        '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
+                                <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-light" href="./filephp/user/login_resgin/login_user.php">Đăng nhập</a>
+                            <a class="nav-link text-light" href="./user/login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
                 </ul>
             </div>
+            <form class="d-flex">
+                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
+                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
+            </form>
         </div>
     </nav>
     <?php echo $_SESSION['iduser'] ?>
@@ -249,7 +255,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('canhan'+
+            xhttp.send('canhan' +
                 '&name=' + s1 +
                 '&phone=' + s2 +
                 '&email=' + s3 +

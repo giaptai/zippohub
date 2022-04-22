@@ -19,12 +19,13 @@ if(isset($_POST['canhan'])){
 }
 
 if(isset($_POST['update_diachi'])){
-    $id=$_POST['id'];
+    $id_adr=$_POST['id'];
     $name=$_POST['name'];
     $phone=$_POST['phone'];
     $addr=$_POST['addr'];
-    $sql="UPDATE diachikhach SET `name`='{$name}', `phone`='{$phone}',
-    addr='{$addr}' WHERE id_user='{$_SESSION['iduser']}' AND id_addr='{$addr}'";
+    $sql="UPDATE diachikhach SET `name`='$name', `phone`='{$phone}',
+    addr='$addr' WHERE id_user={$_SESSION['iduser']} AND id_addr={$id_adr}";
+    //die($sql);
     $result=execute($sql);
     if($result){
         echo 'Cập nhật địa chỉ thành công';

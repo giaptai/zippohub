@@ -35,7 +35,7 @@ if (isset($_POST["action"]) || isset($_SESSION["xemthem"])) {
         foreach ($result as $sp) {
             $arr['arr1'] .= '<div class="card p-0">
         <div class="card-item h-100" style="text-align: center;">
-            <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
+            <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
             <div class="card-body" style="text-align: center;">
                 <h5 class="card-title">' . $sp['name'] . '</h5>
                 <p class="card-text">' . number_format($sp['price']) . ' VNĐ</p>';

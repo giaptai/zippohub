@@ -14,7 +14,7 @@ if (isset($_GET['action'])) {
                         <div class="phone"><span>Điện thoại: </span>' . $arr['phone'] . '</div>
                     </div>
                     <div>
-                        <a class="text-primary text-decoration-none fs-6" >Chỉnh sửa</a>
+                        <a class="text-primary text-decoration-none fs-6"  href="./sua_diachi.php?id_addr='.$arr['id_addr'].'>Chỉnh sửa</a>
                         <a class="btn btn-light text-danger btn-sm fs-6" onclick="xoaDiaChi()">Xóa</a>
                     </div>
                 </div>

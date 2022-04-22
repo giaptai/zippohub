@@ -68,11 +68,11 @@
         <h1 style="text-align: center; color: red; font-style: italic;" class="pt-4">Chi tiết sản phẩm</h1>
         <div class="row mb-5 bg-white">
             <div class="col-lg-auto mb-5 mt-3 m-auto">
-                <div class="text-center mb-3 border"> <img id="main-image" src="../picture/49532_Z-SP-Lighter_49352_MAIN_1024x1024-400x400.jpg" width="320"> </div>
+                <div class="text-center mb-3 border"> <img id="main-image" src="../picture/<?= $result['img'] ?>" width="320"> </div>
                 <div class="thumbnail text-center pt-2">
-                    <img class="border" onclick="change_image(this)" src="../picture/49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg" width="100">
+                    <!-- <img class="border" onclick="change_image(this)" src="../picture/49600_Z-SP-Lighter_49146_MAIN_1024x1024.jpg" width="100">
                     <img class="border" onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="100">
-                    <img class="border" onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="100">
+                    <img class="border" onclick="change_image(this)" src="../picture/72a06bc6099de1f2d17fb96ac417128116dae6a0_1024x1024-400x400.jpg" width="100"> -->
                 </div>
             </div>
             <div class="col col-lg-6">
@@ -99,10 +99,7 @@
                     <hr class="bg-dark border-dark">
                     <div class="">
                         <h5 class="fw-bolder">GIỚI THIỆU: </h5>
-                        <span class="fs-6">Zippo Mèo Khắc Nổi 3D Tuổi Mẹo Tuổi Mão màu vàng chất liệu đồng nguyên khối.
-                            Khắc nổi hiệu ứng 3D cao cấp bền, đẹp, không phai.
-                            Mẫu Zippo độc quyền chỉ có tại ZippoStore.vn hợp làm quà cho bạn trai, bạn bè, anh trai, chú bác, bố, người yêu, sếp nam tuổi mèo, tuổi mẹo, tuổi mão.
-                        </span>
+                        <span class="fs-6"><?= $result['intro'] ?></span>
                     </div>
                     <hr class="bg-dark border-dark">
                     <!-- <div class="col-12"> -->

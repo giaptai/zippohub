@@ -72,7 +72,7 @@
     $sql10 = executeSingleResult("SELECT sum(total_money)as money FROM hoadon WHERE statuss='Đã xác nhận' AND (ngaymua >= '2022/10/01 00:00:00' and ngaymua <= '2022/10/31 23:59:59')");
     $sql11 = executeSingleResult("SELECT sum(total_money)as money FROM hoadon WHERE statuss='Đã xác nhận' AND (ngaymua >= '2022/11/01 00:00:00' and ngaymua <= '2022/11/30 23:59:59')");
     $sql12 = executeSingleResult("SELECT sum(total_money)as money FROM hoadon WHERE statuss='Đã xác nhận' AND (ngaymua >= '2022/12/01 00:00:00' and ngaymua <= '2022/12/31 23:59:59')");
-    
+    //die("SELECT sum(total_money) as money FROM hoadon WHERE statuss='Đã xác nhận' AND (ngaymua >= '2022/01/01 00:00:00' and ngaymua <= '2022/01/31 23:59:59')");
     $sqlTuan=executeResult("select date_add('2022-04-16', interval  -WEEKDAY('2022-04-16')-1 day) FirstDayOfWeek, 
     date_add(date_add('2022-04-16', interval  -WEEKDAY('2022-04-16')-1 day), interval 7 day) LastDayOfWeek,
        week(curdate()) CurrentWeekNumber");

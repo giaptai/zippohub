@@ -11,13 +11,13 @@
 <style>
     .card:hover {
         border: 1px ridge;
-        /* transform: scale(1.1) */
+        transform: scale(1.05)
     }
 
-    /* .card {
+    .card {
         transition: 0.5s ease-in-out;
         margin: 0 1rem 0 0;
-    } */
+    }
 </style>
 
 <body style="background-color: #f2f2f2;">
@@ -51,8 +51,6 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
                                 <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
@@ -127,7 +125,7 @@
 
         <div class="row row-md-2 justify-content-between " style="margin:1rem auto 1rem auto;">
             <div class="col-12 mb-3 ">
-                <div class="d-flex slider-header justify-content-between bg-primary align-items-center" style="height: 3rem;">
+                <div class="d-flex slider-header justify-content-between bg-dark align-items-center" style="height: 3rem;">
                     <h4 class="slider-title fw-bolder text-white ps-2 m-0">
                         Zippo Armor
                     </h4>
@@ -219,12 +217,12 @@
                     </div>
                 </div> -->
 
-                <div class="row row-cols-md-6 gx-0" id="zippoarmor">
+                <div class="row row-cols-md-6 gx-0  bg-white" id="zippoarmor">
                 </div>
             </div>
 
             <div class="col-12 mb-3">
-                <div class="d-flex slider-header justify-content-between bg-primary align-items-center" style="height: 3rem;">
+                <div class="d-flex slider-header justify-content-between bg-dark align-items-center" style="height: 3rem;">
                     <h4 class="slider-title fw-bolder text-white ps-2 m-0">
                         Zippo Sterling Silver
                     </h4>
@@ -234,12 +232,12 @@
                         </form>
                     </div>
                 </div>
-                <div class="row row-cols-md-6 gx-0" id="zipposterlingsilver">
+                <div class="row row-cols-md-6 gx-0 bg-white" id="zipposterlingsilver">
                 </div>
             </div>
 
             <div class="col-12 mb-3">
-                <div class="d-flex slider-header justify-content-between bg-primary align-items-center" style="height: 3rem;">
+                <div class="d-flex slider-header justify-content-between bg-dark align-items-center" style="height: 3rem;">
                     <h4 class="slider-title fw-bolder text-white ps-2 m-0">
                         Zippo Base Models
                     </h4>
@@ -249,7 +247,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="row row-cols-md-6 gx-0" id="zippobasemodels">
+                <div class="row row-cols-md-6 gx-0 bg-white" id="zippobasemodels">
 
                 </div>
             </div>
@@ -472,6 +470,7 @@
             //gui request
             xhttp.send('data=' + e + '&mua');
         }
+        
         let morebtn = document.querySelectorAll(".see-more")
         morebtn.forEach((e) => {
             e.addEventListener('click', () => {
