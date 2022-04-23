@@ -46,7 +46,7 @@
                     if (isset($_GET["reset"])) {
                         switch ($_GET["reset"]) {
                             case "success":
-                                echo "<script>alert('Đổi mật khẩu thành công nhá địt mẹ mày')</script>";
+                                echo "<script>alert('Đổi mật khẩu thành công!')</script>";
                                 break;
                             case "wrongtoken":
                                 echo "<script>alert('Sai token')</script>";

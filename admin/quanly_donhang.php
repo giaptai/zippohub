@@ -226,25 +226,26 @@
             document.querySelectorAll('input[type="radio"]')[i].addEventListener('click', function() {
                 console.log(document.querySelectorAll('input[type="radio"]')[i].value);
                 let val = document.querySelectorAll('input[type="radio"]')[i].value;
-                var xhttp = new XMLHttpRequest() || ActiveXObject();
-                //Bat su kien thay doi trang thai cuar request
-                xhttp.onreadystatechange = function() {
-                    //Kiem tra neu nhu da gui request thanh cong
-                    if (this.readyState == 4 && this.status == 200) {
-                        //In ra data nhan duoc
-                        console.log(JSON.parse(this.responseText).arr2);
-                        arr1 = JSON.parse(this.responseText).arr1;
-                        arr2 = JSON.parse(this.responseText).arr2;
-                        document.getElementById('table_tbody_donhang').innerHTML = arr1;
-                        document.getElementById('table_tfoot_donhang').innerHTML = arr2;
-                    }
-                }
-                //cau hinh request
-                xhttp.open('POST', './PHP_Function/donhang.php', true);
-                //cau hinh header cho request
-                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                //gui request
-                xhttp.send('action=trangthai&value=' + val);
+                phantrang(1);
+                // var xhttp = new XMLHttpRequest() || ActiveXObject();
+                // //Bat su kien thay doi trang thai cuar request
+                // xhttp.onreadystatechange = function() {
+                //     //Kiem tra neu nhu da gui request thanh cong
+                //     if (this.readyState == 4 && this.status == 200) {
+                //         //In ra data nhan duoc
+                //         console.log(JSON.parse(this.responseText).arr2);
+                //         arr1 = JSON.parse(this.responseText).arr1;
+                //         arr2 = JSON.parse(this.responseText).arr2;
+                //         document.getElementById('table_tbody_donhang').innerHTML = arr1;
+                //         document.getElementById('table_tfoot_donhang').innerHTML = arr2;
+                //     }
+                // }
+                // //cau hinh request
+                // xhttp.open('POST', './PHP_Function/donhang.php', true);
+                // //cau hinh header cho request
+                // xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                // //gui request
+                // xhttp.send('action=trangthai&value=' + val);
             })
         }
 

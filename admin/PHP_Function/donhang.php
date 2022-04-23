@@ -9,32 +9,30 @@ function chucnang(){
         case 'trangthai':
             $val = $_POST['value'];
             if ($val == 'Tổng đơn') {
-                display($sql, 0);
+                display($sql);
             } else {
                 $sql .= " WHERE statuss='{$val}'";
-                display($sql, 0);
+                display($sql);
             }
             break;
 
         case 'phantrang':
-            $page = $_POST['page'];
-            $start = ($page - 1) * 10;
             $val = $_POST['value'];
             if ($val == 'Tổng đơn') {
-                display($sql, $start);
+                display($sql);
             } else {
                 $sql .= " WHERE statuss='{$val}'";
-                display($sql, $start);
+                display($sql);
             }
             break;
 
         case 'timkiemma':
             $id = $_POST['id'];
             if (empty($id)) {
-                display($sql, 0);
+                display($sql);
             } else {
                 $sql .= " WHERE id_hoadon={$id}";
-                display($sql, 0);
+                display($sql);
             }
             break;
         default:
@@ -42,8 +40,10 @@ function chucnang(){
     }
 }
 
-function display($query, $start){
+function display($query){
     $arr = array('arr1' => '', 'arr2' => '');
+    $page = isset($_POST['page'])? $_POST['page']:1;
+    $start = ($page - 1) * 10;
     $temp = $query;
     $query .= " LIMIT $start, 10";
     //die($query);
@@ -108,7 +108,7 @@ function display($query, $start){
             }
         }
         for ($i = 0; $i < $result1; $i++) {
-            if($i==$_POST['page']-1){
+            if($i==$page-1){
                 $arr['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
             }else $arr['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
         }

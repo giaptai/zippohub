@@ -11,13 +11,11 @@ function chucnang(){
             if (!empty($val)) {
                 $sql .= " WHERE id_khuyenmai='{$val}'";
             }
-            display($sql, 0);
+            display($sql);
             break;
 
         case 'phantrang':
-            $page = $_POST['page'];
-            $start = ($page - 1) * 10;
-            display($sql, $start);
+            display($sql);
             break;
 
         case 'detail':
@@ -44,8 +42,10 @@ function chucnang(){
 }
 
 // hiện danh sách mã
-function display($query, $start){
+function display($query){
     $s = array('arr1' => '', 'arr2' => '');
+    $page = isset($_POST['page'])? $_POST['page']:1;
+    $start = ($page - 1) * 10;
     $temp = $query;
     $query .= " LIMIT $start, 10";
     //die($query);
@@ -73,7 +73,7 @@ function display($query, $start){
         </tr>';
         }
         for ($i = 0; $i < ceil($result1 / 10); $i++) {
-            if($i==$_POST['page']-1){
+            if($i==$page-1){
                 $s['arr2'] .= '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
             }else $s['arr2'] .= '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
         }

@@ -3,37 +3,40 @@ require_once("../../query.php");
 session_start();
 
 chucnang();
-function chucnang(){
+function chucnang()
+{
     $action = $_POST['action'];
     $id_user = $_SESSION['iduser'];
-    $sql="SELECT * from makhuyenmai where id_user='$id_user'";
+    $sql = "SELECT * from makhuyenmai where id_user='$id_user'";
     switch ($action) {
         case 'search':
             $val = $_POST['val'];
             if (empty($val)) {
-                $sql = $sql;
-            } else $sql .= " and id_khuyenmai='$val'";
-            display($sql, 0);
+                display($sql);
+            } else {
+                $sql .= " and id_khuyenmai='$val'";
+                display($sql);
+            }
             break;
 
         case 'phantrang':
-            $page = $_POST['page'];
-            $start = ($page - 1) * 10;
-            display($sql, $start);
+            display($sql);
             break;
 
         default:
     }
 }
 
-function display($query, $start){
+function display($query){
     $s = array('arr1' => '', 'arr2' => '');
     $temp = $query;
+    $page = isset($_POST['page']) ? $_POST['page']:1;
+    $start = ($page - 1) * 10;
     $query .= " LIMIT $start, 10";
-    //die($query);
+    //echo die($query);
     $result = executeResult($query);
     $result1 = countRow($temp);
-    if ($result) {
+    if ($result1 > 0) {
         foreach ($result as $row) {
             $s['arr1'] .= '<tr>
             <th scope="row">
@@ -53,15 +56,12 @@ function display($query, $start){
         </tr>';
         }
         for ($i = 0; $i < ceil($result1 / 10); $i++) {
-            if($i==$_POST['page']-1){
-                $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang('.($i + 1).', '.$_SESSION['iduser'].')">' . ($i + 1) . '</a></li>';
-            }else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i + 1).', '.$_SESSION['iduser'].')">' . ($i + 1) . '</a></li>';
-            
+            if ($i == $page-1 ) {
+                $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
+            } else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
         }
     } else {
         $s['arr1'] .= '<td colspan="5">Không tìm thấy</td>';
-        $s['arr2'] .= '';
     }
     echo json_encode($s);
 }
-

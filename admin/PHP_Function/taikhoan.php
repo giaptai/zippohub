@@ -26,34 +26,34 @@ function display($query, $start){
     $phone = $_POST['phone'];
     $address = $_POST['address'];
     $page = isset($_POST['page']) ? $_POST['page'] : 1;
-    $start = ($page - 1) * 5;
-    if (!empty($email) && !empty($phone) && !empty($address)) {
-        $query  .= "WHERE email LIKE '%$email%' or phone like '%$phone%' or `address` like '%$address%'";
-    }
+    $start = ($page - 1) * 10;
+    if (!empty($email) && (!empty($phone)||$phone==0) && !empty($address)) {
+        $query  .= "WHERE email LIKE '%$email%' and phone like '%$phone%' and `address` like '%$address%'";
+    }else
     if (!empty($email) && empty($phone) && empty($address)) {
         $query  .= "WHERE email LIKE '%$email%' ";
-    }
-    if (!empty($email) && !empty($phone) && empty($address)) {
-        $query  .= "WHERE email LIKE '%$email%' or phone like '%$phone%'";
-    }
+    }else
+    if (!empty($email) && (!empty($phone)||$phone==0) && empty($address)) {
+        $query  .= "WHERE email LIKE '%$email%' and phone like '%$phone%'";
+    }else
     if (!empty($email) && empty($phone) && !empty($address)) {
-        $query  .= "WHERE email LIKE '%$email%' or `address` like '%$address%'";
-    }
-    if (empty($email) && !empty($phone) && empty($address)) {
+        $query  .= "WHERE email LIKE '%$email%' and `address` like '%$address%'";
+    }else
+    if (empty($email) && (!empty($phone)||$phone==0) && empty($address)) {
         $query  .= "WHERE phone like '%$phone%' ";
-    }
-    if (empty($email) && !empty($phone) && !empty($address)) {
-        $query  .= "WHERE phone like '%$phone%' or `address` like '%$address%'";
-    }
+    }else
+    if (empty($email) && (!empty($phone)||$phone==0) && !empty($address)) {
+        $query  .= "WHERE phone like '%$phone%' and `address` like '%$address%'";
+    }else
     if (empty($email) && empty($phone) && !empty($address)) {
         $query  .= "WHERE `address` like '%$address%'";
     }
     $temp .= $query;
-    $query .= " limit {$start},5";
+    $query .= " limit {$start},10";
     //die($query);
     $result = executeResult($query);
     $result1 = countRow($temp);
-    if ($result > 0) {
+    if ($result1 > 0) {
         foreach ($result as $tk) {
             $arr['arr1'] .= '<tr>
         <th scope="row"><label>' . ++$start . '</label></th>
@@ -69,15 +69,15 @@ function display($query, $start){
                 </td>
             </tr>';
         }
-        for ($i = 0; $i < ceil(($result1) / 5); $i++) {
-            if($i==$_POST['page']-1){
+        for ($i = 0; $i < ceil(($result1) / 10); $i++) {
+            if($i==$page-1){
                 $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
             }else $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
             
         }
         $arr['arr3'] = $result1;
     } else {
-        $arr['arr1'] .= '<td colspan="6">Không tìm thấy</td>';
+        $arr['arr1'] = '<td colspan="6">Không tìm thấy</td>';
     }
     echo json_encode($arr);
 }

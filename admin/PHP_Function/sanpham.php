@@ -10,17 +10,15 @@ function chucnang()
         case 'search':
             $id = $_POST['id'];
             if (empty($id)) {
-                display($sql, 0);
+                display($sql);
             } else {
                 $sql .= " where id='$id'";
-                display($sql, 0);
+                display($sql);
             }
             break;
 
         case 'phantrang':
-            $page = $_POST['page'];
-            $start = ($page - 1) * 5;
-            display($sql, $start);
+            display($sql);
             break;
 
         case 'detail':
@@ -37,7 +35,9 @@ function chucnang()
     }
 }
 // hiện danh sách sản phẩm
-function display($query, $start){
+function display($query){
+    $page = isset ($_POST['page']) ? $_POST['page']:1;
+    $start = ($page - 1) * 5;
     $arr = array('arr1' => '', 'pagin' => '', 'tong' => 0);
     $temp = $query;
     $query .= " LIMIT $start, 5";
@@ -66,13 +66,13 @@ function display($query, $start){
         </tr>';
         }
         for ($i = 0; $i < ceil(($result1) / 5); $i++) {
-            if($i==$_POST['page']-1){
+            if($i==$page-1){
                 $arr['pagin'] .= '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
             }else  $arr['pagin'] .= '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
         }
         $arr['tong'] = $result1;
     } else {
-        $arr['arr1'] = '<td colspan="6">Không tìm thấy</td>';
+        $arr['arr1'] .= '<td colspan="6">Không tìm thấy</td>';
     }
     echo json_encode($arr);
 }

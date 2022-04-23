@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php session_start(); ?>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +16,7 @@
 </style>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -98,8 +99,8 @@
                                 <?php require_once('../query.php');
                                 if (isset($_GET['makhuyenmai'])) {
                                     $id_user = $_SESSION['iduser'];
-                                    $page=isset($_POST['page']) ? $_POST['page']:1;
-                                    $start=($page-1)*10;
+                                    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+                                    $start = ($page - 1) * 10;
                                     $sql = "SELECT * from makhuyenmai where id_user='$id_user' LIMIT $start, 10";
                                     $s = array('arr1' => '', 'arr2' => '');
                                     //die($sql);
@@ -127,7 +128,6 @@
                                         }
                                     } else {
                                         $s['arr1'] = '<td colspan="5">Không tìm thấy</td>  ';
-                                        $s['arr2'] = '';
                                     };
                                     echo ($s['arr1']);
                                 }
@@ -138,10 +138,9 @@
                             <ul class="pagination pagination-sm justify-content-center" id="phantrang">
                                 <?php
                                 for ($i = 0; $i < ceil($resul1t / 10); $i++) {
-                                    if($i==$page-1){
-                                        $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', '.$_SESSION['iduser'].')">' . ($i + 1) . '</a></li>';
-                                    }else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', '.$_SESSION['iduser'].')">' . ($i + 1) . '</a></li>';
-                                    
+                                    if ($i == $page - 1) {
+                                        $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
+                                    } else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
                                 }
                                 echo $s['arr2'];
                                 ?>
@@ -292,7 +291,7 @@
                     //Kiem tra neu nhu da gui request thanh cong
                     if (this.readyState == 4 && this.status == 200) {
                         //In ra data nhan duoc
-                        // console.log(this.responseText);
+                        console.log(this.responseText);
                         let ds = JSON.parse(this.responseText).arr1;
                         let ptr = JSON.parse(this.responseText).arr2;
                         document.getElementById('orderlist').innerHTML = ds;
@@ -316,13 +315,14 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     console.log(this.responseText);
-                    const nextURL = './makhuyenmai.php?makhuyenmai&id='+id+'&page=' + p;
+                    const nextURL = './makhuyenmai.php?makhuyenmai&id=' + id + '&page=' + p;
                     const nextTitle = 'My new page title';
                     const nextState = {
                         additionalInformation: 'Updated the URL with JS'
                     };
                     //window.history.pushState(nextState, nextTitle, nextURL);
                     window.history.replaceState(nextState, nextTitle, nextURL);
+                    console.log(this.responseText);
                     let ds = JSON.parse(this.responseText).arr1;
                     let ptr = JSON.parse(this.responseText).arr2;
                     document.getElementById('orderlist').innerHTML = ds;
@@ -336,29 +336,7 @@
             //gui request
             xhttp.send('action=phantrang&page=' + p);
         }
-        // chọn tình trạng đơn hàng 
-        // function trangthai(val, p) {
-        //     //console.log(val.value, p);
-        //     let s = val.value;
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             //In ra data nhan duoc
-        //             console.log(this.responseText);
-        //             let ds = JSON.parse(this.responseText).arr1;
-        //             let ptr = JSON.parse(this.responseText).arr2;
-        //             document.getElementById('orderlist').innerHTML = ds;
-        //             document.getElementById('phantrang').innerHTML = ptr;
-        //         }
-        //     }
-        //     //cau hinh request
-        //     xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
-        //     //cau hinh header cho request
-        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     //gui request
-        //     xhttp.send('action=trangthai&val=' + s);
-        // }
+       
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

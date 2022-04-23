@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2022 at 07:39 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.3.16
+-- Generation Time: Apr 23, 2022 at 09:03 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -116,6 +116,7 @@ INSERT INTO `diachikhach` (`id_user`, `id_addr`, `name`, `phone`, `addr`) VALUES
 (98648, 1598, 'Le Mai Tran', '0921148541', '99 An Dương Vương, Phường 16, Quận 8'),
 (22659, 3933, 'Le Ngoc Toan', '0921141215', '23 Pham Ngu Lao, Phuong 4, Quan 3, TP HCM'),
 (2165, 5090, 'Nguyễn Mai Như', '0921145127', '99 An Dương Vương, Phường 16, Quận 8'),
+(97419, 5094, 'Le Ngoc Toan', '0321124854', '23 Pham Ngu Lao, Phuong 4, Quan 3, TP HCM'),
 (2165, 5483, 'Nguyễn Mai Như', '0921145124', '99 An Dương Vương, Phường 16, Quận 8'),
 (2165, 6673, 'Yên Như', '0321451252', '99 An Dương Vương, Phường 16, Quận 8'),
 (98648, 7295, 'Le Mai Tran', '0922201315', '99 An Dương Vương, Phường 16, Quận 8'),
@@ -278,6 +279,14 @@ CREATE TABLE `resetpassword` (
   `ResetExpire` varchar(50) COLLATE utf8_vietnamese_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_vietnamese_ci;
 
+--
+-- Dumping data for table `resetpassword`
+--
+
+INSERT INTO `resetpassword` (`ResetID`, `ResetEmail`, `ResetSelector`, `ResetToken`, `ResetExpire`) VALUES
+(15, 'tuyet2001@gmail.com', '00e855b6c89052bd', '$2y$10$ro5SHR0mkiOqGAbA4GuwguKULZs6JatIQQitvNVtZGq4xbtM3s5Km', '1650687134'),
+(25, '', '0fbb71c545c457c8', '$2y$10$7ySGJWgAXXWCxBC3S240IeVKf/ucQGQM71nDBIE1Mrwg1oRHH2smm', '1650688447');
+
 -- --------------------------------------------------------
 
 --
@@ -349,6 +358,7 @@ INSERT INTO `taikhoan` (`id`, `fullname`, `email`, `password`, `phone`, `address
 (50521, 'Lê Yến Như', 'tuyet2001@gmail.com', '123456', '0361152456', '99 An Duong Vuong', 1),
 (66194, 'Lê Yến Như', 'tuyet2001@gmail.com', '123456', '0361152456', '99 An Duong Vuong', 1),
 (86738, 'Tran Thi Tuyet Mai', 'tuyetmai@gmail.com', '123', '0321124854', '23 Pham Ngu Lao, Phuong 4, Quan 3, TP HCM', 1),
+(97419, 'Le Ngoc Toan', 'hentaiktvn321@gmail.com', '123456', '0321124854', '23 Pham Ngu Lao, Phuong 4, Quan 3, TP HCM', 1),
 (98648, 'Lê Yến Như', 'tuyet2001@gmail.com', '123456', '0361121414', '99 An Duong Vuong, Phường 16, Quận 8', 1);
 
 --
@@ -430,7 +440,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `resetpassword`
 --
 ALTER TABLE `resetpassword`
-  MODIFY `ResetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ResetID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -211,6 +211,7 @@
                     //Kiem tra neu nhu da gui request thanh cong
                     if (this.readyState == 4 && this.status == 200) {
                         //In ra data nhan duoc
+                        console.log(this.responseText);
                         let arr1 = JSON.parse(this.responseText).arr1;
                         let pagin = JSON.parse(this.responseText).pagin;
                         document.getElementById('table_tbody_sanpham').innerHTML = arr1;

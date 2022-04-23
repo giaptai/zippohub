@@ -125,8 +125,8 @@
         <?php
         require_once('../query.php');
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $start = ($page - 1) * 5;
-        $result = executeResult("SELECT * FROM taikhoan LIMIT $start, 5");
+        $start = ($page - 1) * 10;
+        $result = executeResult("SELECT * FROM taikhoan LIMIT $start, 10");
         $count = countRow("SELECT * FROM taikhoan");
         ?>
         <table class="table align-middle caption-top" id="table_taikhoan">
@@ -173,7 +173,7 @@
                 <td colspan="6" style="text-align:center">
                     <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_taikhoan">
                         <?php
-                        for ($i = 0; $i < ceil(($count) / 5); $i++) {
+                        for ($i = 0; $i < ceil(($count) / 10); $i++) {
                             if($i==$page-1){
                                 echo '<button type="button" class="btn btn-outline-primary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
                             }else  echo '<button type="button" class="btn btn-outline-primary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
@@ -245,7 +245,6 @@
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 //gui request
                 xhttp.send('action=phantrang' +
-                    '&page=' + page +
                     '&email=' + s1 +
                     '&phone=' + s2 +
                     '&address=' + s3
