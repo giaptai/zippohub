@@ -12,39 +12,15 @@
 </head>
 
 <body>
-    <!-- <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item bg-light">
-            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
-        </li>
+<ul class="nav nav-tabs justify-content-end">
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="./quanly_donhang.php">Quản lý đơn hàng</a>
+            <a class="nav-link active" href="./quanly_taikhoan.php">Quay lại Quản lý tài khoản</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_sanpham.php">Quản lý sản phẩm</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Quản lý tài khoản</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </li>
-    </ul> -->
+    </ul>
     <!--  -->
 
     <!-- Modal Them tai khoan -->
-    <div class="">
+    <div class="container mt-4">
         <div class="col-6 m-auto">
             <h4>Thêm tài khoản</h4>
             <form class="form-floating" enctype="multipart/form-data" method="POST">

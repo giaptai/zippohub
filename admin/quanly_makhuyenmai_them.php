@@ -12,67 +12,42 @@
 </head>
 
 <body>
-    <!-- <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item ">
-            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
-        </li>
+    <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="./quanly_donhang.php">Quản lý đơn hàng</a>
+            <a class="nav-link active" aria-current="page" href="./quanly_makhuyenmai.php">Quay lại Quản lý mã khuyến mãi</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_sanpham.php">Quản lý sản phẩm</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Quản lý tài khoản</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </li>
-    </ul> -->
-    <!--  -->
+    </ul>
 
-    <!-- Modal Them tai khoan -->
-    <div class="">
+    <!-- Them tai khoan -->
+    <div class="container mt-4">
         <div class="col-6 m-auto">
-            <h4>Thêm mã khuyến mãi</h4>
+            <h3>Thêm mã khuyến mãi</h3>
             <form class="form-floating" enctype="multipart/form-data" method="POST">
                 <!-- Name input -->
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Mã khuyến mãi:</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Mã khuyến mãi" id="khuyenmai" >
-                        <button class="btn btn-outline-secondary" type="button"  onclick="console.log(this.parentNode.querySelector('input[type=text]').value=(Math.random() +1).toString(36).substring(2))">Tạo mã</button>
+                        <input type="text" class="form-control" placeholder="Mã khuyến mãi" id="khuyenmai">
+                        <button class="btn btn-outline-secondary" type="button" onclick="console.log(this.parentNode.querySelector('input[type=text]').value=(Math.random() +1).toString(36).substring(2))">Tạo mã</button>
                     </div>
                 </div>
-              
+
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label" >Trạng thái:</label>
+                    <label for="exampleFormControlInput1" class="form-label">Trạng thái:</label>
                     <select class="form-select" id="trangthai">
                         <option value="1">Còn hạn</option>
                         <option value="0">Hết hạn</option>
                     </select>
                 </div>
-            
+
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label" >Ngày hết hạn:</label>
-                    <input type="date" class="form-control"  placeholder="Ngày hết hạn" id="ngayhethan">
+                    <label for="exampleFormControlInput1" class="form-label">Ngày hết hạn:</label>
+                    <input type="date" class="form-control" placeholder="Ngày hết hạn" id="ngayhethan">
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label" >Giá giảm:</label>
-                    <input type="number" class="form-control"  placeholder="Giá giảm" id="giagiam">
+                    <label for="exampleFormControlInput1" class="form-label">Giá giảm:</label>
+                    <input type="number" class="form-control" placeholder="Giá giảm" id="giagiam">
                 </div>
 
             </form>

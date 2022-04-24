@@ -45,7 +45,19 @@
     require_once('../query.php');
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $start = ($page - 1) * 10;
-    $result = executeResult("SELECT * FROM hoadon LIMIT $start, 10");
+    $trangthai=isset($_GET['trangthai']) ? $_GET['trangthai']:'';
+    $sql ="SELECT * FROM hoadon";
+    
+    if($trangthai=='Tổng đơn' || empty($trangthai)){
+        $temp=$sql;
+    }else {
+        $sql .= " WHERE `statuss`='$trangthai'";
+        $temp =$sql;
+    }
+    $sql .= " LIMIT $start, 10";
+    echo $sql.'--'.$temp;
+    $result =executeResult($sql);
+    $result1 =countRow($temp);
     $count = countRow('SELECT * FROM hoadon');
     $count1 = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Chờ xác nhận'");
     $count2 = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã xác nhận'");
@@ -58,30 +70,30 @@
         <div class="container m-0 p-0 mt-3">
             <div class="row justify-content-md-between">
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked value="Tổng đơn">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"  <?= (!isset($_GET['trangthai']) || $_GET['trangthai']=='Tổng đơn') ? 'checked':''?> value="Tổng đơn">
                     <label class="btn btn-outline-primary btn-sm" for="btnradio1">Tổng đơn<span class="badge bg-danger" id="badge_tongdon"><?= $count ?></span></label>
                 </div>
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Chờ xác nhận">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Chờ xác nhận" <?= (isset($_GET['trangthai']) && $_GET['trangthai']=='Chờ xác nhận') ? 'checked':''?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio2">Chờ xác nhận<span class="badge bg-danger" id="badge_choxacnhan"><?= $count1 ?></span></label>
                 </div>
                 <div class="col-md-auto">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Đã xác nhận">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Đã xác nhận" <?= (isset($_GET['trangthai']) &&$_GET['trangthai']=='Đã xác nhận') ? 'checked':''?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio3">Đã xác nhận<span class="badge bg-danger" id="badge_daxacnhan"><?= $count2 ?></span></label>
                 </div>
                 <div class="col-md-auto">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Đang giao">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Đang giao" <?= (isset($_GET['trangthai']) &&$_GET['trangthai']=='Đang giao') ? 'checked':''?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio4">Đang giao<span class="badge bg-danger" id="badge_danggiao"><?= $count3 ?></span></label>
                 </div>
                 <div class="col-md-auto">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" value="Đã giao">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" value="Đã giao" <?= (isset($_GET['trangthai']) && $_GET['trangthai']=='Đã giao') ? 'checked':''?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio5">Đã giao<span class="badge bg-danger" id="badge_dagiao"><?= $count4 ?></span></label>
                 </div>
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" value="Đã hủy">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" value="Đã hủy" <?= (isset($_GET['trangthai']) && $_GET['trangthai']=='Đã hủy') ? 'checked':''?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio6">Đã hủy<span class="badge bg-danger" id="badge_dahuy"><?= $count5 ?></span></label>
                 </div>
                 <div class="col-md-auto">
@@ -173,10 +185,10 @@
                     <nav aria-label="Page navigation example">
                         <ul class="pagination pagination-sm justify-content-center m-0" id="table_tfoot_donhang">
                             <?php
-                            for ($i = 0; $i < ceil($count / 10); $i++) {
-                                if( ($i+1)==$page ){
+                            for ($i = 0; $i < ceil($result1 / 10); $i++) {
+                                if (($i + 1) == $page) {
                                     echo '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
-                                }else echo '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+                                } else echo '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
                             }
                             ?>
                         </ul>
@@ -187,66 +199,38 @@
     </div>
 
     <script>
-       
-        // function table_donhang() {
-        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-        //     //Bat su kien thay doi trang thai cuar request
-        //     xhttp.onreadystatechange = function() {
-        //         //Kiem tra neu nhu da gui request thanh cong
-        //         if (this.readyState == 4 && this.status == 200) {
-        //             // In ra data nhan duoc
-        //             // let s1 = JSON.parse(this.responseText).arr1;
-        //             console.log(this.responseText);
-        //             let s2 = JSON.parse(this.responseText).tongdon;
-        //             let s3 = JSON.parse(this.responseText).choxacnhan;
-        //             let s4 = JSON.parse(this.responseText).daxacnhan;
-        //             let s5 = JSON.parse(this.responseText).danggiao;
-        //             let s6 = JSON.parse(this.responseText).dagiao;
-        //             let s7 = JSON.parse(this.responseText).dahuy;
-        //             // document.getElementById('table_tbody_donhang').innerHTML = s1;
-        //             document.getElementById('badge_tongdon').innerHTML = s2;
-        //             document.getElementById('badge_choxacnhan').innerHTML = s3;
-        //             document.getElementById('badge_daxacnhan').innerHTML = s4;
-        //             document.getElementById('badge_danggiao').innerHTML = s5;
-        //             document.getElementById('badge_dagiao').innerHTML = s6;
-        //             document.getElementById('badge_dahuy').innerHTML = s7;
-        //             //console.log(this.responseText);
-        //         }
-        //     }
-        //     //cau hinh request
-        //     xhttp.open('POST', './PHP_Function/donhang.php', true);
-        //     //cau hinh header cho request
-        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        //     //gui request
-        //     xhttp.send('displaydonhang');
-        // }
-        // table_donhang();
-
         // tìm kiếm loại đơn hàng
         for (let i = 0; i < document.querySelectorAll('input[type="radio"]').length; i++) {
             document.querySelectorAll('input[type="radio"]')[i].addEventListener('click', function() {
                 console.log(document.querySelectorAll('input[type="radio"]')[i].value);
                 let val = document.querySelectorAll('input[type="radio"]')[i].value;
-                phantrang(1);
-                // var xhttp = new XMLHttpRequest() || ActiveXObject();
-                // //Bat su kien thay doi trang thai cuar request
-                // xhttp.onreadystatechange = function() {
-                //     //Kiem tra neu nhu da gui request thanh cong
-                //     if (this.readyState == 4 && this.status == 200) {
-                //         //In ra data nhan duoc
-                //         console.log(JSON.parse(this.responseText).arr2);
-                //         arr1 = JSON.parse(this.responseText).arr1;
-                //         arr2 = JSON.parse(this.responseText).arr2;
-                //         document.getElementById('table_tbody_donhang').innerHTML = arr1;
-                //         document.getElementById('table_tfoot_donhang').innerHTML = arr2;
-                //     }
-                // }
-                // //cau hinh request
-                // xhttp.open('POST', './PHP_Function/donhang.php', true);
-                // //cau hinh header cho request
-                // xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                // //gui request
-                // xhttp.send('action=trangthai&value=' + val);
+                //phantrang(1);
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        console.log(JSON.parse(this.responseText).arr2);
+                        const nextURL = './quanly_donhang.php?trangthai='+val;
+                        const nextTitle = 'My new page title';
+                        const nextState = {
+                            additionalInformation: 'Updated the URL with JS'
+                        };
+                        //window.history.pushState(nextState, nextTitle, nextURL);
+                        window.history.replaceState(nextState, nextTitle, nextURL);
+                        arr1 = JSON.parse(this.responseText).arr1;
+                        arr2 = JSON.parse(this.responseText).arr2;
+                        document.getElementById('table_tbody_donhang').innerHTML = arr1;
+                        document.getElementById('table_tfoot_donhang').innerHTML = arr2;
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/donhang.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=trangthai&value=' + val);
             })
         }
 
@@ -266,7 +250,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     //console.log(JSON.parse(this.responseText).arr2);
-                    const nextURL = './quanly_donhang.php?page=' + p;
+                    const nextURL = './quanly_donhang.php?trangthai='+val+'&page=' + p;
                     const nextTitle = 'My new page title';
                     const nextState = {
                         additionalInformation: 'Updated the URL with JS'

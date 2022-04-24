@@ -12,89 +12,114 @@
 </head>
 
 <body>
-    <!-- <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item bg-light">
-            <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
-        </li>
+    <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="./quanly_donhang.php">Quản lý đơn hàng</a>
+            <a class="nav-link active" href="./quanly_sanpham.php">Quay lại Quản lý sản phẩm</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Quản lý sản phẩm</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_taikhoan.php">Quản lý tài khoản</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </li>
-    </ul> -->
+    </ul>
     <!--  -->
 
     <!-- Modal Them san pham -->
-    <!-- <div class="">
-
-        <div class="col-6 m-auto">
-            <h4>Thêm sản phẩm</h4>
-            <form class="form-floating" enctype="multipart/form-data" method="POST">
-                <div class="text-center mb-3">
-                    <img src="../picture/" class="rounded" alt="..." width="auto" height="200">
-                </div>
-                <div class="input-group mb-3">
-                    <input type="file" class="form-control" name="inputGroupFile02" id="inputGroupFile02" value="">
-                    <button onclick="uploadd()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>
-                </div>
-                <div class="d-flex">
-                    <div class="form-floating mb-3 col-2">
-                        <input type="text" class="form-control " disabled placeholder="1" name="codez" id="codez" value="">
-                        <label for="floatingInput">Mã sản phẩm</label>
-                    </div>
-                    <div class="form-floating mb-3 col-10">
-                        <input type="text" class="form-control" name="namee" id="namee" placeholder="1" value="">
-                        <label for="floatingInput">Tên sản phẩm</label>
-                    </div>
-                </div>
-                <div class="d-flex">
-                    <div class="form-floating mb-3 col-3">
-                        <input type="number" class="form-control" name="amountt" id="amountt" placeholder="1" value="">
-                        <label for="floatingInput">Số lượng</label>
-                    </div>
-                    <div class="form-floating mb-3 col-6 input-group-sm">
-                        <input type="number" class="form-control" name="prices" id="prices" placeholder="1" value="">
-                        <label for="floatingInput">Giá</label>
-                    </div>
-                    <div class="form-floating mb-3 col-3 ">
-                        <select class="form-select" name="tinhtrang" id="tinhtrang">
-                            <option value="1">Còn hàng</option>
-                            <option value="0">Hết hàng</option>
-                        </select>
-                        <label for="">Tình trạng</label>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-6 m-auto"> -->
-    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-    <!-- <a class="btn btn-secondary" href="./quanly_sanpham.php">Quay lại</a>
-            <button type="button" class="btn btn-primary" onclick="addproduct()">Thêm</button>
-        </div>
-    </div> -->
     <div class="container-md ">
-        <form class="m-auto">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h4>Thêm sản phẩm</h4>
+                <div class="col-md-auto">
+                    <img style="object-fit: cover;" src="../picture/" class="rounded" alt="..." width="auto" height="200">
+                </div>
+                <div class="col-md-auto">
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" name="inputGroupFile02" id="inputGroupFile02" value="">
+                        <button onclick="uploadd()" class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon03">Upload</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" disabled placeholder="1" name="codez" id="codez" value="<?php echo rand(1, 10000) ?>">
+                            <label for="floatingInput">Mã sản phẩm</label>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="namee" id="namee" placeholder="1" value="">
+                            <label for="floatingInput">Tên sản phẩm</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-auto">
+                    <div class="mb-3">
+                        <label class="form-label">Giới thiệu:</label>
+                        <textarea name="gioithieu" id="gioithieu" class="form-control" aria-label="With textarea"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Thể loại:</label>
+                            <select class="form-select" name="theloai" id="theloai">
+                                <option value="Zippo Armor">Zippo Armor</option>
+                                <option value="Zippo Sterling Silver">Zippo Sterling Silver</option>
+                                <option value="Zippo Base Models">Zippo Base Models</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Chất liệu:</label>
+                            <select class="form-select" name="chatlieu" id="chatlieu">
+                                <option value="Đồng">Đồng</option>
+                                <option value="Bạc">Bạc</option>
+                                <option value="Vàng">Vàng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Xuất xứ:</label>
+                            <select class="form-select" name="xuatxu" id="xuatxu">
+                                <option value="Nhật Bản">Nhật Bản</option>
+                                <option value="Hàn Quốc">Hàn Quốc</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Tình trạng:</label>
+                            <select class="form-select" name="tinhtrang" id="tinhtrang">
+                                <option value="1">Còn hàng</option>
+                                <option value="0">Hết hàng</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class=" mb-3">
+                            <label for="" class="form-label">Số lượng:</label>
+                            <input type="number" class="form-control" name="amountt" id="amountt" placeholder="1" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label">Giá:</label>
+                            <input type="number" class="form-control" name="prices" id="prices" placeholder="1" value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-auto">
+                        <a class="btn btn-secondary" href="./quanly_sanpham.php">Quay lại</a>
+                        <button type="button" class="btn btn-primary" onclick="addproduct()">Thêm</button>
+                    </div>
+                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- <form class="m-auto">
             <h4>Thêm sản phẩm</h4>
-            <div class="row ">
+            <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <img style="object-fit: cover;" src="../picture/" class="rounded" alt="..." width="auto" height="200">
                 </div>
@@ -191,9 +216,9 @@
                     <a class="btn btn-secondary" href="./quanly_sanpham.php">Quay lại</a>
                     <button type="button" class="btn btn-primary" onclick="addproduct()">Thêm</button>
                 </div>
-                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
-        </form>
+        </form> -->
     </div>
     <!-- Modal chi tiet san pham -->
     <!--  -->
@@ -225,15 +250,15 @@
                     //In ra data nhan duoc     
                     //if(confirm(this.responseText)) 
                     console.log(this.responseText);
-                    if(confirm('Thêm sản phẩm ?')){
-                        if(this.responseText='success'){
+                    if (confirm('Thêm sản phẩm ?')) {
+                        if (this.responseText = 'success') {
                             alert('thành công');
                             location.reload();
-                        }else {
+                        } else {
                             alert('Lỗi khi thêm sản phẩm: \n' +
-                            '- Trùng mã sản phẩm\n ' +
-                            '- Trùng tên sản phẩm\n ' +
-                            '- Số lượng, giá để âm hoặc trống\n ');
+                                '- Trùng mã sản phẩm\n ' +
+                                '- Trùng tên sản phẩm\n ' +
+                                '- Số lượng, giá để âm hoặc trống\n ');
                         }
                     }
                 }
@@ -252,7 +277,7 @@
                 "&xuatxu=" + s5 +
                 "&amountt=" + s6 +
                 "&prices=" + s7 +
-                "&tinhtrang=" + s8+
+                "&tinhtrang=" + s8 +
                 "&gioithieu=" + s9
             );
         }

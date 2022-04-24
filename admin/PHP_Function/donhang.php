@@ -49,7 +49,6 @@ function display($query){
     //die($query);
     $result = executeResult($query);
     $result1 = countRow($temp);
-    $result1=ceil($result1 / 10);
     if ($result1 > 0) {
         foreach ($result as $row) {
             $arr['arr1'] .= ' <tr>
@@ -107,7 +106,7 @@ function display($query){
         </tr>';
             }
         }
-        for ($i = 0; $i < $result1; $i++) {
+        for ($i = 0; $i < ceil($result1 / 10); $i++) {
             if($i==$page-1){
                 $arr['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
             }else $arr['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';

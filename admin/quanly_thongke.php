@@ -14,7 +14,7 @@
 <body>
     <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item bg-light">
-            <a class="nav-link" aria-current="page" href="quanly_makhuyenmai.php">Quản lý ma khuyen mai</a>
+            <a class="nav-link" aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" aria-current="page" href="./quanly_donhang.php">Quản lý đơn hàng</a>
@@ -28,21 +28,9 @@
         <li class="nav-item ">
             <a class="nav-link active " href="#">Thống kê</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </li>
     </ul>
     <!--  -->
-    <div class="container-md">
+    <div class="container-md mt-4">
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
             <label class="btn btn-outline-primary" for="btnradio1">Ngày hôm nay</label>
