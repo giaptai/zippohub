@@ -1,2 +1,1 @@
-iu em nhìu
-địt me tụi nó co chuc năng gửi mail r ông
+kiểm tra lỗi giùm tôi, cảm ơn ông
