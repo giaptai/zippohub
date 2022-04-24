@@ -187,6 +187,7 @@
     </div>
 
     <script>
+       
         // function table_donhang() {
         //     var xhttp = new XMLHttpRequest() || ActiveXObject();
         //     //Bat su kien thay doi trang thai cuar request
@@ -250,7 +251,6 @@
         }
 
         function phantrang(p) {
-            console.log(p);
             ss = document.querySelectorAll('input[type="radio"]');
             var val;
             for (i = 0; i < ss.length; i++) {
@@ -258,13 +258,14 @@
                     val = ss[i].value;
                 }
             }
+            console.log(val);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    console.log(JSON.parse(this.responseText).arr2);
+                    //console.log(JSON.parse(this.responseText).arr2);
                     const nextURL = './quanly_donhang.php?page=' + p;
                     const nextTitle = 'My new page title';
                     const nextState = {

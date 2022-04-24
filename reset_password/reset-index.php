@@ -28,7 +28,7 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="background-color:#d1e7dd">
                 <div class="modal-header">
@@ -36,36 +36,31 @@
                 </div>
                 <div class="modal-body">
                     <?php
-                    // if (isset($_GET["reset"])) {
-                    //     if ($_GET["reset"] == "success") {
-                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    if (isset($_GET["reset"])) {
+                        if ($_GET["reset"] == "success") {
+                            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <strong>Thành công !</strong> Chúng tôi đã gửi email để bạn đổi mật khẩu.
                                 </div>';
-                    //     }
-                    // } 
+                        }
+                    }
                     ?>
                 </div>
             </div>
         </div>
-    </div>
-
+    </div> -->
+    <?php
+    if (isset($_GET["reset"])) {
+        if ($_GET["reset"] == "success") {
+            echo 'alert(`Thành công !, Chúng tôi đã gửi email để bạn đổi mật khẩu.`)';
+        }
+    }
+    ?>
     <div class="container-sm mt-5 mb-5">
-        <!-- <div class="row justify-content-md-center">
-            <div class="col-md-auto">
-                <h2>Reset mật khẩu</h2>
-            </div>
-        </div>
         <div class="row justify-content-md-center">
-            <div class="col-md-auto">
-                <span>1 email sẽ được gửi tới với hướng dẫn cách đặt lại mật khẩu</span>
-            </div>
-        </div> -->
-
-        <div class="row justify-content-md-center">
-            <div class="col-md-6">
+            <div class="col-md-6" id="contentmail">
                 <h2>Nhập địa chỉ email</h2>
                 <p>Một đường dẫn sẽ gửi tới email của bạn, nhấp vào đó để tạo mật khẩu mới</p>
-                <form action="reset-request.php" method="post">
+                <form>
                     <div class="row align-items-center">
                         <div class="col-md-10">
                             <div class="form-floating">
@@ -74,13 +69,11 @@
                             </div>
                         </div>
                         <div class="col-md-auto">
-                            <button name="reset-request-submit" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">Gửi</button>
+                            <button type="button" name="reset-request-submit" class="btn btn-primary btn-lg" onclick="sendmail(this)">Gửi</button>
                         </div>
                     </div>
-
                     <div class="text-center text-lg-start mt-3">
-
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Quay lại đăng nhập? <a href="../user/login_user.php" class="link-danger" onclick="formRG(1)">Đăng nhập</a></p>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Quay lại đăng nhập? <a href="../user/login_user.php" class="link-danger">Đăng nhập</a></p>
                     </div>
                 </form>
             </div>
@@ -209,8 +202,26 @@
     <!-- Footer -->
 </body>
 <script>
-    function sendmail() {
-
+    function sendmail(p) {
+        console.log(p.parentElement.parentElement.children[0].children[0].children[0].value);
+        s1=p.parentElement.parentElement.children[0].children[0].children[0].value;
+        var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    // window.location.href = "./login_user.php";
+                    document.getElementById('contentmail').innerHTML=this.responseText;
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', 'reset-request.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('reset-request-submit'+
+                        '&email='+s1);
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

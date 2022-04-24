@@ -40,5 +40,7 @@ if (isset($_POST["reset-request-submit"])) {
     $mail->Body = $message;
     $mail->addAddress($_POST["email"]);
     $mail->send();
-    header("Location: ./reset-index.php?reset=success");
+    // header("Location: ./reset-index.php?reset=success");
+    echo '<h2 class="text-success">Thành công</h2>
+    <p>Đã gửi mail thành công đến địa chỉ: <strong>'.$_POST["email"].'<strong></p>';
 }

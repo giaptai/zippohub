@@ -3,6 +3,7 @@ session_start();
 if (isset($_POST["action"]) || isset($_SESSION["xemthem"])) {
     $result = $result1 = $temp = '';
     $arr = array('arr1' => '', 'pagin' => '');
+    $page = isset($_POST['page']) ? $_POST['page'] : 1;
     if (isset($_SESSION["xemthem"])) {
         $sql = 'SELECT * FROM sanpham WHERE category = "' . $_SESSION["xemthem"] . '"';
         $temp = $sql;
@@ -25,7 +26,7 @@ if (isset($_POST["action"]) || isset($_SESSION["xemthem"])) {
         $priceto = $_POST['priceto'] != '' ? $_POST['priceto'] : PHP_INT_MAX;
         $sql .= ") AND (price BETWEEN {$pricefrom} and {$priceto}) and material like '%{$_POST['material']}%' and madeby like '%{$_POST['madeby']}%'";
         $temp = $sql;
-        $page = isset($_POST['page']) ? $_POST['page'] : 1;
+        //$page = isset($_POST['page']) ? $_POST['page'] : 1;
         $start = ($page - 1) * 12;
         $sql .= " LIMIT $start, 12";
     }
@@ -50,7 +51,10 @@ if (isset($_POST["action"]) || isset($_SESSION["xemthem"])) {
         </div>';
         }
         for ($i = 0; $i < ceil(($result1) / 12); $i++) {
-            $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+            if($i==$page-1){
+                $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm active" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+            }else  $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+           
         }
     } else $arr['arr1'] = "Không tìm thấy sản phẩm !";
     echo json_encode($arr);
