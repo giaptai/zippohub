@@ -9,10 +9,10 @@ function chucnang()
     switch ($action) {
         case 'search':
             $id = $_POST['id'];
-            if (empty($id)) {
+            if ( !empty($id) || $id==0) {
+                $sql .= " where id='$id'";
                 display($sql);
             } else {
-                $sql .= " where id='$id'";
                 display($sql);
             }
             break;
@@ -41,6 +41,7 @@ function display($query){
     $arr = array('arr1' => '', 'pagin' => '', 'tong' => 0);
     $temp = $query;
     $query .= " LIMIT $start, 5";
+    //die($query);
     $result = executeResult($query);
     $result1 = countRow($temp);
     if ($result1 > 0) {

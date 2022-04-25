@@ -28,10 +28,10 @@ function chucnang(){
 
         case 'timkiemma':
             $id = $_POST['id'];
-            if (empty($id)) {
+            if (!empty($id) || $id==0) {
+                $sql .= " WHERE id_hoadon={$id}";
                 display($sql);
             } else {
-                $sql .= " WHERE id_hoadon={$id}";
                 display($sql);
             }
             break;

@@ -8,7 +8,7 @@ function chucnang(){
     switch ($action) {
         case 'search';
             $val = $_POST['val'];
-            if (!empty($val)) {
+            if (!empty($val) || $val==0) {
                 $sql .= " WHERE id_khuyenmai='{$val}'";
             }
             display($sql);
