@@ -28,7 +28,7 @@
                         <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light">Cửa hàng</a>
+                        <a class="nav-link text-light" href="../cuahang.php" >Cửa hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="../user/cart.php">
@@ -42,7 +42,7 @@
                         echo
                         '</span></a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle bg-white" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">

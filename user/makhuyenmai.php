@@ -27,7 +27,7 @@
                         <a class="nav-link text-light" aria-current="page" href="../index.php">Trang chủ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light">Cửa hàng</a>
+                        <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="../user/cart.php">
@@ -332,7 +332,6 @@
             //gui request
             xhttp.send('action=phantrang&page=' + p);
         }
-       
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
