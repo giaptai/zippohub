@@ -190,7 +190,7 @@
                     <div class="card w-25 mb-3">
                         <div class="card-body row justify-content-md-center">
                             <div class="card-tilte col-md-auto">
-                                <h5 class="card-title">Đơn hàng: #<?= $result0['id_hoadon'] ?> </h5>
+                                <h5 class="card-title">Thang LON chua lam Đơn hàng: #<?= $result0['id_hoadon'] ?> </h5>
                                
                             </div>
                             <hr class="dropdown-divider">

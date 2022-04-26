@@ -168,7 +168,7 @@
                 ?>
             </tbody>
             <tfoot>
-                <td colspan="6" style="text-align:center">
+                <td colspan="7" style="text-align:center">
                     <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_taikhoan">
                         <?php
                         for ($i = 0; $i < ceil(($count) / 10); $i++) {
@@ -206,54 +206,59 @@
         }
 
         function search() {
-            s1 = document.getElementById('button-addon1').value;
-            s2 = document.getElementById('button-addon2').value;
-            s3 = document.getElementById('button-addon3').value;
+            let s1 = document.getElementById('button-addon1').value;
+            let s2 = document.getElementById('button-addon2').value;
+            let s3 = document.getElementById('button-addon3').value;
             console.log(s1, s2, s3);
-            s1 = document.getElementById('button-addon1').value;
-            if (s1 == '' && s2 == '' && s3 == '') {
-                ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
-                if (ss == -1) {
-                    phantrang(1);
-                } else {
-                    page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
-                    page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
-                    phantrang(page);
-                }
-            } else {
-                var xhttp = new XMLHttpRequest() || ActiveXObject();
-                //Bat su kien thay doi trang thai cuar request
-                xhttp.onreadystatechange = function() {
-                    //Kiem tra neu nhu da gui request thanh cong
-                    if (this.readyState == 4 && this.status == 200) {
-                        //In ra data nhan duoc
-                        console.log((this.responseText));
-                        let s1 = JSON.parse(this.responseText).arr1;
-                        let s2 = JSON.parse(this.responseText).arr2;
-                        //let s3 = JSON.parse(this.responseText).arr3;
-                        document.getElementById('table_tbody_taikhoan').innerHTML = s1;
-                        document.getElementById('table_tfoot_taikhoan').innerHTML = s2;
-                        //document.getElementById('badge').innerHTML = s3;
+            // if (s1 == '' && s2 == '' && s3 == '') {
+            //     ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+            //     if (ss == -1) {
+            //         phantrang(1, 'search');
+            //     } else {
+            //         page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+            //         page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+            //         phantrang(page, 'search');
+            //     }
+            // } else {
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    console.log((this.responseText));
+                    // let nextURL = './quanly_taikhoan.php?email=' + s1 + '&phone=' + s2 + '&diachi=' + s3 + '&page=' + 1;
+                    // let nextTitle = 'My new page title';
+                    // let nextState = {
+                    //     additionalInformation: 'Updated the URL with JS'
+                    // };
+                    //window.history.pushState(nextState, nextTitle, nextURL);
+                    // window.history.replaceState(nextState, nextTitle, nextURL);
+                    let s4 = JSON.parse(this.responseText).arr1;
+                    let s5 = JSON.parse(this.responseText).arr2;
+                    //let s3 = JSON.parse(this.responseText).arr3;
+                    document.getElementById('table_tbody_taikhoan').innerHTML = s4;
+                    document.getElementById('table_tfoot_taikhoan').innerHTML = s5;
+                    //document.getElementById('badge').innerHTML = s3;
 
-                    }
                 }
-                //cau hinh request
-                xhttp.open('POST', './PHP_Function/taikhoan.php', true);
-                //cau hinh header cho request
-                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                //gui request
-                xhttp.send('action=search' +
-                    '&email=' + s1 +
-                    '&phone=' + s2 +
-                    '&address=' + s3
-                );
             }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/taikhoan.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=search' +
+                '&email=' + s1 +
+                '&phone=' + s2 +
+                '&address=' + s3
+            );
         }
-
-        function phantrang(p) {
-            s1 = document.getElementById('button-addon1').value;
-            s2 = document.getElementById('button-addon2').value;
-            s3 = document.getElementById('button-addon3').value;
+    // }
+        function phantrang(p, id) {
+            let s1 = document.getElementById('button-addon1').value;
+            let s2 = document.getElementById('button-addon2').value;
+            let s3 = document.getElementById('button-addon3').value;
             console.log(s1, s2, s3);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
@@ -287,91 +292,92 @@
                 '&page=' + p +
                 '&email=' + s1 +
                 '&phone=' + s2 +
-                '&address=' + s3
-            ); 
+                '&address=' + s3 +
+                '&id=' + id
+            );
             // xhttp.send('action=search' +'&page=' + p);
-            }
+        }
 
-            function details(id) {
-                var xhttp = new XMLHttpRequest() || ActiveXObject();
-                //Bat su kien thay doi trang thai cuar request
-                xhttp.onreadystatechange = function() {
-                    //Kiem tra neu nhu da gui request thanh cong
-                    if (this.readyState == 4 && this.status == 200) {
-                        //In ra data nhan duoc
-                        //console.log(this.responseText);
-                        document.getElementById('modal-content').innerHTML = this.responseText;
-                    }
+        function details(id) {
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    //console.log(this.responseText);
+                    document.getElementById('modal-content').innerHTML = this.responseText;
                 }
-                //cau hinh request
-                xhttp.open('POST', './PHP_Function/taikhoan.php', true);
-                //cau hinh header cho request
-                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                //gui request
-                xhttp.send('action=details&id=' + id);
             }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/taikhoan.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=details&id=' + id);
+        }
 
-            function updateCus(e) {
-                status = document.getElementById('trangthai').value;
-                console.log(status);
-                let row = document.getElementById('detail' + e).parentElement.parentElement;
-                console.log(row.children[5]);
-                var xhttp = new XMLHttpRequest() || ActiveXObject();
-                //Bat su kien thay doi trang thai cuar request
-                xhttp.onreadystatechange = function() {
-                    //Kiem tra neu nhu da gui request thanh cong
-                    if (this.readyState == 4 && this.status == 200) {
-                        //In ra data nhan duoc
-                        alert(this.responseText);
-                        row.children[5].innerText = (status==1 ? 'Mở':'Khóa');
-                    }
+        function updateCus(e) {
+            status = document.getElementById('trangthai').value;
+            console.log(status);
+            let row = document.getElementById('detail' + e).parentElement.parentElement;
+            console.log(row.children[5]);
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    alert(this.responseText);
+                    row.children[5].innerText = (status == 1 ? 'Mở' : 'Khóa');
                 }
-                //cau hinh request
-                xhttp.open('POST', './PHP_Function/taikhoan.php', true);
-                //cau hinh header cho request
-                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                //gui request
-                xhttp.send('action=update' + '&status=' + status + '&id=' + e);
             }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/taikhoan.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('action=update' + '&status=' + status + '&id=' + e);
+        }
 
-            // function addRow() {
-            //     let table = document.getElementById('table_taikhoan').getElementsByTagName('tbody')[0];
-            //     let row = table.insertRow(0);
-            //     row.insertCell(0).outerHTML = '<th scope="row"><div class="form-check">' +
-            //         '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">' +
-            //         '</div>' +
-            //         '</th>';
-            //     row.insertCell(1).outerHTML = "<td>Tiến</td>";
-            //     row.insertCell(2).outerHTML = "<td>tienk192001@gmail.com</td>";
-            //     row.insertCell(3).outerHTML = "<td>0921145258</td>";
-            //     row.insertCell(4).outerHTML = "<td>99 An Dương Vương, phường 16, quận 8</td>";
-            //     row.insertCell(5).outerHTML = "<td>" +
-            //         '<button class="btn btn-warning btn-sm">Khóa</button>' +
-            //         ' <button onclick="details(2165)" type="button" class="btn btn-info btn-sm" id="detail2165" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
-            //         'Chi tiết' +
-            //         '</button></td>';
+        // function addRow() {
+        //     let table = document.getElementById('table_taikhoan').getElementsByTagName('tbody')[0];
+        //     let row = table.insertRow(0);
+        //     row.insertCell(0).outerHTML = '<th scope="row"><div class="form-check">' +
+        //         '<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">' +
+        //         '</div>' +
+        //         '</th>';
+        //     row.insertCell(1).outerHTML = "<td>Tiến</td>";
+        //     row.insertCell(2).outerHTML = "<td>tienk192001@gmail.com</td>";
+        //     row.insertCell(3).outerHTML = "<td>0921145258</td>";
+        //     row.insertCell(4).outerHTML = "<td>99 An Dương Vương, phường 16, quận 8</td>";
+        //     row.insertCell(5).outerHTML = "<td>" +
+        //         '<button class="btn btn-warning btn-sm">Khóa</button>' +
+        //         ' <button onclick="details(2165)" type="button" class="btn btn-info btn-sm" id="detail2165" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
+        //         'Chi tiết' +
+        //         '</button></td>';
 
-            // }
+        // }
 
-            // var DisplayData1 = function(){
-            //     var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //     //Bat su kien thay doi trang thai cuar request
-            //     xhttp.onreadystatechange = function() {
-            //         //Kiem tra neu nhu da gui request thanh cong
-            //         if (this.readyState == 4 && this.status == 200) {
-            //             //In ra data nhan duoc
-            //             //addData(this.responseText);
-            //             document.getElementById('table_tfoot_taikhoan').innerHTML=this.responseText;
-            //         }
-            //     }
-            //     //cau hinh request
-            //     xhttp.open('POST', './taikhoan/them_sua_xoa_taikhoan.php', true);
-            //     //cau hinh header cho request
-            //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //     //gui request
-            //     xhttp.send('data=hienphantrang');
-            // }
-            // DisplayData1();
+        // var DisplayData1 = function(){
+        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
+        //     //Bat su kien thay doi trang thai cuar request
+        //     xhttp.onreadystatechange = function() {
+        //         //Kiem tra neu nhu da gui request thanh cong
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             //In ra data nhan duoc
+        //             //addData(this.responseText);
+        //             document.getElementById('table_tfoot_taikhoan').innerHTML=this.responseText;
+        //         }
+        //     }
+        //     //cau hinh request
+        //     xhttp.open('POST', './taikhoan/them_sua_xoa_taikhoan.php', true);
+        //     //cau hinh header cho request
+        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //     //gui request
+        //     xhttp.send('data=hienphantrang');
+        // }
+        // DisplayData1();
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 

@@ -106,11 +106,16 @@ function display($query){
         </tr>';
             }
         }
-        for ($i = 0; $i < ceil($result1 / 10); $i++) {
-            if($i==$page-1){
-                $arr['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
-            }else $arr['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
+        if($_POST['action']=='timkiemma'){
+            $arr['arr2']='';
+        }else {
+            for ($i = 0; $i < ceil($result1 / 10); $i++) {
+                if($i==$page-1){
+                    $arr['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
+                }else $arr['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).')">'.($i+1).'</a></li>';
+            }
         }
+        
     } else {
         $arr['arr1'] = '<td colspan="7">Không tìm thấy</td>';
     }

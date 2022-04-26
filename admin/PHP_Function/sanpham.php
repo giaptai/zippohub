@@ -9,7 +9,7 @@ function chucnang()
     switch ($action) {
         case 'search':
             $id = $_POST['id'];
-            if ( !empty($id) || $id==0) {
+            if (!empty($id) || $id == 0) {
                 $sql .= " where id='$id'";
                 display($sql);
             } else {
@@ -35,8 +35,9 @@ function chucnang()
     }
 }
 // hiện danh sách sản phẩm
-function display($query){
-    $page = isset ($_POST['page']) ? $_POST['page']:1;
+function display($query)
+{
+    $page = isset($_POST['page']) ? $_POST['page'] : 1;
     $start = ($page - 1) * 5;
     $arr = array('arr1' => '', 'pagin' => '', 'tong' => 0);
     $temp = $query;
@@ -50,7 +51,7 @@ function display($query){
             <th scope="row">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="' . $sp['id'] . '">
-                    <span>'.(++$start).' #'.$sp['id'] .'</span>
+                    <span>' . (++$start) . ' #' . $sp['id'] . '</span>
                 </div>
             </th>' .
                 '<td>
@@ -66,11 +67,16 @@ function display($query){
             </td>
         </tr>';
         }
-        for ($i = 0; $i < ceil(($result1) / 5); $i++) {
-            if($i==$page-1){
-                $arr['pagin'] .= '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
-            }else  $arr['pagin'] .= '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+        if ($_POST['action'] == 'search') {
+            $arr['pagin'] = '';
+        } else {
+            for ($i = 0; $i < ceil(($result1) / 5); $i++) {
+                if ($i == $page - 1) {
+                    $arr['pagin'] .= '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+                } else  $arr['pagin'] .= '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+            }
         }
+
         $arr['tong'] = $result1;
     } else {
         $arr['arr1'] .= '<td colspan="6">Không tìm thấy</td>';
@@ -78,7 +84,8 @@ function display($query){
     echo json_encode($arr);
 }
 //hiện chi tiết sản phẩm
-function detail($id){
+function detail($id)
+{
     $sql = "SELECT * FROM sanpham WHERE id=$id;";
     $result = executeSingleResult($sql);
     echo '
@@ -191,7 +198,8 @@ function detail($id){
     </div>';
 }
 // cập nhật sản phẩm
-function edit() {
+function edit()
+{
     $anh = $_POST['inputGroupFile02'];
     $ma = $_POST['codez'];
     $ten = $_POST['namee'];

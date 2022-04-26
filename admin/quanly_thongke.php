@@ -71,7 +71,7 @@
 
     foreach($sqlTuan as $row){
         echo
-        '<div class="btn-group" role="group" aria-label="Basic example" style="display:none;">
+        '<div class="btn-group" role="group" aria-label="Basic example" style="display:block;">
             <button type="button" class="btn btn-primary" id="n1" value="' . $sql1['money'] . '">Left</button>
             <button type="button" class="btn btn-primary" id="n2" value="' . $sql2['money'] . '">Left</button>
             <button type="button" class="btn btn-primary" id="n3" value="' . $sql3['money'] . '">Left</button>
@@ -82,7 +82,7 @@
         </div>';
     }
     echo
-    '<div class="btn-group" role="group" aria-label="Basic example" style="display:none;">
+    '<div class="btn-group" role="group" aria-label="Basic example" style="display:block;">
         <button type="button" class="btn btn-primary" id="1" value="' . $sql1['money'] . '">Left</button>
         <button type="button" class="btn btn-primary" id="2" value="' . $sql2['money'] . '">Left</button>
         <button type="button" class="btn btn-primary" id="3" value="' . $sql3['money'] . '">Left</button>

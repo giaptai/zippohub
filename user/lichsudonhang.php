@@ -146,7 +146,7 @@
                                                     <p class="mb-0" style="font-weight: 500;">' . number_format($row['total_product']) . '</p>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <p class="mb-0" style="font-weight: 500;">' . number_format($row['total_money']) . '</p>
+                                                    <p class="mb-0" style="font-weight: 500;">' . number_format($row['total_money']) . ' VND</p>
                                                 </td>';
                                             if ($row['statuss'] == 'Chờ xác nhận') {
                                                 echo '<td class="align-middle">

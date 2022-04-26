@@ -10,23 +10,18 @@ function chucnang()
         case 'search':
             display($sql, 1);
             break;
-
         case 'phantrang':
             display($sql, 1);
             break;
-
         case 'details':
             $id = $_POST["id"];
             $sql .= "where id=$id";
             details($sql, 1);
             break;
-
         case 'update':
             $status = $_POST["status"];
             $id  = $_POST["id"];
             updateCus($status, $id);
-            break;
-        default:
             break;
     }
 }
@@ -35,31 +30,30 @@ function display($query, $start)
 {
     $arr = array('arr1' => '', 'arr2' => '', 'arr3' => 0);
     $result = $result1 = $temp = '';
-
+    $seach = '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
     $address = isset($_POST['address']) ? $_POST['address'] : '';
 
     $page = isset($_POST['page']) ? $_POST['page'] : 1;
     $start = ($page - 1) * 10;
-
-    // if (empty($email) && empty($phone) && empty($address)) {
-    //     $query = $query;
-    // }else 
-    if (!empty($email) && (!empty($phone) || $phone == 0) && !empty($address)) {
-        $query  .= "WHERE email LIKE '%$email%' and phone like '%$phone%' and `address` like '%$address%'";
-    } else if (!empty($email) && empty($phone) && empty($address)) {
-        $query  .= "WHERE email LIKE '%$email%' ";
-    } else if (!empty($email) && (!empty($phone) || $phone == 0) && empty($address)) {
-        $query  .= "WHERE email LIKE '%$email%' and phone like '%$phone%'";
-    } else if (!empty($email) && empty($phone) && !empty($address)) {
-        $query  .= "WHERE email LIKE '%$email%' and `address` like '%$address%'";
-    } else if (empty($email) && (!empty($phone) || $phone == 0) && empty($address)) {
-        $query  .= "WHERE phone like '%$phone%' ";
-    } else if (empty($email) && (!empty($phone) || $phone == 0) && !empty($address)) {
-        $query  .= "WHERE phone like '%$phone%' and `address` like '%$address%'";
-    } else if (empty($email) && empty($phone) && !empty($address)) {
-        $query  .= "WHERE `address` like '%$address%'";
+    if ($_POST["action"] == 'search' || $_POST["id"] == 'search') {
+        if (!empty($email) && (!empty($phone) || $phone == 0) && !empty($address)) {
+            $query  .= "WHERE email LIKE '%$email%' and phone like '%$phone%' and `address` like '%$address%'";
+        } else if (!empty($email) && empty($phone) && empty($address)) {
+            $query  .= "WHERE email LIKE '%$email%' ";
+        } else if (!empty($email) && (!empty($phone) || $phone == 0) && empty($address)) {
+            $query  .= "WHERE email LIKE '%$email%' and phone like '%$phone%'";
+        } else if (!empty($email) && empty($phone) && !empty($address)) {
+            $query  .= "WHERE email LIKE '%$email%' and `address` like '%$address%'";
+        } else if (empty($email) && (!empty($phone) || $phone == 0) && empty($address)) {
+            $query  .= "WHERE phone like '%$phone%' ";
+        } else if (empty($email) && (!empty($phone) || $phone == 0) && !empty($address)) {
+            $query  .= "WHERE phone like '%$phone%' and `address` like '%$address%'";
+        } else if (empty($email) && empty($phone) && !empty($address)) {
+            $query  .= "WHERE `address` like '%$address%'";
+        }
+        $seach = ",'search'";
     }
     $temp .= $query;
     $query .= " limit {$start},10";
@@ -85,12 +79,12 @@ function display($query, $start)
         }
         for ($i = 0; $i < ceil(($result1) / 10); $i++) {
             if ($i == $page - 1) {
-                $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
-            } else $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
+                $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary active" onclick="phantrang(' . $i + 1 . '' . $seach . ')">' . $i + 1 . '</button>';
+            } else $arr['arr2'] .= '<button type="button" class="btn btn-outline-primary" onclick="phantrang(' . $i + 1 . '' . $seach . ')">' . $i + 1 . '</button>';
         }
         $arr['arr3'] = $result1;
     } else {
-        $arr['arr1'] = '<td colspan="6">Không tìm thấy</td>';
+        $arr['arr1'] = '<td colspan="7">Không tìm thấy</td>';
     }
     echo json_encode($arr);
 }
@@ -98,7 +92,8 @@ function display($query, $start)
 // <input type="password" id="passwordd" class="form-control" placeholder="1" name="passwordd" value="' . $result['password'] . '">
 // <label class="form-label" for="form5Example2">Mật khẩu</label>
 // </div>
-function details($query){
+function details($query)
+{
     $id = $_POST["id"];
     $s = '';
     $result = executeSingleResult($query);
@@ -131,8 +126,8 @@ function details($query){
 
                 <div class="form-floating mb-4">
                     <select class="form-select" id="trangthai">
-                        <option value="1" '.(($result['status'] == 1) ?  "selected" : "").'>Mở</option>
-                        <option value="0" '.(($result['status'] == 0) ?  "selected" : "").'>Khóa</option>
+                        <option value="1" ' . (($result['status'] == 1) ?  "selected" : "") . '>Mở</option>
+                        <option value="0" ' . (($result['status'] == 0) ?  "selected" : "") . '>Khóa</option>
                     </select>
                     <label class="form-label" for="floatingInput">Trạng thái</label>
                 </div>
@@ -147,7 +142,8 @@ function details($query){
 }
 // }
 
-function updateCus($status, $id){
+function updateCus($status, $id)
+{
     $sql  = "UPDATE taikhoan SET `status`='$status' WHERE id=$id";
     if (execute($sql)) {
         echo 'success';

@@ -92,7 +92,7 @@
                                                                             } else {
                                                                                 echo "Chưa áp dụng";
                                                                             } ?></span>
-                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $_SESSION["Order"]["Fullname"] ?>">
+                        <input type="text" class="form-control" placeholder="Username" disabled aria-label="Username" aria-describedby="basic-addon1" value="<?php echo $_SESSION["Order"]["Fullname"] ?>">
                     </div>
                 </div>
                 <div class="form-group">

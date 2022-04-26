@@ -307,7 +307,7 @@
         }
 
         listaddress();
-document.getElementById
+
         function listaddress() {
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {

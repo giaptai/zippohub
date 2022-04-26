@@ -92,7 +92,6 @@
                                     <th scope="col">Mã khuyến mãi</th>
                                     <th scope="col">Giảm giá</th>
                                     <th scope="col">Ngày hết hạn</th>
-                                    <th scope="col">Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody id="orderlist">
@@ -121,13 +120,10 @@
                                             </td>
                                             <td>' . number_format($row["giamgia"]) . '</td>
                                             <td>' . $row["ngayhethan"] . '</td>
-                                            <td>  
-                                                <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
-                                            </td>
                                         </tr>';
                                         }
                                     } else {
-                                        $s['arr1'] = '<td colspan="5">Không tìm thấy</td>  ';
+                                        $s['arr1'] = '<td colspan="4">Không tìm thấy</td>  ';
                                     };
                                     echo ($s['arr1']);
                                 }

@@ -75,7 +75,7 @@ if (isset($_POST['action'])) {
                             </div>
                         </div>
                     </td>
-                    <td scope="col">' . number_format($cart['gia']) . '</td> 
+                    <td scope="col">' . number_format($cart['gia']) . ' VND</td> 
                     <td>
                         <div class="input-group">
                             <button class="subtract btn btn-outline-primary btn-sm" onclick="subtract(this)" value="' . $cart['id'] . '"><i class="bi bi-dash-lg"></i></button>
@@ -83,7 +83,7 @@ if (isset($_POST['action'])) {
                             <button class="add btn btn-outline-primary btn-sm" value="' . $cart['id'] . '" onclick="add(this)"><i class="bi bi-plus-lg"></i></button>
                         </div>
                     </td>
-                    <td scope="col">' . number_format($cart['soluong'] * $cart['gia']) . '</td>
+                    <td scope="col">' . number_format($cart['soluong'] * $cart['gia']) . ' VND</td>
                     <td scope="col"><button class="btn btn-danger btn-sm" id="id' . $cart["id"] . '" onclick="dele(' . $cart["id"] . ')">X</button></td>
                 </tr>';
         }
@@ -92,8 +92,8 @@ if (isset($_POST['action'])) {
             <td class="fs-5">' . number_format($sumtien) . ' VND</td>
             <td><a class="btn btn-outline-warning btn-sm" id="deletedall" onclick="deletedAll()">Xóa tất cả</a></td>
         </tr>';
-        $dimemay['checkoutOK'] = '<p class="card-text">' . number_format($sumtien) . '</p>
-        <b class="card-text">' . number_format($sumtien) . '</b>';
+        $dimemay['checkoutOK'] = '<p class="card-text">' . number_format($sumtien) . ' VND</p>
+        <b class="card-text">' . number_format($sumtien) . ' VND</b>';
         echo json_encode($dimemay);
     }
 }

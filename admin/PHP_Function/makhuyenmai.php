@@ -2,13 +2,14 @@
 require_once('../../query.php');
 
 chucnang();
-function chucnang(){
+function chucnang()
+{
     $action = $_POST['action'];
     $sql = "SELECT * FROM makhuyenmai";
     switch ($action) {
         case 'search';
             $val = $_POST['val'];
-            if (!empty($val) || $val==0) {
+            if (!empty($val) || $val == 0) {
                 $sql .= " WHERE id_khuyenmai='{$val}'";
             }
             display($sql);
@@ -42,9 +43,10 @@ function chucnang(){
 }
 
 // hiện danh sách mã
-function display($query){
+function display($query)
+{
     $s = array('arr1' => '', 'arr2' => '');
-    $page = isset($_POST['page'])? $_POST['page']:1;
+    $page = isset($_POST['page']) ? $_POST['page'] : 1;
     $start = ($page - 1) * 10;
     $temp = $query;
     $query .= " LIMIT $start, 10";
@@ -72,10 +74,14 @@ function display($query){
             </td>
         </tr>';
         }
-        for ($i = 0; $i < ceil($result1 / 10); $i++) {
-            if($i==$page-1){
-                $s['arr2'] .= '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
-            }else $s['arr2'] .= '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
+        if ($_POST['action'] == 'search') {
+            $s['arr2']='';
+        } else {
+            for ($i = 0; $i < ceil($result1 / 10); $i++) {
+                if ($i == $page - 1) {
+                    $s['arr2'] .= '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
+                } else $s['arr2'] .= '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
+            }
         }
     } else {
         $s['arr1'] = '<td colspan="6">Không tìm thấy</td>';
@@ -150,7 +156,8 @@ function deleted($id)
     } else echo 'fail';
 }
 // thêm 1 mã
-function them(){
+function them()
+{
     $khuyenmai = $_POST['khuyenmai'];
     $trangthai = $_POST['trangthai'];
     $ngayhethan = $_POST['ngayhethan'];
@@ -194,5 +201,3 @@ function them(){
     // </tr>';
     //     }
 // }
-
-

@@ -50,9 +50,6 @@ function display($query){
             </td>
             <td>' . number_format($row["giamgia"]) . '</td>
             <td>' . $row["ngayhethan"] . '</td>
-            <td>  
-                <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-info btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
-            </td>
         </tr>';
         }
         for ($i = 0; $i < ceil($result1 / 10); $i++) {
@@ -61,7 +58,7 @@ function display($query){
             } else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
         }
     } else {
-        $s['arr1'] .= '<td colspan="5">Không tìm thấy</td>';
+        $s['arr1'] .= '<td colspan="4">Không tìm thấy</td>';
     }
     echo json_encode($s);
 }
