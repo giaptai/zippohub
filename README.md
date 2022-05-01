@@ -11,3 +11,11 @@ https://nhentai.net/g/399341/
 https://nhentai.net/g/399135/
 https://nhentai.net/g/379817/
 https://nhentai.net/g/240142/
+https://nhentai.net/g/183122/
+https://nhentai.net/g/190711/
+https://nhentai.net/g/294453/
+https://nhentai.net/g/383112/
+https://nhentai.net/g/309596/
+https://nhentai.net/g/258693/
+https://nhentai.net/g/150133/
+https://nhentai.net/g/35456/
