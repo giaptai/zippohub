@@ -28,10 +28,10 @@
                                 <input type="password" class="form-control" id="floatingInput2" placeholder="name@example.com">
                                 <label for="floatingInput">Mật khẩu</label>
                             </div>
-       
+
                             <hr class="my-4">
                             <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="login()">Login</button>
-                          
+
                         </div>
                     </div>
                 </div>
@@ -40,13 +40,13 @@
     </section>
 </body>
 <script>
-    function login(){
-        s1=document.getElementById('floatingInput').value;
-        s2=document.getElementById('floatingInput2').value;
-        if(s1=='admin' && s2=='admin'){
-            window.location.href="./quanly_sanpham.php";
-        }else {
-            alert('Nhập sai mẹ rồi !');
+    function login() {
+        s1 = document.getElementById('floatingInput').value;
+        s2 = document.getElementById('floatingInput2').value;
+        if (s1 == 'admin' && s2 == 'admin') {
+            window.location.href = "./quanly_sanpham.php";
+        } else {
+            alert('Sai thông tin');
             return;
         }
     }
