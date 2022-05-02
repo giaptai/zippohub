@@ -82,10 +82,6 @@
                     ?>
                 </ul>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-3" type="search" placeholder="Search">
-                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
-            </form>
         </div>
     </nav>
 

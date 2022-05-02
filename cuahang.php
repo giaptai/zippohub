@@ -13,10 +13,11 @@ if (isset($_POST["xemthem"])) {
     <title>Document</title>
 </head>
 <style>
-.a{
-    object-fit: cover;
-}
-/* .card:hover {
+    .a {
+        object-fit: cover;
+    }
+
+    /* .card:hover {
         border: 1px ridge;
         transform: scale(1.1)
     }
@@ -33,7 +34,7 @@ if (isset($_POST["xemthem"])) {
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                 <ul class="nav nav-pills align-items-center">
                     <li class="nav-item">
                         <a class="nav-link text-light" aria-current="page" href="./index.php">Trang chủ</a>
@@ -68,11 +69,15 @@ if (isset($_POST["xemthem"])) {
                         </li>';
                     ?>
                 </ul>
+                <ul class="nav nav-pills align-items-right">
+                    <li class="nav-item">
+                        <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light" type="submit">Tìm kiếm</button>
+                    </li>
+                </ul>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
-                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
-            </form>
         </div>
     </nav>
 
@@ -89,16 +94,22 @@ if (isset($_POST["xemthem"])) {
                             <div class="list-group">
                                 <h5>Danh mục sản phẩm</h5>
                                 <label class="list-group-item ">
-                                    <input class="form-check-input" type="checkbox" checked value="" onclick="uncheck()">Tất cả sản phẩm
+                                    <input class="form-check-input" type="checkbox" value="" onclick="uncheck()" <?= !isset($_GET['search1']) || !isset($_GET['search2']) || !isset($_GET['search1']) ? 'checked' : '' ?>>Tất cả sản phẩm
                                 </label>
                                 <label class="list-group-item">
-                                    <input class="form-check-input" type="checkbox" value="Zippo Armor" onclick="uncheck1()">Zippo Armor
+                                    <input class="form-check-input" type="checkbox" value="Zippo Armor" onclick="uncheck1()" <?= (isset($_GET['search1']) && $_GET['search1'] == 'Zippo Armor') ||
+                                                                                                                                    (isset($_GET['search2']) && $_GET['search2'] == 'Zippo Armor') ||
+                                                                                                                                    (isset($_GET['search3']) && $_GET['search3'] == 'Zippo Armor') ? 'checked' : '' ?>>Zippo Armor
                                 </label>
                                 <label class="list-group-item ">
-                                    <input class="form-check-input" type="checkbox" value="Zippo Sterling Silver" onclick="uncheck1()">Zippo Sterling Silver
+                                    <input class="form-check-input" type="checkbox" value="Zippo Sterling Silver" onclick="uncheck1()" <?= (isset($_GET['search1']) && $_GET['search1'] == 'Zippo Sterling Silver') ||
+                                                                                                                                            (isset($_GET['search2']) && $_GET['search2'] == 'Zippo Sterling Silver') ||
+                                                                                                                                            (isset($_GET['search3']) && $_GET['search3'] == 'Zippo Sterling Silver') ? 'checked' : '' ?>>Zippo Sterling Silver
                                 </label>
                                 <label class="list-group-item">
-                                    <input class="form-check-input" type="checkbox" value="Zippo Base Models" onclick="uncheck1()">Zippo Base Models
+                                    <input class="form-check-input" type="checkbox" value="Zippo Base Models" onclick="uncheck1()" <?= (isset($_GET['search1']) && $_GET['search1'] == 'Zippo Base Models') ||
+                                                                                                                                        (isset($_GET['search2']) && $_GET['search2'] == 'Zippo Base Models') ||
+                                                                                                                                        (isset($_GET['search3']) && $_GET['search3'] == 'Zippo Base Models') ? 'checked' : '' ?>>Zippo Base Models
                                 </label>
                             </div>
                         </li>
@@ -117,13 +128,6 @@ if (isset($_POST["xemthem"])) {
                         </li>
                         <li class="list-group-item">
                             <div class="row">
-                                <!-- <h5>Chất liệu</h5>
-                                <select class="form-select form-select-sm w-75" aria-label=".form-select-sm example" id="material">
-                                    <option value="" selected>Tất cả</option>
-                                    <option value="Đồng">Đồng</option>
-                                    <option value="Bạc">Bạc</option>
-                                    <option value="Vàng">Vàng</option>
-                                </select> -->
                                 <div class="d-flex bd-highlight">
                                     <div class="flex-sm-grow-1 bd-highlight">
                                         <h5>Chất liệu</h5>
@@ -160,19 +164,75 @@ if (isset($_POST["xemthem"])) {
                     </ul>
                 </div>
             </div>
+            <?php
+            require_once('./query.php');
+            $arr = array('arr1' => '', 'pagin' => '');
+
+            $page = isset($_GET['page']) ? $_GET['page'] : 1;
+            $start = ($page - 1) * 12;
+            $sql = "SELECT * FROM sanpham";
+
+            $sql .= " where ( category like '%" . (isset($_GET['search1']) ? $_GET['search1'] : ''). "%' ";
+
+            if(isset($_GET['search2']) && !isset($_GET['search3'])){
+                $sql .= "or category like '%".$_GET['search2']."%'";
+            }
+            if(isset($_GET['search2']) && isset($_GET['search3'])){
+                $sql .= "or category like '%".$_GET['search2']."%' or category like '%".$_GET['search3']."%'";
+            }
+
+            $pricefrom = isset($_GET['pricefrom']) ? $_GET['pricefrom'] : 0;
+            $priceto = isset($_GET['priceto']) ? $_GET['priceto'] : PHP_INT_MAX;
+            $material = isset($_GET['material']) ? $_GET['material'] : '';
+            $madeby = isset($_GET['madeby']) ? $_GET['madeby'] : '';
+            $sql .= ") AND (price BETWEEN {$pricefrom} and {$priceto}) and material like '%{$material}%' and madeby like '%{$madeby}%'";
+            $temp = $sql;
+            $sql .= " LIMIT $start,12";
+            //echo $sql;
+            $result = executeResult($sql);
+            $result1 = countRow($temp);
+            ?>
             <div class="col-md-9 p-0">
                 <div class="row row-cols-1 row-cols-md-4 g-0" id="sanpham">
-
+                    <?php
+                    if (sizeof($result) > 0) {
+                        foreach ($result as $sp) {
+                            $arr['arr1'] .= '<div class="card p-0">
+                            <div class="card-item h-100" style="text-align: center;">
+                                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
+                                <div class="card-body" style="text-align: center;">
+                                    <h5 class="card-title">' . $sp['name'] . '</h5>
+                                    <p class="card-text">' . number_format($sp['price']) . ' VNĐ</p>';
+                            if (!isset($_SESSION["cart"][$sp['id']])) {
+                                $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Thêm vào giỏ</a>';
+                            } else {
+                                $arr['arr1'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Đã thêm vào giỏ</a>';
+                            }
+                            $arr['arr1'] .= ' 
+                                        </div>
+                                    </div>
+                                    </div>';
+                        }
+                    } else $arr['arr1'] = "Không tìm thấy sản phẩm !";
+                    echo $arr['arr1'];
+                    ?>
                 </div>
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center m-3" id="pagination">
-
+                        <?php
+                        for ($i = 0; $i < ceil(($result1) / 12); $i++) {
+                            if ($i == $page - 1) {
+                                $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm active" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+                            } else  $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+                        }
+                        echo  $arr['pagin'];
+                        ?>
                     </ul>
                 </nav>
             </div>
         </div>
-        
+
     </div>
 
     <!-- Footer -->
@@ -297,48 +357,57 @@ if (isset($_POST["xemthem"])) {
     </footer>
     <!-- Footer -->
     <script>
-        display_cuahang();
+        // display_cuahang();
 
-        function display_cuahang() {
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    console.log(this.responseText)
-                    let s0 = JSON.parse(this.responseText).arr1;
-                    let pagin = JSON.parse(this.responseText).pagin;
-                    document.getElementById('sanpham').innerHTML = s0;
-                    document.getElementById('pagination').innerHTML = pagin;
-                    //console.log((this.responseText));
-                }
-            }
-            //cau hinh request
-            xhttp.open('POST', './user/PHP_Function/display_cuahang.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=displaycuahang');
-        }
+        // function display_cuahang() {
+        //     var xhttp = new XMLHttpRequest() || ActiveXObject();
+        //     //Bat su kien thay doi trang thai cuar request
+        //     xhttp.onreadystatechange = function() {
+        //         //Kiem tra neu nhu da gui request thanh cong
+        //         if (this.readyState == 4 && this.status == 200) {
+        //             //In ra data nhan duoc
+        //             console.log(this.responseText)
+        //             let s0 = JSON.parse(this.responseText).arr1;
+        //             let pagin = JSON.parse(this.responseText).pagin;
+        //             document.getElementById('sanpham').innerHTML = s0;
+        //             document.getElementById('pagination').innerHTML = pagin;
+        //             //console.log((this.responseText));
+        //         }
+        //     }
+        //     //cau hinh request
+        //     xhttp.open('POST', './user/PHP_Function/display_cuahang.php', true);
+        //     //cau hinh header cho request
+        //     xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        //     //gui request
+        //     xhttp.send('action=displaycuahang');
+        // }
 
         function timkiem(p) {
             let pricefrom = document.getElementById('pricefrom').value;
             let priceto = document.getElementById('priceto').value;
             let material = document.getElementById('material').value;
             let madeby = document.getElementById('madeby').value;
-
+            // console.log(pricefrom, priceto, material, madeby);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
+                    console.log((this.responseText));
                     let s0 = JSON.parse(this.responseText).arr1;
                     let pagin = JSON.parse(this.responseText).pagin;
+                    let url = JSON.parse(this.responseText).url;
+                    const nextURL = url;
+                    const nextTitle = 'My new page title';
+                    const nextState = {
+                        additionalInformation: 'Updated the URL with JS'
+                    };
+                    //window.history.pushState(nextState, nextTitle, nextURL);
+                    window.history.replaceState(nextState, nextTitle, nextURL);
                     document.getElementById('sanpham').innerHTML = s0;
                     document.getElementById('pagination').innerHTML = pagin;
-                    //console.log((this.responseText));
+
                 }
             }
             //cau hinh request
@@ -375,6 +444,7 @@ if (isset($_POST["xemthem"])) {
                 s[3].checked = false;
             } else s[0].checked = true;
         }
+        uncheck1()
 
         function uncheck1() {
             s = document.querySelectorAll('input[type=checkbox]');
