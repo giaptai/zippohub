@@ -169,7 +169,7 @@ if (isset($_POST["xemthem"])) {
             $arr = array('arr1' => '', 'pagin' => '');
 
             $page = isset($_GET['page']) ? $_GET['page'] : 1;
-            $start = ($page - 1) * 12;
+            $start = ($page - 1) * 10;
             $sql = "SELECT * FROM sanpham";
 
             $sql .= " where ( category like '%" . (isset($_GET['search1']) ? $_GET['search1'] : ''). "%' ";
@@ -187,21 +187,21 @@ if (isset($_POST["xemthem"])) {
             $madeby = isset($_GET['madeby']) ? $_GET['madeby'] : '';
             $sql .= ") AND (price BETWEEN {$pricefrom} and {$priceto}) and material like '%{$material}%' and madeby like '%{$madeby}%'";
             $temp = $sql;
-            $sql .= " LIMIT $start,12";
+            $sql .= " LIMIT $start,10";
             //echo $sql;
             $result = executeResult($sql);
             $result1 = countRow($temp);
             ?>
             <div class="col-md-9 p-0">
-                <div class="row row-cols-1 row-cols-md-4 g-0" id="sanpham">
+                <div class="row row-cols-md-5 g-0" id="sanpham">
                     <?php
                     if (sizeof($result) > 0) {
                         foreach ($result as $sp) {
                             $arr['arr1'] .= '<div class="card p-0">
                             <div class="card-item h-100" style="text-align: center;">
-                                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
+                                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp['id'] . '"><img style="object-fit: cover; width:7rem; height:8rem;" src="./picture/' . $sp['img'] . '" class="card-img-top" alt="..."></a>
                                 <div class="card-body" style="text-align: center;">
-                                    <h5 class="card-title">' . $sp['name'] . '</h5>
+                                    <h6 class="card-title">' . $sp['name'] . '</h6>
                                     <p class="card-text">' . number_format($sp['price']) . ' VNĐ</p>';
                             if (!isset($_SESSION["cart"][$sp['id']])) {
                                 $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp['id'] . '" onclick="buyproduct(' . $sp['id'] . ')">Thêm vào giỏ</a>';
@@ -221,10 +221,10 @@ if (isset($_POST["xemthem"])) {
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center m-3" id="pagination">
                         <?php
-                        for ($i = 0; $i < ceil(($result1) / 12); $i++) {
+                        for ($i = 0; $i < ceil(($result1) / 10); $i++) {
                             if ($i == $page - 1) {
-                                $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm active" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
-                            } else  $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-secondary btn-sm" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+                                $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-primary btn-sm active" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
+                            } else  $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-primary btn-sm" onclick="timkiem(' . ($i + 1) . ')">' . ($i + 1) . '</a></li>';
                         }
                         echo  $arr['pagin'];
                         ?>
@@ -387,7 +387,7 @@ if (isset($_POST["xemthem"])) {
             let priceto = document.getElementById('priceto').value;
             let material = document.getElementById('material').value;
             let madeby = document.getElementById('madeby').value;
-            console.log(priceto);
+            //console.log(priceto);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {
