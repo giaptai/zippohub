@@ -9,6 +9,11 @@ if (isset($_POST['id_user'])) {
         $name = $_POST['name'];
         $phone = $_POST['phone'];
         $addr = $_POST['addr'];
+        if (!preg_match('/^[0-9]{10,11}$/', $phone)) {
+            echo 'fail';
+            die();
+        }
+    
         $sql = "INSERT INTO diachikhach(id_user, id_addr, `name`, phone, addr) 
         VALUES ('$id_user','$id_addr','$name','$phone','$addr')";
         $result = execute($sql);

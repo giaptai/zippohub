@@ -12,7 +12,7 @@
 </head>
 
 <body>
-<ul class="nav nav-tabs justify-content-end">
+    <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item">
             <a class="nav-link active" href="./quanly_taikhoan.php">Quay lại Quản lý tài khoản</a>
         </li>
@@ -33,16 +33,25 @@
                 <div class="form-floating mb-4">
                     <input type="email" id="emaill" class="form-control" placeholder="1" name="emaill" value="">
                     <label class="form-label" for="form5Example2">Email</label>
+                    <div id="" class="form-text">
+                        Hợp lệ: _, a-z, A-Z, 0-9; Định dạng: example@gmail.com
+                    </div>
                 </div>
                 <!-- Email input -->
                 <div class="form-floating mb-4">
-                    <input type="password" id="passwordd" class="form-control" placeholder="1" name="passwordd" value="">
+                    <input type="password" id="passwordd" class="form-control" placeholder="1" name="passwordd" value="" aria-describedby="passwordHelpBlock">
                     <label class="form-label" for="form5Example2">Mật khẩu</label>
+                    <div id="passwordHelpBlock" class="form-text">
+                        Độ dài từ 3 đến 20,  Hợp lệ: a-z, A-Z, 0-9
+                    </div>
                 </div>
 
                 <div class="form-floating mb-4">
                     <input type="tel" id="phonee" class="form-control" placeholder="1" name="phonee" value="">
                     <label class="form-label" for="form5Example2">Số điện thoại</label>
+                    <div id="" class="form-text">
+                        Hợp lệ: 0-9; Độ dài 10-11
+                    </div>
                 </div>
 
                 <div class="form-floating mb-4">
@@ -77,7 +86,12 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc     
-                    alert(this.responseText);
+                    if (this.responseText == 'fail') {
+                        alert('Xảy ra lỗi khi thêm, có thể do:\n' +
+                            '1. Số điện thoại trùng hoặc không hợp lệ.\n' +
+                            '2. Email trùng hoặc không hợp lệ,\n' +
+                            '3. Mật khẩu không hợp lệ.');
+                    } else alert(this.responseText);
                     //location.reload();
                 }
             }
@@ -86,7 +100,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('add=them' +
+            xhttp.send('action=them' +
                 "&namee=" + s1 +
                 '&emaill=' + s2 +
                 "&passwordd=" + s3 +

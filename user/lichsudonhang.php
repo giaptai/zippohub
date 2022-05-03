@@ -64,7 +64,7 @@
         </div>
     </nav>
 
-    <?php echo $_SESSION['iduser'] ?>
+    <!-- <?php echo $_SESSION['iduser'] ?> -->
 
     <div class="container mt-4 mb-4">
         <div class="row justify-content-around">
@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-9 p-0">
                 <div id="manhinh">
-                    <div style="padding:0 1rem 1rem 1rem;" id="lichsudonhang">
+                    <div style="padding:0 1rem 0rem 1rem;" id="lichsudonhang">
                         <div class="btn-group justify-content-between p-1" style="width:100%; ">
                             <input type="radio" class="btn-check" name="btnradio" id="btnradio1" value="Tất cả đơn" autocomplete="off" <?= ((isset($_GET['trangthai']) && $_GET['trangthai'] == 'Tất cả đơn') || !isset($_GET['trangthai'])) ? 'checked' : '' ?>>
                             <label class="btn btn-outline-primary" for="btnradio1" onclick="window.location.href = './lichsudonhang.php?lichsu&id=<?= $_SESSION['iduser'] ?>&trangthai=Tất cả đơn'"><span>Tất cả đơn</span></label>

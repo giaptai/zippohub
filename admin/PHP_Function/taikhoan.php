@@ -23,11 +23,17 @@ function chucnang()
             $id  = $_POST["id"];
             updateCus($status, $id);
             break;
+        case 'lock':
+            $id  = $_POST["id"];
+            lockCus($id);
+            break;
+        case 'them':
+            addCus();
+            break;
     }
 }
-
-function display($query, $start)
-{
+// hiện sản phẩm
+function display($query, $start){
     $arr = array('arr1' => '', 'arr2' => '', 'arr3' => 0);
     $result = $result1 = $temp = '';
     $seach = '';
@@ -92,8 +98,7 @@ function display($query, $start)
 // <input type="password" id="passwordd" class="form-control" placeholder="1" name="passwordd" value="' . $result['password'] . '">
 // <label class="form-label" for="form5Example2">Mật khẩu</label>
 // </div>
-function details($query)
-{
+function details($query){
     $id = $_POST["id"];
     $s = '';
     $result = executeSingleResult($query);
@@ -141,40 +146,60 @@ function details($query)
     echo $s;
 }
 // }
-
-function updateCus($status, $id)
-{
+// cập nhật tài khoản
+function updateCus($status, $id){
     $sql  = "UPDATE taikhoan SET `status`='$status' WHERE id=$id";
     if (execute($sql)) {
         echo 'success';
     } else echo 'fail';
 }
 
-if (isset($_POST["add"])) {
-    if ($_POST["add"] == 'them') {
-        $idd = rand(10000, 99999);
-        if (isset($_POST['namee'])) {
-            $ten = $_POST['namee'];
-        }
-        if (isset($_POST['emaill'])) {
-            $email = $_POST['emaill'];
-        }
-        if (isset($_POST['passwordd'])) {
-            $matkhau = $_POST['passwordd'];
-        }
-        if (isset($_POST['phonee'])) {
-            $dienthoai = $_POST['phonee'];
-        }
-        if (isset($_POST['addresss'])) {
-            $diachi = $_POST['addresss'];
-        }
-        $sql  = "INSERT INTO taikhoan(id, fullname, email, `password`, phone, `address`, `status`) 
-        VALUES ('$idd', '$ten', '$email', '$matkhau', '$dienthoai', '$diachi', 1)";
-        if (execute($sql)) {
-            echo 'success';
-        } else echo 'fail';
+// khóa tài khoản
+function lockCus($id){
+    $sql  = "UPDATE taikhoan SET `status`=0 WHERE id=$id";
+    if (execute($sql)) {
+        echo 'success';
+    } else echo 'fail';
+}
+// thêm tài khoản
+function addCus(){
+    $idd = rand(10000, 99999);
+    if (isset($_POST['namee'])) {
+        $ten = $_POST['namee'];
+    }
+    if (isset($_POST['emaill'])) {
+        $email = $_POST['emaill'];
+    }
+    if (isset($_POST['passwordd'])) {
+        $matkhau = $_POST['passwordd'];
+    }
+    if (isset($_POST['phonee'])) {
+        $dienthoai = $_POST['phonee'];
+    }
+    if (isset($_POST['addresss'])) {
+        $diachi = $_POST['addresss'];
+    }
+    
+    if (!preg_match('/^[0-9]{10,11}$/', $dienthoai)) {
+        echo 'Số điện thoại lỗi';
         die();
     }
+
+    if (!preg_match('/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $email)) {
+        echo 'Email không hợp lệ';
+        die();
+    }
+
+    if (!preg_match('/^[a-zA-Z0-9]{3,20}$/', $matkhau)) {
+        echo 'Mật khẩu không hợp lệ';
+        die();
+    }
+
+    $sql  = "INSERT INTO taikhoan(id, fullname, email, `password`, phone, `address`, `status`) 
+    VALUES ('$idd', '$ten', '$email', '$matkhau', '$dienthoai', '$diachi', 1)";
+    if (execute($sql)) {
+        echo 'Thêm tài khoản thành công';
+    } else echo ('fail');
 }
 
 // if (isset($_POST["sendmail"])) {

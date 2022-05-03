@@ -380,11 +380,11 @@
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
-                    var del = document.getElementById("xoa" + id);
-                    del.parentElement.parentElement.remove();
                     //In ra data nhan duoc
                     alert(this.responseText);
-                    table_sanpham(); // load lai san pham va nut phan trang
+                    var del = document.getElementById("xoa" + id);
+                    del.parentElement.parentElement.remove();
+                    
                 }
             }
             //cau hinh request
@@ -392,7 +392,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('deleted&id=' + id);
+            xhttp.send('action=deleted&id=' + id);
         }
 
         // function phantrang(page) {

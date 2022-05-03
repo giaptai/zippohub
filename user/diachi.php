@@ -118,7 +118,8 @@
                             </div>
                         </div>
                         <!-- Modal -->
-                        <div id="addruser">
+                        <div id="addruser" class="mt-3">
+                        <i class="mt-3">Lưu ý: Mỗi tài khoản tối đa 5 địa chỉ</i>
                             <?php
                             require_once('../query.php');
                             if (isset($_GET['diachi'])) {
@@ -309,7 +310,7 @@
                     if (this.responseText == 'fail') {
                         alert('Thêm địa chỉ lỗi, có thể do:\n' +
                             '1. Trùng số điện thoại.\n' +
-                            '2. Tên người nhận lỗi');
+                            '2. Số điện thoại không hợp lệ') ;
                     } else if (this.responseText == 'fail1') {
                         alert('Mỗi tài khoản tối đa 5 địa chỉ');
                     } else {

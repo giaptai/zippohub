@@ -135,14 +135,23 @@
                     <div class="form-floating mb-4">
                         <input type="text" class="form-control" id="sodienthoai" placeholder="09001201">
                         <label for="floatingInput">Số điện thoại</label>
+                        <div id="" class="form-text">
+                            Hợp lệ: 0-9; Độ dài 10-11
+                        </div>
                     </div>
                     <div class="form-floating mb-4">
                         <input type="email" class="form-control" id="email" placeholder="name@example.com">
                         <label for="floatingInput">Địa chỉ email</label>
+                        <div id="" class="form-text">
+                            Hợp lệ: _, a-z, A-Z, 0-9; Định dạng: example@gmail.com
+                        </div>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" id="matkhau" placeholder="Mật khẩu">
                         <label for="floatingInput">Mật khẩu</label>
+                        <div class="form-text">
+                            Độ dài từ 3 - 20, Hợp lệ: a-z, A-Z, 0-9
+                        </div>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ">

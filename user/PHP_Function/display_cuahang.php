@@ -37,17 +37,17 @@ function search(){
                 $arr['url'].='&';
             }
         }
-        $pricefrom = $_POST['pricefrom'] != '' ? $_POST['pricefrom'] and $arr['url'].='&pricefrom='.$_POST['pricefrom']: 0;
-        $priceto = $_POST['priceto'] != '' ? $_POST['priceto'] and $arr['url'].='&priceto='.$_POST['priceto'] : PHP_INT_MAX;
-        $material = $_POST['material'] != '' ? $_POST['material'] and $arr['url'].='&material='.$_POST['material'] : '';
-        $madeby = $_POST['madeby'] != '' ? $_POST['madeby'] and $arr['url'].='&madeby='.$_POST['madeby'] : '';
+        $pricefrom = ($_POST['pricefrom'] != '' ? $_POST['pricefrom']:0) and $arr['url'].='&pricefrom='.$_POST['pricefrom'];
+        $priceto = ($_POST['priceto'] != '' ? $_POST['priceto'] : PHP_INT_MAX) and $arr['url'].='&priceto='.$_POST['priceto'];
+        $material = ($_POST['material'] != '' ? $_POST['material'] : '') and $arr['url'].='&material='.$_POST['material'] ;
+        $madeby = ($_POST['madeby'] != '' ? $_POST['madeby'] : '') and $arr['url'].='&madeby='.$_POST['madeby'] ;
         $sql .= ") AND (price BETWEEN {$pricefrom} and {$priceto}) and material like '%{$_POST['material']}%' and madeby like '%{$_POST['madeby']}%'";
         $temp = $sql;
         $start = ($page - 1) * 12;
         $sql .= " LIMIT $start, 12";
     }
     $arr['url'].='&page='.$page;
-    //die ($arr['url'].'\n'.$sql);
+    //die ($arr['url'].'<br>'.$sql);
     $result = executeResult($sql);
     $result1 = countRow($temp);
     if ($result1 > 0) {

@@ -158,7 +158,7 @@
                                 <td>' . $tk['address'] . '</td>
                                 <td>' . (($tk['status'] == 1) ?  "Mở" : "Khóa")  . '</td>
                             <td>
-                                <button class="btn btn-outline-warning btn-sm">Khóa</button>
+                                <button class="btn btn-outline-warning btn-sm" onclick="lockCus(' . $tk['id'] . ')">Khóa</button>
                                 <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-outline-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             Chi tiết
                         </button>
@@ -254,7 +254,7 @@
                 '&address=' + s3
             );
         }
-    // }
+        // }
         function phantrang(p, id) {
             let s1 = document.getElementById('button-addon1').value;
             let s2 = document.getElementById('button-addon2').value;
@@ -340,6 +340,30 @@
             xhttp.send('action=update' + '&status=' + status + '&id=' + e);
         }
 
+        function lockCus(e) {
+            if (confirm('Bạn muốn khóa tài khoản này ?')) {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        if (this.responseText == 'success') {
+                            alert(this.responseText);
+                            let row = document.getElementById('detail' + e).parentElement.parentElement;
+                            row.children[5].innerText = 'Khóa';
+                        }else alert(this.responseText);
+
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/taikhoan.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=lock' + '&id=' + e);
+            } else return;
+        }
         // function addRow() {
         //     let table = document.getElementById('table_taikhoan').getElementsByTagName('tbody')[0];
         //     let row = table.insertRow(0);

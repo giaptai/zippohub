@@ -92,6 +92,7 @@
                                     <th scope="col">Mã khuyến mãi</th>
                                     <th scope="col">Giảm giá</th>
                                     <th scope="col">Ngày hết hạn</th>
+                                    <th scope="col">Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody id="orderlist">
@@ -106,20 +107,17 @@
                                     $result = executeResult($sql);
                                     $resul1t = countRow("SELECT * from makhuyenmai where id_user='$id_user'");
                                     if ($resul1t > 0) {
-                                        $count = 1;
                                         foreach ($result as $row) {
                                             $s['arr1'] .= '<tr>
                                             <th scope="row">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="' . $row["id_khuyenmai"] . '">
-                                                    <span>' . $count++ . '</span>
-                                                </div>
+                                                <span>' . ++$start . '</span>
                                             </th>
                                             <td>
                                                 <span>' . $row["id_khuyenmai"] . '</span>
                                             </td>
                                             <td>' . number_format($row["giamgia"]) . '</td>
                                             <td>' . $row["ngayhethan"] . '</td>
+                                            <td>' . ($row["trangthai"]==1 ? 'Còn hạn':'Hết hạn') . '</td>
                                         </tr>';
                                         }
                                     } else {

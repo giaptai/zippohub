@@ -39,23 +39,25 @@ function display($query){
     if ($result1 > 0) {
         foreach ($result as $row) {
             $s['arr1'] .= '<tr>
-            <th scope="row">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="' . $row["id_khuyenmai"] . '">
-                    <span>' . ++$start . '</span>
-                </div>
+            <th scope="row"> 
+                <span>' . ++$start . '</span>
             </th>
             <td>
                 <span>' . $row["id_khuyenmai"] . '</span>
             </td>
             <td>' . number_format($row["giamgia"]) . '</td>
             <td>' . $row["ngayhethan"] . '</td>
+            <td>' . ($row["trangthai"]==1 ? 'Còn hạn':'Hết hạn') . '</td>
         </tr>';
         }
-        for ($i = 0; $i < ceil($result1 / 10); $i++) {
-            if ($i == $page-1 ) {
-                $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
+        if ($_POST['action'] == 'search') {
+            $s['arr2']='';
+        } else {
+            for ($i = 0; $i < ceil($result1 / 10); $i++) {
+                if ($i == $page - 1) {
+                    $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
             } else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
+            }
         }
     } else {
         $s['arr1'] .= '<td colspan="4">Không tìm thấy</td>';

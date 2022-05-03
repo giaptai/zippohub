@@ -387,7 +387,7 @@ if (isset($_POST["xemthem"])) {
             let priceto = document.getElementById('priceto').value;
             let material = document.getElementById('material').value;
             let madeby = document.getElementById('madeby').value;
-            // console.log(pricefrom, priceto, material, madeby);
+            console.log(priceto);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             //Bat su kien thay doi trang thai cuar request
             xhttp.onreadystatechange = function() {

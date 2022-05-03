@@ -2,8 +2,7 @@
 require_once("../../query.php");
 
 chucnang();
-function chucnang()
-{
+function chucnang(){
     $action = $_POST['action'];
     $sql = "SELECT * FROM sanpham";
     switch ($action) {
@@ -30,13 +29,16 @@ function chucnang()
             edit();
             break;
 
+        case 'deleted':
+            $id = $_POST['id'];
+            deletedProduct($id);
+            break;
         default:
             break;
     }
 }
 // hiện danh sách sản phẩm
-function display($query)
-{
+function display($query){
     $page = isset($_POST['page']) ? $_POST['page'] : 1;
     $start = ($page - 1) * 5;
     $arr = array('arr1' => '', 'pagin' => '', 'tong' => 0);
@@ -84,8 +86,7 @@ function display($query)
     echo json_encode($arr);
 }
 //hiện chi tiết sản phẩm
-function detail($id)
-{
+function detail($id){
     $sql = "SELECT * FROM sanpham WHERE id=$id;";
     $result = executeSingleResult($sql);
     echo '
@@ -198,8 +199,7 @@ function detail($id)
     </div>';
 }
 // cập nhật sản phẩm
-function edit()
-{
+function edit(){
     $anh = $_POST['inputGroupFile02'];
     $ma = $_POST['codez'];
     $ten = $_POST['namee'];
@@ -218,6 +218,16 @@ function edit()
         echo 'success';
     } else {
         echo "Error";
+    }
+}
+
+//xóa sản phẩm
+function deletedProduct($id) {
+    $sql = "DELETE FROM sanpham WHERE id=$id";
+    if (execute($sql)) {
+        echo "success";
+    } else {
+        echo "error";
     }
 }
 // //Hien danh sach san pham dang table
@@ -270,19 +280,6 @@ function edit()
 //     }
 //     $arr['arr3'] = $result1;
 //     echo json_encode($arr);
-// }
-
-//xóa sản phẩm
-if (isset($_POST['deleted'])) {
-    // if (($_POST["action"] == "deleted")) {
-    $idd = $_POST["id"];
-    $sql = "DELETE FROM sanpham WHERE id=$idd";
-    if (execute($sql)) {
-        echo "success";
-    } else {
-        echo "error";
-    }
-}
 // }
 
 if (isset($_POST['deleted1page'])) {

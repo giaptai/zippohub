@@ -130,9 +130,9 @@
                         Zippo Armor
                     </h4>
                     <div class="sub-links pe-2">
-                        <form action="./cuahang.php" method="post">
-                            <button name="xemthem" value="Zippo Armor" class="btn btn-light btn-sm text-dark">Xem thêm</button>
-                        </form>
+                        <!-- <form action="./cuahang.php?search1=Zippo Armor&page=1" method="post"> -->
+                            <a href="./cuahang.php?search1=Zippo Armor&page=1" name="xemthem" value="Zippo Armor" class="btn btn-light btn-sm text-dark">Xem thêm</a>
+                        <!-- </form> -->
                     </div>
                 </div>
 
@@ -227,9 +227,9 @@
                         Zippo Sterling Silver
                     </h4>
                     <div class="sub-links pe-2">
-                        <form action="./cuahang.php" method="post">
-                            <button name="xemthem" value="Zippo Sterling Silver" class="btn btn-light btn-sm text-dark">Xem thêm</button>
-                        </form>
+                        <!-- <form action="./cuahang.php?search1=Zippo Sterling Silver&page=1" method="post"> -->
+                            <a href="./cuahang.php?search1=Zippo Sterling Silver&page=1" name="xemthem" value="Zippo Sterling Silver" class="btn btn-light btn-sm text-dark">Xem thêm</a>
+                        <!-- </form> -->
                     </div>
                 </div>
                 <div class="row row-cols-md-6 gx-0 bg-white" id="zipposterlingsilver">
@@ -242,9 +242,9 @@
                         Zippo Base Models
                     </h4>
                     <div class="sub-links pe-2">
-                        <form action="./cuahang.php" method="post">
-                            <button name="xemthem" value="Zippo Base Models" class="btn btn-light btn-sm text-dark">Xem thêm</button>
-                        </form>
+                        <!-- <form action="./cuahang.php?search1=Zippo Base Models&page=1" method="post"> -->
+                            <a href="./cuahang.php?search1=Zippo Base Models&page=1" name="xemthem" value="Zippo Base Models" class="btn btn-light btn-sm text-dark">Xem thêm</a>
+                        <!-- </form> -->
                     </div>
                 </div>
                 <div class="row row-cols-md-6 gx-0 bg-white" id="zippobasemodels">

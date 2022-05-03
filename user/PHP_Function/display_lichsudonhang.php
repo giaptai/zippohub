@@ -201,9 +201,9 @@ if ( isset($_POST['searchID']) ) {
                 </td>
             </tr>';
         }
-        for ($i = 0; $i < ceil($result1 / 10); $i++) {
-            $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).', '.$_SESSION['iduser'].')">'.($i+1).'</a></li>';
-        }
+        // for ($i = 0; $i < ceil($result1 / 10); $i++) {
+        //     $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang('.($i+1).', '.$_SESSION['iduser'].')">'.($i+1).'</a></li>';
+        // }
     } else {
         $s['arr1'] = 'Không tìm thấy';
         $s['arr2'] = '';
