@@ -33,10 +33,17 @@ function chucnang(){
             $id = $_POST['id'];
             deletedProduct($id);
             break;
+            
+        case 'deleted1page':
+            $idd = explode(',', $_POST["data"]);
+            deleted1Page($idd);
+            break;
+
         default:
             break;
     }
 }
+
 // hiện danh sách sản phẩm
 function display($query){
     $page = isset($_POST['page']) ? $_POST['page'] : 1;
@@ -78,13 +85,13 @@ function display($query){
                 } else  $arr['pagin'] .= '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
             }
         }
-
         $arr['tong'] = $result1;
     } else {
         $arr['arr1'] .= '<td colspan="6">Không tìm thấy</td>';
     }
     echo json_encode($arr);
 }
+
 //hiện chi tiết sản phẩm
 function detail($id){
     $sql = "SELECT * FROM sanpham WHERE id=$id;";
@@ -198,6 +205,7 @@ function detail($id){
         </div>
     </div>';
 }
+
 // cập nhật sản phẩm
 function edit(){
     $anh = $_POST['inputGroupFile02'];
@@ -224,6 +232,26 @@ function edit(){
 //xóa sản phẩm
 function deletedProduct($id) {
     $sql = "DELETE FROM sanpham WHERE id=$id";
+    if (execute($sql)>0) {
+        echo "success";
+    } else {
+        echo "error";
+    }
+}
+
+
+function deleted1Page($idd){
+    $sql = "DELETE FROM sanpham WHERE";
+    //$idd = explode(',', $_POST["data"]);
+    $i = 0;
+    foreach ($idd as $id) {
+        $i++;
+        $sql .= " id ={$id}";
+        if ($i < count($idd)) {
+            $sql .= ' or';
+        }
+    }
+    // die($sql);
     if (execute($sql)) {
         echo "success";
     } else {
@@ -281,25 +309,6 @@ function deletedProduct($id) {
 //     $arr['arr3'] = $result1;
 //     echo json_encode($arr);
 // }
-
-if (isset($_POST['deleted1page'])) {
-    $sql = "DELETE FROM sanpham WHERE";
-    $idd = explode(',', $_POST["data"]);
-    $i = 0;
-    foreach ($idd as $id) {
-        $i++;
-        $sql .= " id ={$id}";
-        if ($i < count($idd)) {
-            $sql .= ' or';
-        }
-    }
-    //die($sql);
-    if (execute($sql)) {
-        echo "success";
-    } else {
-        echo "error";
-    }
-}
 
 // thêm sản phẩm
 if (isset($_POST['add'])) {

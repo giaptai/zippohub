@@ -126,10 +126,7 @@
                 foreach ($result as $row) {
                     echo '<tr>
                         <th scope="row">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                <span>' . ++$start . '</span>
-                            </div>
+                            <span>' . ++$start . '</span>
                         </th>
                         <td>' . $row['id_hoadon'] . '</td>
                         <td>' .  date("d-m-Y H:i:s", strtotime($row['ngaymua'])) . '</td>

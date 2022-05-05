@@ -151,7 +151,7 @@
                         <th scope="row">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="' . $sp['id'] . '">
-                                <span>'.(++$start).' #'.$sp['id'] .'</span>
+                                <span>' . (++$start) . ' #' . $sp['id'] . '</span>
                             </div>
                         </th>' .
                         '<td>
@@ -173,12 +173,10 @@
                 <td colspan="6" style="text-align:center">
                     <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_sanpham">
                         <?php
-                        // in nut phan trang
                         for ($i = 0; $i < ceil(($count) / 5); $i++) {
-                            if($i==$page-1){
+                            if ($i == $page - 1) {
                                 echo '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
-                            }else  echo '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
-                           
+                            } else  echo '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . $i + 1 . ')">' . $i + 1 . '</button>';
                         }
                         ?>
                     </div>
@@ -290,34 +288,43 @@
         })
 
         function xoa1trang() {
-            var ss = document.querySelectorAll('input[type=checkbox]:checked');
-            var arr = [];
-            for (let i = 1; i < ss.length; i++) {
-                arr.push(ss[i].value);
-            }
-            console.log(arr);
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    //console.log(JSON.parse(this.responseText)[0]);
-                    if (this.responseText == 'success') {
-                        alert('Xóa 1 trang thành công');
-                        table_sanpham();
-                    } else {
-                        alert('xóa thất bại');
-                    }
-                    console.log(this.responseText);
+            if (confirm('Xóa tất sản phẩm trên trang này ?') == true) {
+                var ss = document.querySelectorAll('input[type=checkbox]:checked');
+                var arr = [];
+                for (let i = 1; i < ss.length; i++) {
+                    arr.push(ss[i].value);
                 }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/sanpham.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('deleted1page&data=' + arr);
+                console.log(arr);
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        //console.log(JSON.parse(this.responseText)[0]);
+                        console.log(this.responseText);
+                        if (this.responseText == 'success') {
+                            alert('Xóa 1 trang sản phẩm thành công');
+                            ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                            if (ss == -1) {
+                                phantrang(1);
+                            } else {
+                                page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                                page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                                phantrang(page);
+                            }
+                        } else {
+                            alert('Đã xảy ra lỗi khi xóa 1 trang sản phẩm!');
+                        }
+                    }
+                }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/sanpham.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=deleted1page&data=' + arr);
+            }else return;
         }
 
         function editproduct(id) {
@@ -372,27 +379,41 @@
             );
         }
 
-        //Ajax javascript xóa đối tượng
+        //Xóa 1 sản phẩm
         let deleteproduct = function(id) {
             //Khoi tao doi tuong
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    alert(this.responseText);
-                    var del = document.getElementById("xoa" + id);
-                    del.parentElement.parentElement.remove();
-                    
+            if (confirm('Xóa sản phẩm này ?') == true) {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        //alert(this.responseText);
+                        // var del = document.getElementById("xoa" + id);
+                        // del.parentElement.parentElement.remove();
+                        if (this.responseText == 'success') {
+                            alert('Xóa sản phẩm thành công');
+                            ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                            if (ss == -1) {
+                                phantrang(1);
+                            } else {
+                                page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                                page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                                phantrang(page);
+                            }
+                        } else {
+                            alert('Đã xảy ra lỗi khi xóa !');
+                        }
+                    }
                 }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/sanpham.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=deleted&id=' + id);
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/sanpham.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=deleted&id=' + id);
+            } else return
         }
 
         // function phantrang(page) {
