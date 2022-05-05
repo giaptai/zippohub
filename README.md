@@ -1,5 +1,4 @@
-gui code moi nhat 05-05-2022, chi toi android ong 
-
+ok ong cam on ong
 
 
 
