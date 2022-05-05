@@ -1,4 +1,4 @@
-chay dc r ong
+chạy được đâu ông
 
 
 
