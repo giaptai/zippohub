@@ -45,55 +45,53 @@
     require_once('../query.php');
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $start = ($page - 1) * 10;
-    $trangthai=isset($_GET['trangthai']) ? $_GET['trangthai']:'';
-    $sql ="SELECT * FROM hoadon";
-    
-    if($trangthai=='Tổng đơn' || empty($trangthai)){
-        $temp=$sql;
-    }else {
+    $trangthai = isset($_GET['trangthai']) ? $_GET['trangthai'] : '';
+    $sql = "SELECT * FROM hoadon";
+    if ($trangthai == 'Tổng đơn' || empty($trangthai)) {
+        $temp = $sql;
+    } else {
         $sql .= " WHERE `statuss`='$trangthai'";
-        $temp =$sql;
+        $temp = $sql;
     }
     $sql .= " LIMIT $start, 10";
-    echo $sql.'--'.$temp;
-    $result =executeResult($sql);
-    $result1 =countRow($temp);
+    echo $sql . '--' . $temp;
+    $result = executeResult($sql);
+    $result1 = countRow($temp);
     $count = countRow('SELECT * FROM hoadon');
     $count1 = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Chờ xác nhận'");
     $count2 = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã xác nhận'");
     $count3 = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đang giao'");
     $count4 = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã giao'");
     $count5 = countRow("SELECT * FROM `hoadon` WHERE `statuss`='Đã hủy'");
-    //die("SELECT * FROM hoadon ORDER BY `hoadon`.`statuss` ASC  LIMIT $start, 10");
     ?>
     <div class="d-block m-auto" style="width: 90%;">
         <div class="container m-0 p-0 mt-3">
             <div class="row justify-content-md-between">
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"  <?= (!isset($_GET['trangthai']) || $_GET['trangthai']=='Tổng đơn') ? 'checked':''?> value="Tổng đơn">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" <?= (!isset($_GET['trangthai']) || $_GET['trangthai'] == 'Tổng đơn') ? 'checked' : '' ?> value="Tổng đơn">
                     <label class="btn btn-outline-primary btn-sm" for="btnradio1">Tổng đơn<span class="badge bg-danger" id="badge_tongdon"><?= $count ?></span></label>
                 </div>
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Chờ xác nhận" <?= (isset($_GET['trangthai']) && $_GET['trangthai']=='Chờ xác nhận') ? 'checked':''?>>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Chờ xác nhận" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Chờ xác nhận') ? 'checked' : '' ?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio2">Chờ xác nhận<span class="badge bg-danger" id="badge_choxacnhan"><?= $count1 ?></span></label>
                 </div>
                 <div class="col-md-auto">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Đã xác nhận" <?= (isset($_GET['trangthai']) &&$_GET['trangthai']=='Đã xác nhận') ? 'checked':''?>>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" value="Đã xác nhận" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã xác nhận') ? 'checked' : '' ?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio3">Đã xác nhận<span class="badge bg-danger" id="badge_daxacnhan"><?= $count2 ?></span></label>
                 </div>
                 <div class="col-md-auto">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Đang giao" <?= (isset($_GET['trangthai']) &&$_GET['trangthai']=='Đang giao') ? 'checked':''?>>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" value="Đang giao" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đang giao') ? 'checked' : '' ?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio4">Đang giao<span class="badge bg-danger" id="badge_danggiao"><?= $count3 ?></span></label>
                 </div>
                 <div class="col-md-auto">
 
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" value="Đã giao" <?= (isset($_GET['trangthai']) && $_GET['trangthai']=='Đã giao') ? 'checked':''?>>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" value="Đã giao" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã giao') ? 'checked' : '' ?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio5">Đã giao<span class="badge bg-danger" id="badge_dagiao"><?= $count4 ?></span></label>
                 </div>
                 <div class="col-md-auto">
-                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" value="Đã hủy" <?= (isset($_GET['trangthai']) && $_GET['trangthai']=='Đã hủy') ? 'checked':''?>>
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" value="Đã hủy" <?= (isset($_GET['trangthai']) && $_GET['trangthai'] == 'Đã hủy') ? 'checked' : '' ?>>
                     <label class="btn btn-outline-primary btn-sm" for="btnradio6">Đã hủy<span class="badge bg-danger" id="badge_dahuy"><?= $count5 ?></span></label>
                 </div>
                 <div class="col-md-auto">
@@ -122,8 +120,8 @@
                 </tr>
             </thead>
             <tbody id="table_tbody_donhang">
-                <?php
-                foreach ($result as $row) {
+                <?php foreach ($result as $row) {
+                    $StatusButtons = "";
                     echo '<tr>
                         <th scope="row">
                             <span>' . ++$start . '</span>
@@ -133,49 +131,34 @@
                         <td>' . number_format($row['total_product']) . '</td>
                         <td>' . number_format($row['total_money']) . '</td>';
                     if ($row['statuss'] == 'Đã xác nhận') {
-                        echo '<td><p class="mb-0 text-primary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                        $StatusButtons = '<td><p class="mb-0 text-primary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
                                 <a class="btn btn-outline-dark btn-sm" onclick="thaotac(' . $row["id_hoadon"] . ', `Đang giao`, this)">Đang giao</a>
-                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>
-                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
-                            </td>
-                        </tr>';
+                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>';
                     }
-
                     if ($row['statuss'] == 'Đã giao') {
-                        echo '<td><p class="mb-0 text-success" style="font-weight: 500;">' . $row['statuss'] . '</p></td><td>
-                            <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
+                        $StatusButtons = '<td><p class="mb-0 text-success" style="font-weight: 500;">' . $row['statuss'] . '</p></td><td>
+                            <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '&iduser=' . $row["id_user"] . '">!</a>
                             </td>
                         </tr>';
                     }
-
                     if ($row['statuss'] == 'Chờ xác nhận') {
-                        echo '<td><p class="mb-0 text-secondary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                        $StatusButtons = '<td><p class="mb-0 text-secondary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
                                 <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã xác nhận`, this)">Xác nhận</a>
-                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>
-                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
-                            </td>
-                        </tr>';
+                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>';
                     }
                     if ($row['statuss'] == 'Đang giao') {
-                        echo '<td><p class="mb-0" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                        $StatusButtons = '<td><p class="mb-0" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
-                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã giao`, this)">Đã giao</a>
-                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
-                            </td>
-                        </tr>';
+                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã giao`, this)">Đã giao</a>';
                     }
-
                     if ($row['statuss'] == 'Đã hủy') {
-                        echo '<td><p class="mb-0 text-danger" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
-                            <td>
-                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
-                            </td>
-                        </tr>';
+                        $StatusButtons = '<td><p class="mb-0 text-danger" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
+                            <td>';
                     }
-                }
-                ?>
+                    echo $StatusButtons .= '<a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '&iduser=' . $row["id_user"] . '">!</a></td></tr>'; 
+                } ?>
             </tbody>
             <tfoot>
                 <td colspan="7">
@@ -209,7 +192,7 @@
                     if (this.readyState == 4 && this.status == 200) {
                         //In ra data nhan duoc
                         console.log(JSON.parse(this.responseText).arr2);
-                        const nextURL = './quanly_donhang.php?trangthai='+val;
+                        const nextURL = './quanly_donhang.php?trangthai=' + val;
                         const nextTitle = 'My new page title';
                         const nextState = {
                             additionalInformation: 'Updated the URL with JS'
@@ -247,7 +230,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     //console.log(JSON.parse(this.responseText).arr2);
-                    const nextURL = './quanly_donhang.php?trangthai='+val+'&page=' + p;
+                    const nextURL = './quanly_donhang.php?trangthai=' + val + '&page=' + p;
                     const nextTitle = 'My new page title';
                     const nextState = {
                         additionalInformation: 'Updated the URL with JS'
@@ -333,7 +316,6 @@
                         s1.children[5].innerHTML = '<p class="mb-0 text-danger" style="font-weight: 500;">Đã hủy</p>';
                     }
                     table_donhang();
-                    console.log(this.responseText);
                 }
             }
             //cau hinh request

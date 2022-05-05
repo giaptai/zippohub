@@ -38,22 +38,18 @@
     </ul>
     <?php require_once('../query.php');
     session_start();
-    echo $_SESSION['iduser'];
-    $idd = isset($_GET['id']) ? $_GET['id'] : '';
+    $id_hoadon = isset($_GET['id']) ? $_GET['id'] : '';
+    $id_nguoidung = isset($_GET['iduser']) ? $_GET['iduser'] : '';
     $sql = "SELECT sanpham.img as img, sanpham.name as name ,sanpham.price as price , chitiethoadon.amount as amount, chitiethoadon.total as total
-        FROM chitiethoadon INNER JOIN hoadon on chitiethoadon.id_hoadon=hoadon.id_hoadon AND hoadon.id_hoadon=$idd 
+        FROM chitiethoadon INNER JOIN hoadon on chitiethoadon.id_hoadon=hoadon.id_hoadon AND hoadon.id_hoadon=$id_hoadon 
         INNER JOIN sanpham on chitiethoadon.id_sanpham=sanpham.id";
-
-
-    $sql0 = "SELECT hoadon.id_hoadon as id_hoadon, hoadon.fullname as name , hoadon.phone as phonee, hoadon.address as addresss, 
-            hoadon.ngaymua as datee, hoadon.total_money as total FROM taikhoan 
-        INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user={$_SESSION['iduser']} and hoadon.id_hoadon=$idd GROUP by hoadon.id_user";
+    $sql0 = "SELECT hoadon.id_hoadon as id_hoadon, hoadon.fullname as name , hoadon.phone as phone, hoadon.address as address, 
+            hoadon.ngaymua as ngaymua, hoadon.total_money as total_money FROM taikhoan 
+        INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user='$id_nguoidung' and hoadon.id_hoadon=$id_hoadon GROUP by hoadon.id_user";
     $result0 = executeSingleResult($sql0);
     $result = executeResult($sql);
     echo $sql0 . '<br>';
-    echo $sql;
-    ?>
-
+    echo $sql; ?>
     <h1 class="pt-4" style="text-align: center;">Chi tiết đơn hàng</h1>
     <div class="row row-cols-1 row-cols-md-3 pt-4 pb-4" style="width:95%; margin:auto">
         <div class="col">
@@ -62,10 +58,10 @@
             <div class="card-body">
                 <h5 class="card-title">Địa chỉ</h5>
                 <b class="card-text pe-3">' . $result0['name'] . '</b>
-                <b class="card-text">' . $result0['phonee'] . '</b>
+                <b class="card-text">' . $result0['phone'] . '</b>
             </div>
             <div class="card-header">
-                <span class="text-muted">' . $result0['addresss'] . '</span>
+                <span class="text-muted">' . $result0['address'] . '</span>
             </div>
         </div>';
             ?>
@@ -75,7 +71,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Ngày mua</h5>
                     <?php
-                    echo '<b class="card-text pe-3">' . $result0['datee'] . '</b>';
+                    echo '<b class="card-text pe-3">' . $result0['ngaymua'] . '</b>';
                     ?>
 
                 </div>
@@ -131,54 +127,14 @@
                                         <p class="mb-0" style="font-weight: 500;">' . number_format($row['total']) . '</p>
                                     </td>
                                 </tr>';
-                                }
-
-                                ?>
+                                } ?>
                             </tbody>
                         </table>
                     </div>
-                    <!-- 
-                    <div class="card w-25 mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Đơn hàng: #152458652 </h5>
-                            <hr class="dropdown-divider">
-                            <div class="d-flex justify-content-between">
-                                <div class="">
-                                    <p>Tạm tính: </p>
-                                    <p>Phí ship: </p>
-                                    <p>Khuyến mãi: </p>
-                                </div>
-                                <div class="">
-                                    <p>2.000.000</p>
-                                    <p>20.000</p>
-                                    <p>20.000</p>
-                                </div>
-                            </div>
-                            <hr class="dropdown-divider">
-                            <div class="d-flex justify-content-between pt-2 pb-2">
-                                <div class="">
-                                    <b class="fs-5">Tổng tiền: </b>
-                                </div>
-                                <div class="">
-                                    <b class="fs-5">2.000.000</b>
-                                </div>
-                            </div>
-                            <hr class="dropdown-divider">
-                            <div class="d-flex justify-content-between pt-2 pb-2">
-                                <div class="">
-                                    <a href="#" class="btn btn-light me-5">Chờ xác nhận</a>
-                                </div>
-                                <div class="">
-                                    <a href="#" class="btn btn-danger">Hủy đơn</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div class="card w-25 mb-3">
                         <div class="card-body row justify-content-md-center">
                             <div class="card-tilte col-md-auto">
-                                <h5 class="card-title"> Đơn hàng: <?=$result0['id_hoadon']?> </h5>
+                                <h5 class="card-title">Đơn hàng: <?= $result0['id_hoadon'] ?> </h5>
                                 <hr class="dropdown-divider">
                             </div>
                         </div>
@@ -187,7 +143,7 @@
                                 <p>Tạm tính: </p>
                             </div>
                             <div class="col-md-auto">
-                                <p><?=$result0['id_hoadon']?></p>
+                                <p><?= $result0['id_hoadon'] ?></p>
                             </div>
                         </div>
                         <div class="card-body row justify-content-between">
@@ -212,7 +168,7 @@
                                 <b class="fs-5">Tổng tiền: </b>
                             </div>
                             <div class="col-md-auto">
-                                <b class="fs-5"><?=number_format($result0['total']) ?></b>
+                                <b class="fs-5"><?= number_format($result0['total_money']) ?></b>
                             </div>
                         </div>
                         <hr class="dropdown-divider">
