@@ -13,8 +13,11 @@
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="./quanly_makhuyenmai.php">Quay lại Quản lý mã khuyến mãi</a>
+        </li> -->
+        <li class="nav-item bg-light">
+            <button class="nav-link active" aria-current="page" onclick="console.log(document.referrer);window.location.href=document.referrer">Quay lại Quản lý mã khuyến mãi</button>
         </li>
     </ul>
 

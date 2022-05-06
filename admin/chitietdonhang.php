@@ -11,59 +11,44 @@
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
+        <!-- <li class="nav-item bg-light">
+            <a class="nav-link active" aria-current="page" href="#" onclick="history.forward()">Quay lại Quản lý đơn hàng</a>
+        </li> -->
         <li class="nav-item bg-light">
-            <a class="nav-link active" aria-current="page" href="#">Quản lý đơn hàng</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_sanpham.php">Quản lý sản phẩm</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_taikhoan.php">Quản lý tài khoản</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
+            <button class="nav-link active" aria-current="page" onclick="console.log(document.referrer);window.location.href=document.referrer">Quay lại Quản lý đơn hàng</button>
         </li>
     </ul>
     <?php require_once('../query.php');
     session_start();
     $id_hoadon = isset($_GET['id']) ? $_GET['id'] : '';
-    $id_nguoidung = isset($_GET['iduser']) ? $_GET['iduser'] : '';
+    //$id_nguoidung = isset($_GET['iduser']) ? $_GET['iduser'] : '';
     $sql = "SELECT sanpham.img as img, sanpham.name as name ,sanpham.price as price , chitiethoadon.amount as amount, chitiethoadon.total as total
         FROM chitiethoadon INNER JOIN hoadon on chitiethoadon.id_hoadon=hoadon.id_hoadon AND hoadon.id_hoadon=$id_hoadon 
         INNER JOIN sanpham on chitiethoadon.id_sanpham=sanpham.id";
-    $sql0 = "SELECT hoadon.id_hoadon as id_hoadon, hoadon.fullname as name , hoadon.phone as phone, hoadon.address as address, 
-            hoadon.ngaymua as ngaymua, hoadon.total_money as total_money FROM taikhoan 
-        INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user='$id_nguoidung' and hoadon.id_hoadon=$id_hoadon GROUP by hoadon.id_user";
+
+    $sql0 = "SELECT * FROM hoadon where id_hoadon='{$id_hoadon}'";
+    // $sql0 = "SELECT hoadon.id_hoadon as id_hoadon, hoadon.fullname as name , hoadon.phone as phone, hoadon.address as address, 
+    //         hoadon.ngaymua as ngaymua, hoadon.total_money as total_money FROM taikhoan 
+    //     INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user='$id_nguoidung' and hoadon.id_hoadon=$id_hoadon GROUP by hoadon.id_user";
     $result0 = executeSingleResult($sql0);
     $result = executeResult($sql);
     echo $sql0 . '<br>';
     echo $sql; ?>
-    <h1 class="pt-4" style="text-align: center;">Chi tiết đơn hàng</h1>
+    <!-- <h1 class="pt-4" style="text-align: center;">Chi tiết đơn hàng</h1>
     <div class="row row-cols-1 row-cols-md-3 pt-4 pb-4" style="width:95%; margin:auto">
         <div class="col">
             <?php
-            echo '<div class="card h-100">
-            <div class="card-body">
-                <h5 class="card-title">Địa chỉ</h5>
-                <b class="card-text pe-3">' . $result0['name'] . '</b>
-                <b class="card-text">' . $result0['phone'] . '</b>
-            </div>
-            <div class="card-header">
-                <span class="text-muted">' . $result0['address'] . '</span>
-            </div>
-        </div>';
+            echo '
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Địa chỉ</h5>
+                    <b class="card-text pe-3">' . $result0['fullname'] . '</b>
+                    <b class="card-text">' . $result0['phone'] . '</b>
+                </div>
+                <div class="card-header">
+                    <span class="text-dark">' . $result0['address'] . '</span>
+                </div>
+            </div>';
             ?>
         </div>
         <div class="col">
@@ -76,7 +61,7 @@
 
                 </div>
                 <div class="card-header">
-                    <span class="text-muted">Giao hàng tận nơi</span>
+                    <span class="text-dark">Giao hàng tận nơi PHÍ SHIP: 30,000 VNĐ</span>
                 </div>
             </div>
         </div>
@@ -87,106 +72,152 @@
                     <p class="card-text">Qua thẻ ngân hàng</p>
                 </div>
                 <div class="card-header">
-                    <span class="text-muted">Mã giao dịch (Ref): <b>0159652148545</b></span>
+                    <span class="text-dark">Mã giao dịch (Ref): <b>0159652148545</b></span>
                 </div>
             </div>
+        </div>
+    </div> -->
+    <!-- <section class="h-100 h-custom"> -->
+    <div class="container h-100">
+        <h1 class="pt-4" style="text-align: center;">Chi tiết đơn hàng</h1>
+        <div class="row row-cols-1 row-cols-md-3 pt-4 pb-4">
+            <div class="col">
+                <?php
+                echo '
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Địa chỉ</h5>
+                    <b class="card-text pe-3">' . $result0['fullname'] . '</b>
+                    <b class="card-text">' . $result0['phone'] . '</b>
+                </div>
+                <div class="card-header">
+                    <span class="text-dark">' . $result0['address'] . '</span>
+                </div>
+            </div>';
+                ?>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Ngày mua</h5>
+                        <?php
+                        echo '<b class="card-text pe-3">' . $result0['ngaymua'] . '</b>';
+                        ?>
+
+                    </div>
+                    <div class="card-header">
+                        <span class="text-dark">Giao hàng tận nơi PHÍ SHIP: 30,000 VNĐ</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Thanh toán</h5>
+                        <p class="card-text">Qua thẻ ngân hàng</p>
+                    </div>
+                    <div class="card-header">
+                        <span class="text-dark">Mã giao dịch (Ref): <b>0159652148545</b></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-end align-items-center h-100">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="h5 col-md-5">Sản phẩm</th>
+                            <th class="col-md-3">Giá</th>
+                            <th class="col-md-2">Số lượng</th>
+                            <th class="col-md-2">Tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
+                        <?php
+                        // foreach ($result as $row) {
+                        //     echo '
+                        //         <tr>
+                        //         <td scope="row" style="width:40%">
+                        //             <div class="d-flex align-items-center">
+                        //                 <img src="../picture/' . $row['img'] . '" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+                        //                 <p class="ms-2">' . $row['name'] . '</p>
+                        //             </div>
+                        //         </td>
+                        //         <td class="align-middle">
+                        //             <p class="mb-0" style="font-weight: 500;">' . number_format($row['price']) . '</p>
+                        //         </td>
+                        //         <td class="align-middle">
+                        //             <p class="mb-0" style="font-weight: 500;">' . number_format($row['amount']) . '</p>
+                        //         </td>
+                        //         <td class="align-middle">
+                        //             <p class="mb-0" style="font-weight: 500;">' . number_format($row['total']) . '</p>
+                        //         </td>
+                        //     </tr>';
+                        // }
+                        foreach ($result as $row) {
+                            echo '
+                                    <tr>
+                                        <td>
+                                            <img src="../picture/' . $row['img'] . '" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+                                            <span class="ms-2">' . $row['name'] . '</span>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0" style="font-weight: 500;">' . number_format($row['price']) . '</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0" style="font-weight: 500;">' . number_format($row['amount']) . '</p>
+                                        </td>
+                                        <td>
+                                            <p class="mb-0" style="font-weight: 500;">' . number_format($row['total']) . '</p>
+                                        </td>
+                                    </tr>
+                                ';
+                        } ?>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="col-md-auto"> -->
+            <div class="card col-md-3 mb-3 p-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Đơn hàng: #<?= $result0['id_hoadon'] ?> </h4>
+                    </div>
+                </div>
+                <div class="row pt-3 pb-3">
+                    <div class="col-md-12">
+                        <span>Tạm tính: </span>
+                        <span class="float-end"><?= $result0['id_hoadon'] ?></span>
+                    </div>
+                    <div class="col-md-12">
+                        <span>Phí ship: </span>
+                        <span class="float-end">30.000</span>
+                    </div>
+                    <div class="col-md-12">
+                        <span>Khuyến mãi: </span>
+                        <span class="float-end">20.000</span>
+                    </div>
+                </div>
+
+                <hr class="dropdown-divider">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span><b class="fs-5">Tổng tiền: </b></span>
+                        <span class="float-end"><b class="fs-5"><?= number_format($result0['total_money']) ?></b></span>
+                    </div>
+                </div>
+                <hr class="dropdown-divider">
+                <div class="row justify-content-between">
+                    <div class="col-md-12">
+                        <span><a href="#" class="btn btn-light">Chờ xác nhận</a></span>
+                        <span class="float-end"><a href="#" class="btn btn-danger">Hủy đơn</a></span>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
         </div>
     </div>
-    <section class="h-100 h-custom">
-        <div class="container h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="h5">Sản phẩm</th>
-                                    <th scope="col">Giá</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col">Tổng tiền</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($result as $row) {
-                                    echo '
-                                    <tr>
-                                    <th scope="row" style="width:40%">
-                                        <div class="d-flex align-items-center">
-                                            <img src="../picture/' . $row['img'] . '" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
-                                            <p class="ms-2">' . $row['name'] . '</p>
-                                        </div>
-                                    </th>
-                                    <td class="align-middle">
-                                        <p class="mb-0" style="font-weight: 500;">' . number_format($row['price']) . '</p>
-                                    </td>
-                                    <td class="align-middle">
-                                        <p class="mb-0" style="font-weight: 500;">' . number_format($row['amount']) . '</p>
-                                    </td>
-                                    <td class="align-middle">
-                                        <p class="mb-0" style="font-weight: 500;">' . number_format($row['total']) . '</p>
-                                    </td>
-                                </tr>';
-                                } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card w-25 mb-3">
-                        <div class="card-body row justify-content-md-center">
-                            <div class="card-tilte col-md-auto">
-                                <h5 class="card-title">Đơn hàng: <?= $result0['id_hoadon'] ?> </h5>
-                                <hr class="dropdown-divider">
-                            </div>
-                        </div>
-                        <div class="card-body row justify-content-between">
-                            <div class="col-md-auto">
-                                <p>Tạm tính: </p>
-                            </div>
-                            <div class="col-md-auto">
-                                <p><?= $result0['id_hoadon'] ?></p>
-                            </div>
-                        </div>
-                        <div class="card-body row justify-content-between">
-                            <div class="col-md-auto">
-                                <p>Phí ship: </p>
-                            </div>
-                            <div class="col-md-auto">
-                                <p>30.000</p>
-                            </div>
-                        </div>
-                        <div class="card-body row justify-content-between">
-                            <div class="col-md-auto">
-                                <p>Khuyến mãi: </p>
-                            </div>
-                            <div class="col-md-auto">
-                                <p>20.000</p>
-                            </div>
-                        </div>
-                        <hr class="dropdown-divider">
-                        <div class="card-body row justify-content-between">
-                            <div class="col-md-auto">
-                                <b class="fs-5">Tổng tiền: </b>
-                            </div>
-                            <div class="col-md-auto">
-                                <b class="fs-5"><?= number_format($result0['total_money']) ?></b>
-                            </div>
-                        </div>
-                        <hr class="dropdown-divider">
-                        <div class="card-body row justify-content-between">
-                            <div class="col-md-auto">
-                                <a href="#" class="btn btn-light">Chờ xác nhận</a>
-                            </div>
-                            <div class="col-md-auto">
-                                <a href="#" class="btn btn-danger">Hủy đơn</a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- </section> -->
 
     <!-- Footer -->
     <footer class="text-center text-lg-start bg-dark text-muted">
