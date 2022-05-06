@@ -121,7 +121,6 @@ if (isset($_POST['promocode'])) {
         <strong>' . number_format($tongtien) . '</strong>
         </li>';
     if ($result) {
-
         $stringg['checkoutbox'] .=
             '<h6 class="card-text">' . number_format($tongtien) . '</h6>
                 <h6 class="card-text">' . number_format(30000) . '</h6>
@@ -140,9 +139,8 @@ if (isset($_POST['promocode'])) {
 
 
 if (isset($_GET['payment'])) {
-    $OrderID = rand(1, 2147483647);
     $id_user = $_SESSION['iduser'];
-    $OrderDate = date("Y-m-d h:i:s");
+    $OrderID = date("Ymdhis");
     $Fullname = $_GET['name'];
     $Phonenumber = $_GET['phone'];
     $Address = $_GET['address'];
@@ -160,7 +158,7 @@ if (isset($_GET['payment'])) {
         $Quantity += $cart['soluong'];
     }
     $_SESSION["Order"] = array(
-        "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice - $result['giamgia'] + 30000), "OrderDate" => $OrderDate, "Fullname" => $Fullname,
+        "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice - $result['giamgia'] + 30000), "Fullname" => $Fullname,
         "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $makhuyenmai,
     );
 }
