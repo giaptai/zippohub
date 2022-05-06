@@ -75,11 +75,11 @@ if (isset($_POST['phantrang']) || isset($_POST['trangthai'])) {
     $start = ($page - 1) * 10;
     $trangthai = $_POST['val'];
     if ($trangthai=='Tất cả đơn') {
-        $sql = "SELECT * FROM hoadon WHERE id_user=$id LIMIT $start, 10";
-        $sql0 = "SELECT * FROM hoadon WHERE id_user=$id";
+        $sql = "SELECT * FROM hoadon WHERE id_user=$id ORDER BY `statuss` ASC,`ngaymua` DESC LIMIT $start, 10";
+        $sql0 = "SELECT * FROM hoadon WHERE id_user=$id ORDER BY `statuss` ASC,`ngaymua` DESC";
     } else {
-        $sql = "SELECT * FROM hoadon WHERE id_user=$id AND statuss='{$trangthai}' LIMIT $start, 10";
-        $sql0 = "SELECT * FROM hoadon WHERE id_user=$id AND statuss='{$trangthai}'";
+        $sql = "SELECT * FROM hoadon WHERE id_user=$id AND statuss='{$trangthai}' ORDER BY `statuss` ASC,`ngaymua` DESC LIMIT $start, 10";
+        $sql0 = "SELECT * FROM hoadon WHERE id_user=$id AND statuss='{$trangthai}' ORDER BY `statuss` ASC,`ngaymua` DESC";
     }
     $s = array('arr1' => '', 'arr2' => '');
     //die($sql);

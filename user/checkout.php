@@ -57,7 +57,7 @@
     <div class="step-container row justify-content-md-center align-items-center mt-4">
         <div class="col-md-auto">
             <div class="text-center">
-                <a type="button" class="btn btn-outline-primary btn-sm active">1</a>
+                <a type="button" class="btn btn-outline-primary btn-sm active" onclick="console.log(document.referrer);window.location.href=document.referrer">1</a>
                 <p><strong>Giỏ hàng</strong></p>
             </div>
         </div>
@@ -141,6 +141,7 @@
                             </div>
                         </div>
                         <a class="btn btn-primary" onclick="payment()">Thanh toán</a>
+                        <a class="btn btn-secondary" onclick="console.log(document.referrer);window.location.href=document.referrer">Quay lại giỏ hàng</a>
                     </div>
                     <!-- </div> -->
                 </div>

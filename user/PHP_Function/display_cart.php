@@ -15,12 +15,11 @@ if (isset($_POST['data']) && isset($_POST['mua'])) {
         'soluong' => 1,
         'gia' => $product['price']
     );
-    
+
     if (isset($_SESSION["cart"])) {
         if (count($_SESSION["cart"]) == 5) {
-            die("Mỗi tài khoản tối đa 5 sản phẩm, ý kiến thì cút");
+            die("Mỗi tài khoản chỉ mua được tối đa 5 sản phẩm");
         }
-
         if (isset($_SESSION['cart'][$id])) {
             if ($_SESSION['cart'][$id]['soluong'] < $product['amount']) {
                 $_SESSION['cart'][$id]["soluong"] += 1;
@@ -30,7 +29,7 @@ if (isset($_POST['data']) && isset($_POST['mua'])) {
         } else {
             $_SESSION['cart'][$id] = $item;
         }
-    }else $_SESSION['cart'][$id] = $item;
+    } else $_SESSION['cart'][$id] = $item;
 }
 
 if (isset($_POST["type"])) {
@@ -51,7 +50,7 @@ if (isset($_POST["type"])) {
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'listcart') {
-        $dimemay = array('tbody' => '', 'tfooter' => '', 'checkoutOK' => '');
+        $dimemay = array('tbody' => '', 'tfooter' => '', 'checkoutOK' => '', 'cartCount'=>0);
         $arr = array(
             'id' => '',
             'name' => '',
@@ -89,11 +88,17 @@ if (isset($_POST['action'])) {
         }
         $dimemay['tfooter'] = '<tr>
             <td colspan="3" style="text-align: right;" class="fw-bolder fs-5">Tổng:</td>
-            <td class="fs-5">' . number_format($sumtien) . ' VND</td>
+            <td class="fs-5">' . number_format($sumtien) . '</td>
             <td><a class="btn btn-outline-warning btn-sm" id="deletedall" onclick="deletedAll()">Xóa tất cả</a></td>
         </tr>';
-        $dimemay['checkoutOK'] = '<p class="card-text">' . number_format($sumtien) . ' VND</p>
-        <b class="card-text">' . number_format($sumtien) . ' VND</b>';
+        // echo sizeof($_SESSION['cart'];
+        if (isset($_SESSION['cart']) && json_encode($_SESSION['cart'])!=null) {
+            $dimemay['cartCount']=sizeof($_SESSION['cart']);
+            $dimemay['checkoutOK'] = '<p class="card-text">' . number_format($sumtien) . ' VND</p>
+            <b class="card-text">' . number_format($sumtien) . ' VND</b>';
+        } else {
+            $dimemay['checkoutOK'] = '';
+        }
         echo json_encode($dimemay);
     }
 }
@@ -102,19 +107,23 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == 'dele') {
         $id = $_POST['id'];
         unset($_SESSION['cart'][$id]);
+        if(sizeof($_SESSION['cart'])==0){
+            unset($_SESSION['cart']);
+        }
     }
 }
 
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'deletedall') {
         unset($_SESSION['cart']);
+        
     }
 }
 
-if(isset($_POST['checkout']) ){
-    if( isset($_SESSION['iduser']) ){
+if (isset($_POST['checkout'])) {
+    if (isset($_SESSION['iduser'])) {
         echo 'success';
-    }else echo 'fail';
+    } else echo 'fail';
 }
 
 // if(isset($_POST['data']) && isset($_POST['em'])){
@@ -188,5 +197,3 @@ if(isset($_POST['checkout']) ){
 //         }
 //     }
 // }
-
-

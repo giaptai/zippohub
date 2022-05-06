@@ -16,75 +16,137 @@ if (isset($_POST["action"])) {
         $result3 = executeResult($sql3);
         //in san pham
         foreach ($result0 as $sp0) {
-            $arr['arr0'] .= '<div class="card p-0">
-            <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp0['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp0['img'] . '" class="card-img-top" alt="..."></a>
-                <div class="card-body" style="text-align: center;">
-                    <h5 class="card-title">' . $sp0['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp0['price']) . ' VNĐ</p>';
-            if (!isset($_SESSION["cart"][$sp0['id']])) {
-                $arr['arr0'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp0['id'] . '" onclick="buyproduct(' . $sp0['id'] . ')">Mua</a>';
-            } else {
-                $arr['arr0'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp0['id'] . '" onclick="buyproduct(' . $sp0['id'] . ')">Đã thêm vào giỏ</a>';
-            }
-            $arr['arr0'] .= '
+            // $arr['arr0'] .= '<div class="card p-0">
+            // <div class="card-item h-100" style="text-align: center;">
+            //     <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp0['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp0['img'] . '" class="card-img-top" alt="..."></a>
+            //     <div class="card-body" style="text-align: center;">
+            //         <h5 class="card-title">' . $sp0['name'] . '</h5>
+            //         <p class="card-text">' . number_format($sp0['price']) . ' VNĐ</p>';
+            // if (!isset($_SESSION["cart"][$sp0['id']])) {
+            //     $arr['arr0'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp0['id'] . '" onclick="buyproduct(' . $sp0['id'] . ')">Mua</a>';
+            // } else {
+            //     $arr['arr0'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp0['id'] . '" onclick="buyproduct(' . $sp0['id'] . ')">Đã thêm vào giỏ</a>';
+            // }
+            // $arr['arr0'] .= '
+            //             </div>
+            //         </div>
+            //         </div>';
+
+
+            $arr['arr0'] .= '<div class="col">
+                <div class="card p-3 h-100" style="text-align: center;">
+                    <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp0['id'] . '"><img style="object-fit: cover; width:7rem; height:8rem;" src="./picture/' . $sp0['img'] . '" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                        <h6 class="card-title">' . $sp0['name'] . '</h6>
+                        <p class="card-text">' . number_format($sp0['price']) . ' VNĐ</p></div>';
+                if (!isset($_SESSION["cart"][$sp0['id']])) {
+                    $arr['arr0'] .= '<div ><a class="btn btn-sm btn-outline-primary" id="id' . $sp0['id'] . '" onclick="buyproduct(' . $sp0['id'] . ')">Thêm vào giỏ</a>';
+                } else {
+                    $arr['arr0'] .= '<div ><a class="btn btn-sm btn-primary disabled" id="id' . $sp0['id'] . '" onclick="buyproduct(' . $sp0['id'] . ')">Đã thêm vào giỏ</a>';
+                }
+                $arr['arr0'] .= ' 
+                            </div>
                         </div>
-                    </div>
-                    </div>';
+                        </div>';
         }
 
         foreach ($result1 as $sp1) {
-            $arr['arr1'] .= '<div class="card p-0">
-            <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp1['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp1['img'] . '" class="card-img-top" alt="..."></a>
-                <div class="card-body" style="text-align: center;">
-                    <h5 class="card-title">' . $sp1['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp1['price']) . ' VNĐ</p>';
-            if (!isset($_SESSION["cart"][$sp1['id']])) {
-                $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp1['id'] . '" onclick="buyproduct(' . $sp1['id'] . ')">Mua</a>';
-            } else {
-                $arr['arr1'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp1['id'] . '" onclick="buyproduct(' . $sp1['id'] . ')">Đã thêm vào giỏ</a>';
-            }
-            $arr['arr1'] .= '
+            // $arr['arr1'] .= '<div class="card p-0">
+            // <div class="card-item h-100" style="text-align: center;">
+            //     <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp1['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp1['img'] . '" class="card-img-top" alt="..."></a>
+            //     <div class="card-body" style="text-align: center;">
+            //         <h5 class="card-title">' . $sp1['name'] . '</h5>
+            //         <p class="card-text">' . number_format($sp1['price']) . ' VNĐ</p>';
+            // if (!isset($_SESSION["cart"][$sp1['id']])) {
+            //     $arr['arr1'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp1['id'] . '" onclick="buyproduct(' . $sp1['id'] . ')">Mua</a>';
+            // } else {
+            //     $arr['arr1'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp1['id'] . '" onclick="buyproduct(' . $sp1['id'] . ')">Đã thêm vào giỏ</a>';
+            // }
+            // $arr['arr1'] .= '
+            //                 </div>
+            //             </div>
+            //             </div>';
+            $arr['arr1'] .= '<div class="col">
+                <div class="card p-3 h-100" style="text-align: center;">
+                    <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp1['id'] . '"><img style="object-fit: cover; width:7rem; height:8rem;" src="./picture/' . $sp1['img'] . '" class="card-img-top" alt="..."></a>
+                    <div class="card-body">
+                        <h6 class="card-title">' . $sp1['name'] . '</h6>
+                        <p class="card-text">' . number_format($sp1['price']) . ' VNĐ</p></div>';
+                if (!isset($_SESSION["cart"][$sp1['id']])) {
+                    $arr['arr1'] .= '<div ><a class="btn btn-sm btn-outline-primary" id="id' . $sp1['id'] . '" onclick="buyproduct(' . $sp1['id'] . ')">Thêm vào giỏ</a>';
+                } else {
+                    $arr['arr1'] .= '<div ><a class="btn btn-sm btn-primary disabled" id="id' . $sp1['id'] . '" onclick="buyproduct(' . $sp1['id'] . ')">Đã thêm vào giỏ</a>';
+                }
+                $arr['arr1'] .= ' 
                             </div>
                         </div>
                         </div>';
         }
 
         foreach ($result2 as $sp2) {
-            $arr['arr2'] .= '<div class="card p-0">
-            <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp2['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp2['img'] . '" class="card-img-top" alt="..."></a>
-                <div class="card-body" style="text-align: center;">
-                    <h5 class="card-title">' . $sp2['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp2['price']) . ' VNĐ</p>';
+            // $arr['arr2'] .= '<div class="card p-0">
+            // <div class="card-item h-100" style="text-align: center;">
+            //     <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp2['id'] . '"><img style="object-fit: cover; width:8rem; height:9rem;" src="./picture/' . $sp2['img'] . '" class="card-img-top" alt="..."></a>
+            //     <div class="card-body" style="text-align: center;">
+            //         <h5 class="card-title">' . $sp2['name'] . '</h5>
+            //         <p class="card-text">' . number_format($sp2['price']) . ' VNĐ</p>';
+            // if (!isset($_SESSION["cart"][$sp2['id']])) {
+            //     $arr['arr2'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp2['id'] . '" onclick="buyproduct(' . $sp2['id'] . ')">Mua</a>';
+            // } else {
+            //     $arr['arr2'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp2['id'] . '" onclick="buyproduct(' . $sp2['id'] . ')">Đã thêm vào giỏ</a>';
+            // }
+            // $arr['arr2'] .= '
+            //                 </div>
+            //             </div>
+            //             </div>';
+            $arr['arr2'] .= '<div class="col">
+            <div class="card p-3 h-100" style="text-align: center;">
+                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp2['id'] . '"><img style="object-fit: cover; width:7rem; height:8rem;" src="./picture/' . $sp2['img'] . '" class="card-img-top" alt="..."></a>
+                <div class="card-body">
+                    <h6 class="card-title">' . $sp2['name'] . '</h6>
+                    <p class="card-text">' . number_format($sp2['price']) . ' VNĐ</p></div>';
             if (!isset($_SESSION["cart"][$sp2['id']])) {
-                $arr['arr2'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp2['id'] . '" onclick="buyproduct(' . $sp2['id'] . ')">Mua</a>';
+                $arr['arr2'] .= '<div ><a class="btn btn-sm btn-outline-primary" id="id' . $sp2['id'] . '" onclick="buyproduct(' . $sp2['id'] . ')">Thêm vào giỏ</a>';
             } else {
-                $arr['arr2'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp2['id'] . '" onclick="buyproduct(' . $sp2['id'] . ')">Đã thêm vào giỏ</a>';
+                $arr['arr2'] .= '<div ><a class="btn btn-sm btn-primary disabled" id="id' . $sp2['id'] . '" onclick="buyproduct(' . $sp2['id'] . ')">Đã thêm vào giỏ</a>';
             }
-            $arr['arr2'] .= '
-                            </div>
+            $arr['arr2'] .= ' 
                         </div>
-                        </div>';
+                    </div>
+                    </div>';
         }
 
         foreach ($result3 as $sp3) {
-            $arr['arr3'] .= '<div class="card p-0">
-            <div class="card-item h-100" style="text-align: center;">
-                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp3['id'] . '"><img style="object-fit: cover;width:8rem; height:9rem;" src="./picture/' . $sp3['img'] . '" class="card-img-top" alt="..."></a>
-                <div class="card-body" style="text-align: center;">
-                    <h5 class="card-title">' . $sp3['name'] . '</h5>
-                    <p class="card-text">' . number_format($sp3['price']) . ' VNĐ</p>';
+            // $arr['arr3'] .= '<div class="card p-0">
+            // <div class="card-item h-100" style="text-align: center;">
+            //     <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp3['id'] . '"><img style="object-fit: cover;width:8rem; height:9rem;" src="./picture/' . $sp3['img'] . '" class="card-img-top" alt="..."></a>
+            //     <div class="card-body" style="text-align: center;">
+            //         <h5 class="card-title">' . $sp3['name'] . '</h5>
+            //         <p class="card-text">' . number_format($sp3['price']) . ' VNĐ</p>';
+            // if (!isset($_SESSION["cart"][$sp3['id']])) {
+            //     $arr['arr3'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp3['id'] . '" onclick="buyproduct(' . $sp3['id'] . ')">Mua</a>';
+            // } else {
+            //     $arr['arr3'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp3['id'] . '" onclick="buyproduct(' . $sp3['id'] . ')">Đã thêm vào giỏ</a>';
+            // }
+            // $arr['arr3'] .= '
+            //                 </div>
+            //             </div>
+            //             </div>';
+            $arr['arr3'] .= '<div class="col">
+            <div class="card p-3 h-100" style="text-align: center;">
+                <a href="./user/hien_chitiet_sanpham_grid.php?id=' . $sp3['id'] . '"><img style="object-fit: cover; width:7rem; height:8rem;" src="./picture/' . $sp3['img'] . '" class="card-img-top" alt="..."></a>
+                <div class="card-body">
+                    <h6 class="card-title">' . $sp3['name'] . '</h6>
+                    <p class="card-text">' . number_format($sp3['price']) . ' VNĐ</p></div>';
             if (!isset($_SESSION["cart"][$sp3['id']])) {
-                $arr['arr3'] .= '<a class="btn btn-sm btn-outline-primary" id="id' . $sp3['id'] . '" onclick="buyproduct(' . $sp3['id'] . ')">Mua</a>';
+                $arr['arr3'] .= '<div ><a class="btn btn-sm btn-outline-primary" id="id' . $sp3['id'] . '" onclick="buyproduct(' . $sp3['id'] . ')">Thêm vào giỏ</a>';
             } else {
-                $arr['arr3'] .= '<a class="btn btn-sm btn-primary disabled" id="id' . $sp3['id'] . '" onclick="buyproduct(' . $sp3['id'] . ')">Đã thêm vào giỏ</a>';
+                $arr['arr3'] .= '<div ><a class="btn btn-sm btn-primary disabled" id="id' . $sp3['id'] . '" onclick="buyproduct(' . $sp3['id'] . ')">Đã thêm vào giỏ</a>';
             }
-            $arr['arr3'] .= '
-                            </div>
+            $arr['arr3'] .= ' 
                         </div>
-                        </div>';
+                    </div>
+                    </div>';
         }
         echo json_encode($arr);
     }

@@ -45,7 +45,7 @@
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
+                                <li><a class="dropdown-item">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>

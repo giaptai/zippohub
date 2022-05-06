@@ -28,7 +28,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark bg-light" href="#">
-                            Giỏ hàng <span class="badge bg-secondary">
+                            Giỏ hàng <span class="badge bg-secondary" id="cartcount">
                                 <?php session_start();
                                 echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;
                                 ?></span></a>
@@ -93,7 +93,11 @@
             </div>
         </div>
         <!-- step -->
-
+        <?php
+        if (isset($_SESSION['cart'])) {
+            echo json_encode($_SESSION['cart']);
+        } else echo '$_SESSION["cart"] không tồn tại !';
+        ?>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead>
@@ -116,7 +120,7 @@
             </table>
         </div>
 
-        <div id="checkout" style="width: 90%; margin: 1rem auto 2rem auto;" class="d-flex justify-content-end">
+        <div id="checkout" style="margin: 1rem auto 2rem auto;" class="d-flex justify-content-end">
             <div class="card" style="width: 18rem;">
                 <h5 class="card-title" style="padding: 1rem 0 0 1rem;">Thanh toán</h5>
                 <div class="card-body d-flex justify-content-between">
@@ -254,7 +258,6 @@
         </div>
         <!-- Copyright -->
     </footer>
-    <!-- Footer -->
     <script async>
         displaycart();
 
@@ -264,17 +267,22 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
-                    let dimemay = JSON.parse(this.responseText).tbody;
+                    let dimemay0 = JSON.parse(this.responseText).tbody;
                     let dimemay1 = JSON.parse(this.responseText).tfooter;
                     let dimemay2 = JSON.parse(this.responseText).checkoutOK;
+                    let dimemay3 = JSON.parse(this.responseText).cartCount;
                     //In ra data nhan duoc
-                    document.getElementById('cartt').innerHTML = dimemay;
+                    document.getElementById('cartt').innerHTML = dimemay0;
                     document.getElementById('cartt2').innerHTML = dimemay1;
-                    document.getElementById('checkoutttt').innerHTML = dimemay2;
-                    let div = document.createElement('div');
-                    div.innerHTML = div.innerHTML + dimemay2;
-                    if (div.children[0].innerText == 0) {
-                        document.getElementById("checkout").innerHTML = ''
+                    document.getElementById('cartcount').innerHTML = dimemay3;
+                    // let div = document.createElement('div');
+                    // div.innerHTML = div.innerHTML + dimemay2;
+
+                    console.log(JSON.parse(this.responseText).checkoutOK);
+                    if (dimemay2 == '') {
+                        document.getElementById('checkout').innerHTML = "";
+                    } else {
+                        document.getElementById('checkoutttt').innerHTML = dimemay2;
                     }
                 }
             }
@@ -326,19 +334,19 @@
             xhttp.send('type=tangsoluong&id=' + id.value);
         }
 
-        document.getElementById('flexCheckDefault0').addEventListener('click', function() {
-            let d = document.getElementById('flexCheckDefault0')
-            let s = document.querySelectorAll('input[type=checkbox]');
-            if (d.checked) {
-                s.forEach((item) => {
-                    item.checked = true;
-                })
-            } else {
-                s.forEach((item) => {
-                    item.checked = false;
-                })
-            }
-        })
+        // document.getElementById('flexCheckDefault0').addEventListener('click', function() {
+        //     let d = document.getElementById('flexCheckDefault0')
+        //     let s = document.querySelectorAll('input[type=checkbox]');
+        //     if (d.checked) {
+        //         s.forEach((item) => {
+        //             item.checked = true;
+        //         })
+        //     } else {
+        //         s.forEach((item) => {
+        //             item.checked = false;
+        //         })
+        //     }
+        // })
 
         function dele(e) {
             console.log(e);

@@ -45,7 +45,7 @@
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./user/canhan.php">Tài khoản</a></li>
+                                <li><a class="dropdown-item">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
@@ -64,7 +64,7 @@
         </div>
     </nav>
 
-    <!-- <?php echo $_SESSION['iduser'] ?> -->
+    <?php echo $_SESSION['iduser'] ?>
 
     <div class="container mt-4 mb-4">
         <div class="row justify-content-around">
@@ -124,11 +124,11 @@
                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                     $start = ($page - 1) * 10;
                                     if ($trangthai == '' || $trangthai == 'Tất cả đơn') {
-                                        $sql = "SELECT * FROM hoadon WHERE id_user='$id' LIMIT $start, 10";
-                                        $sql0 = "SELECT * FROM hoadon  WHERE id_user='$id' ";
+                                        $sql = "SELECT * FROM hoadon WHERE id_user='$id' ORDER BY `statuss` ASC,`ngaymua` DESC LIMIT $start, 10";
+                                        $sql0 = "SELECT * FROM hoadon  WHERE id_user='$id' ORDER BY `statuss` ASC,`ngaymua` DESC ";
                                     } else {
-                                        $sql = "SELECT * FROM hoadon WHERE id_user='$id' AND statuss='{$trangthai}' LIMIT $start, 10";
-                                        $sql0 = "SELECT * FROM hoadon WHERE id_user='$id' and statuss='{$trangthai}'";
+                                        $sql = "SELECT * FROM hoadon WHERE id_user='$id' AND statuss='{$trangthai}' ORDER BY `statuss` ASC,`ngaymua` DESC LIMIT $start, 10";
+                                        $sql0 = "SELECT * FROM hoadon WHERE id_user='$id' and statuss='{$trangthai}' ORDER BY `statuss` ASC,`ngaymua` DESC";
                                     }
                                     //die($sql);
                                     $result = executeResult($sql);

@@ -92,7 +92,8 @@
                 </div>
                 <div class="form-floating mb-3">
                     <button type="button" class="btn btn-success" onclick="updateAdr(' .$id_addr. ')">Cập nhật</button>
-                    <a class="btn btn-secondary" href="./diachi.php?diachi&id='.$_SESSION['iduser'].'">Quay lại</a>
+                    <a class="btn btn-secondary"  onclick="console.log(document.referrer);window.location.href=document.referrer">Quay lại</a>
+                   
                 </div>';
                 // }
                 ?>
