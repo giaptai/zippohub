@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php session_start();
+if (isset($_SESSION["Order"])) {
+    unset($_SESSION["Order"]);
+    unset($_SESSION["cart"]);
+} ?>
 
 <head>
     <meta charset="UTF-8">
@@ -37,8 +42,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
                             Giỏ hàng <span class="badge bg-secondary">
-                                <?php session_start();
-                                echo  isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                                <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
                         </a>
                     </li>
                     <?php
@@ -72,8 +76,8 @@
             </form>
         </div>
     </nav>
-    
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" >
+
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
