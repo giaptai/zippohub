@@ -81,6 +81,10 @@
                     <input class="form-control" id="order_id" name="order_id" type="text" readonly value="<?php echo $_SESSION["Order"]["OrderID"] ?>">
                 </div>
                 <div class="form-group">
+                    <label for="">Ngày đặt</label>
+                    <input class="form-control" type="text" readonly value="<?php echo $_SESSION["Order"]["OrderDate"] ?>">
+                </div>
+                <div class="form-group">
                     <label for="order_id">Mã giảm giá:</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1"><?php if (!empty($_SESSION["Order"]["PromoCode"])) {

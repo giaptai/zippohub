@@ -25,10 +25,9 @@ foreach ($inputData as $key => $value) {
 $secureHash = hash('sha256', $vnp_HashSecret . $hashData);
 if ($secureHash == $vnp_SecureHash) {
     if ($_GET['vnp_ResponseCode'] == '00') {
-        $Time = date("Y-m-d h:i:s", strtotime($_GET['vnp_PayDate']));
         $PaymentArray = array(
             "Total" => $_GET['vnp_Amount'] / 100, "Note" => $_GET['vnp_OrderInfo'],
-            "PaymentTime" => $Time, "vnp_response_code" => $_GET['vnp_ResponseCode'],
+            "vnp_response_code" => $_GET['vnp_ResponseCode'],
             "code_vnpay" => $_GET['vnp_TransactionNo'], "BankCode" => $_GET['vnp_BankCode']
         );
         if (mysqli_num_rows(execute("select * from payments where code_vnpay= '" . $PaymentArray["code_vnpay"] . "'")) == 1) {
@@ -36,10 +35,10 @@ if ($secureHash == $vnp_SecureHash) {
         }
         $paymentadd = execute("INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
-            '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $PaymentArray["PaymentTime"] . "')");
+            '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $_SESSION["Order"]["OrderDate"] . "')");
         $orderadd = execute("INSERT INTO `hoadon`(`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`,
          `total_product`, `magiamgia`, `total_money`, `statuss`)
-        VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["iduser"] . "','" . $Time . "',
+        VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["iduser"] . "','" . $_SESSION["Order"]["OrderDate"] . "',
         '" . $_SESSION["Order"]["Fullname"] . "','" . $_SESSION["Order"]["Phonenumber"] . "','" .
             $_SESSION["Order"]["Address"] . "','" . $_SESSION["Order"]["Quantity"] . "','" .
             $_SESSION["Order"]["PromoCode"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','Chờ xác nhận')");
@@ -150,7 +149,7 @@ if ($secureHash == $vnp_SecureHash) {
                     <label class="form-control">Mã Ngân hàng: <?php echo $_GET['vnp_BankCode'] ?></label>
                 </div>
                 <div class="form-group">
-                    <label class="form-control">Thời gian thanh toán: <?php echo date("d-m-Y h:i:s", strtotime($_GET['vnp_PayDate'])) ?></label>
+                    <label class="form-control">Thời gian thanh toán: <?php echo date("d-m-Y h:i:s", strtotime($_SESSION["Order"]["OrderDate"])) ?></label>
                 </div>
                 <div class="form-group">
                     <label class="form-control">Người thanh toán: <?php echo $_SESSION["Order"]["Fullname"] ?></label>

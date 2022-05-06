@@ -139,6 +139,8 @@ if (isset($_POST['promocode'])) {
 
 
 if (isset($_GET['payment'])) {
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
+    $OrderDate = date("Y-m-d H:i:s");
     $id_user = $_SESSION['iduser'];
     $OrderID = date("Ymdhis");
     $Fullname = $_GET['name'];
@@ -158,7 +160,7 @@ if (isset($_GET['payment'])) {
         $Quantity += $cart['soluong'];
     }
     $_SESSION["Order"] = array(
-        "OrderID" => $OrderID, "TotalPrice" => strval($TotalPrice - $result['giamgia'] + 30000), "Fullname" => $Fullname,
+        "OrderID" => $OrderID, "OrderDate" => $OrderDate, "TotalPrice" => strval($TotalPrice - $result['giamgia'] + 30000), "Fullname" => $Fullname,
         "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $makhuyenmai,
     );
 }
