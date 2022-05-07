@@ -9,7 +9,6 @@ function chucnang()
         case 'search';
             search();
             break;
-
         case 'timkiem';
             search();
             break;

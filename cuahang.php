@@ -178,11 +178,12 @@ if (isset($_POST["xemthem"])) {
             if (isset($_GET['search1']) && $_GET['search1'] == 'All') {
                 $sql = "SELECT * FROM sanpham";
                 $temp = $sql;
-            } else if (isset($_GET['key'])) {
+            }
+            if (isset($_GET['key'])) {
                 $sql .= " WHERE name LIKE '%{$_GET['key']}%'";
                 $temp = $sql;
             } else {
-                $sql .= " where ( category like '%" . (isset($_GET['search1']) ? $_GET['search1'] : '') . "%' ";
+                $sql .= " where ( category like '%" . (isset($_GET['search1']) && $_GET['search1'] != 'All' ? $_GET["search1"] : '') . "%' ";
                 if (isset($_GET['search2']) && !isset($_GET['search3'])) {
                     $sql .= "or category like '%" . $_GET['search2'] . "%'";
                 }
@@ -234,8 +235,8 @@ if (isset($_POST["xemthem"])) {
                         <?php
                         for ($i = 0; $i < ceil(($result1) / 10); $i++) {
                             if ($i == $page - 1) {
-                                $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-primary btn-sm active" onclick="timkiem('.($i + 1).', `'.(isset($_GET["key"]) ? $_GET["key"]:'xemketqua').'` )">' . ($i + 1) . '</a></li>';
-                            } else  $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-primary btn-sm" onclick="timkiem(' . ($i + 1) . ', `'.(isset($_GET["key"]) ? $_GET["key"]:'xemketqua').'`)">' . ($i + 1) . '</a></li>';
+                                $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-primary btn-sm active" onclick="timkiem(' . ($i + 1) . ', `' . (isset($_GET["key"]) ? $_GET["key"] : 'xemketqua') . '` )">' . ($i + 1) . '</a></li>';
+                            } else  $arr['pagin'] .= '<li class="page-item"><a class="btn btn-outline-primary btn-sm" onclick="timkiem(' . ($i + 1) . ', `' . (isset($_GET["key"]) ? $_GET["key"] : 'xemketqua') . '`)">' . ($i + 1) . '</a></li>';
                         }
                         echo  $arr['pagin'];
                         ?>
@@ -345,7 +346,7 @@ if (isset($_POST["xemthem"])) {
                     window.history.replaceState(nextState, nextTitle, nextURL);
                     document.getElementById('sanpham').innerHTML = s0;
                     document.getElementById('pagination').innerHTML = pagin;
-                    document.getElementById('searchname').innerHTML= (xkq == 'xemketqua' ? 'Không có':key);
+                    document.getElementById('searchname').innerHTML = (xkq == 'xemketqua' ? 'Không có' : key);
                 }
             }
             //cau hinh request
@@ -360,7 +361,7 @@ if (isset($_POST["xemthem"])) {
                 '&priceto=' + priceto +
                 '&material=' + material +
                 '&madeby=' + madeby +
-                (xkq == 'xemketqua' ? '': '&key=' + key)
+                (xkq == 'xemketqua' ? '' : '&key=' + key)
             );
         }
 
