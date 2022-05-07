@@ -168,7 +168,7 @@ if ($secureHash == $vnp_SecureHash) {
                     <label class="form-control">Mã Ngân hàng: <?php echo $_GET['vnp_BankCode'] ?></label>
                 </div>
                 <div class="form-group">
-                    <label class="form-control">Thời gian thanh toán: <?php echo date("d-m-Y h:i:s", strtotime($_SESSION["Order"]["OrderDate"])) ?></label>
+                    <label class="form-control">Thời gian thanh toán: <?php echo date("d-m-Y H:i:s", strtotime($_SESSION["Order"]["OrderDate"])) ?></label>
                 </div>
                 <div class="form-group">
                     <label class="form-control">Người thanh toán: <?php echo $_SESSION["Order"]["Fullname"] ?></label>

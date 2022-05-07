@@ -82,7 +82,7 @@ if (isset($_GET['data'])) {
 if (isset($_POST['promocode'])) {
     Bruh();
     $discount = $_POST['promocode'];
-    $result = executeSingleResult("SELECT * FROM makhuyenmai mkm, khuyenmai_khachhang kmkh WHERE kmkh.manguoidung='" . $_SESSION["iduser"] . "' and mkm.id_khuyenmai='{$discount}' and mkm.trangthai=1 and kmkh.sudung=1");
+    $result = executeSingleResult("SELECT * FROM makhuyenmai mkm, khuyenmai_khachhang kmkh WHERE kmkh.manguoidung='" . $_SESSION["iduser"] . "' and mkm.id_khuyenmai='{$discount}' and kmkh.makhuyenmai = mkm.id_khuyenmai and mkm.trangthai=1 and kmkh.sudung=1");
     $tongtien = $summ = 0;
     $stringg = array('lstcart' => '', 'checkoutbox' => '', 'tongg' => '', 'response' => '');
     $arr = array('id' => '', 'name' => '', 'imagee' => '', 'soluong' => 0, 'gia' => 0);
@@ -91,6 +91,7 @@ if (isset($_POST['promocode'])) {
         unset($_SESSION["id_makhuyenmai"]);
     } else {
         $_SESSION["id_makhuyenmai"] = $result["id_khuyenmai"];
+        $_SESSION["giamgia"] = $result["giamgia"];
         $stringg["response"] = 'success';
     }
     isset($_SESSION['cart']) ? $arr = $_SESSION['cart'] : $arr = [];
@@ -110,7 +111,7 @@ if (isset($_POST['promocode'])) {
         <span>Tạm tính:</span>
         <strong>' . number_format($tongtien) . '</strong>
         </li>';
-    if ($result) {
+    if ($result != null) {
         $stringg['checkoutbox'] .=
             '<h6 class="card-text">' . number_format($tongtien) . '</h6>
                 <h6 class="card-text">' . number_format(30000) . '</h6>
@@ -134,13 +135,14 @@ if (isset($_GET['payment'])) {
     $Fullname = $_GET['name'];
     $Phonenumber = $_GET['phone'];
     $Address = $_GET['address'];
-    $result = $TotalPrice = $Quantity = 0;
+    $TotalPrice = $Quantity = 0;
+    $GiamGia = isset($_SESSION["giamgia"]) ? $_SESSION["giamgia"] : 0;
     foreach ($_SESSION['cart'] as $cart) {
         $TotalPrice += ($cart['soluong'] * $cart['gia']);
         $Quantity += $cart['soluong'];
     }
     $_SESSION["Order"] = array(
-        "OrderID" => $OrderID, "OrderDate" => $OrderDate, "TotalPrice" => strval($TotalPrice - $result['giamgia'] + 30000), "Fullname" => $Fullname,
+        "OrderID" => $OrderID, "OrderDate" => $OrderDate, "TotalPrice" => strval($TotalPrice - $GiamGia + 30000), "Fullname" => $Fullname,
         "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $_SESSION["id_makhuyenmai"],
     );
 }
