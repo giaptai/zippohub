@@ -412,6 +412,7 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
+                    // console.log(this.responseText)
                     window.location.href = "billing.php"
                 }
             }

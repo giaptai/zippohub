@@ -116,7 +116,7 @@ if (isset($_POST['promocode'])) {
             '<h6 class="card-text">' . number_format($tongtien) . '</h6>
                 <h6 class="card-text">' . number_format(30000) . '</h6>
                 <h6 class="card-text">' . number_format($result['giamgia']) . '</h6>
-                <h6 class="card-text">' . number_format($tongtien + 30000 - $result['giamgia']) . '</h6>';
+                <h6 class="card-text">' . number_format(($tongtien + 30000 - $result['giamgia']) < 0 ? 0 : $tongtien + 30000 - $result['giamgia']) . '</h6>';
     } else {
         $stringg['checkoutbox'] .=
             '<h6 class="card-text">' . number_format($tongtien) . '</h6>
@@ -136,13 +136,17 @@ if (isset($_GET['payment'])) {
     $Phonenumber = $_GET['phone'];
     $Address = $_GET['address'];
     $TotalPrice = $Quantity = 0;
+    if (empty($_GET['magiamgia'])) {
+        unset($_SESSION["giamgia"]);
+    }
     $GiamGia = isset($_SESSION["giamgia"]) ? $_SESSION["giamgia"] : 0;
     foreach ($_SESSION['cart'] as $cart) {
         $TotalPrice += ($cart['soluong'] * $cart['gia']);
         $Quantity += $cart['soluong'];
     }
+    $TotalPrice = $TotalPrice - $GiamGia + 30000;
     $_SESSION["Order"] = array(
-        "OrderID" => $OrderID, "OrderDate" => $OrderDate, "TotalPrice" => strval($TotalPrice - $GiamGia + 30000), "Fullname" => $Fullname,
+        "OrderID" => $OrderID, "OrderDate" => $OrderDate, "TotalPrice" => strval($TotalPrice < 0 ? 0 : $TotalPrice), "Fullname" => $Fullname,
         "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $_SESSION["id_makhuyenmai"],
     );
 }
