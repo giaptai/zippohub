@@ -47,7 +47,7 @@
             <div class="col-md-auto">
                 <div class="text-center">
                     <a type="button" class="btn btn-outline-primary btn-sm active">2</a>
-                    <p><strong>Kiểm tra thanh toán</strong></p>
+                    <p><strong>Kiểm tra thông tin</strong></p>
                 </div>
             </div>
 

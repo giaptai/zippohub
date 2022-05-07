@@ -1,39 +1,34 @@
-<?php
-require_once("../../query.php");
+<?php require_once("../../query.php");
 session_start();
-
-chucnang();
 function chucnang()
 {
     $action = $_POST['action'];
     $id_user = $_SESSION['iduser'];
-    $sql = "SELECT * from makhuyenmai where id_user='$id_user'";
+    $sql = "SELECT * from khuyenmai_khachhang kmkh, makhuyenmai mkm where kmkh.makhuyenmai = mkm.id_khuyenmai and kmkh.manguoidung='$id_user'";
     switch ($action) {
         case 'search':
             $val = $_POST['val'];
             if (empty($val)) {
                 display($sql);
             } else {
-                $sql .= " and id_khuyenmai='$val'";
+                $sql .= " and kmkh.makhuyenmai='$val'";
                 display($sql);
             }
             break;
-
         case 'phantrang':
             display($sql);
             break;
-
         default:
     }
 }
-
-function display($query){
+chucnang();
+function display($query)
+{
     $s = array('arr1' => '', 'arr2' => '');
     $temp = $query;
-    $page = isset($_POST['page']) ? $_POST['page']:1;
+    $page = isset($_POST['page']) ? $_POST['page'] : 1;
     $start = ($page - 1) * 10;
     $query .= " LIMIT $start, 10";
-    //echo die($query);
     $result = executeResult($query);
     $result1 = countRow($temp);
     if ($result1 > 0) {
@@ -47,16 +42,17 @@ function display($query){
             </td>
             <td>' . number_format($row["giamgia"]) . '</td>
             <td>' . $row["ngayhethan"] . '</td>
-            <td>' . ($row["trangthai"]==1 ? 'Còn hạn':'Hết hạn') . '</td>
+            <td>' . ($row["trangthai"] == 1 ? 'Còn hạn' : 'Hết hạn') . '</td>
+            <td>' . ($row["sudung"] == 1 ? 'Đã dùng' : 'Chưa dùng') . '</td>
         </tr>';
         }
         if ($_POST['action'] == 'search') {
-            $s['arr2']='';
+            $s['arr2'] = '';
         } else {
             for ($i = 0; $i < ceil($result1 / 10); $i++) {
                 if ($i == $page - 1) {
                     $s['arr2'] .= '<li class="page-item active"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
-            } else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
+                } else $s['arr2'] .= '<li class="page-item"><a class="page-link" onclick="phantrang(' . ($i + 1) . ', ' . $_SESSION['iduser'] . ')">' . ($i + 1) . '</a></li>';
             }
         }
     } else {

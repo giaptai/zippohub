@@ -93,6 +93,7 @@
                                     <th scope="col">Giảm giá</th>
                                     <th scope="col">Ngày hết hạn</th>
                                     <th scope="col">Trạng thái</th>
+                                    <th scope="col">Sử dụng</th>
                                 </tr>
                             </thead>
                             <tbody id="orderlist">
@@ -101,11 +102,10 @@
                                     $id_user = $_SESSION['iduser'];
                                     $page = isset($_GET['page']) ? $_GET['page'] : 1;
                                     $start = ($page - 1) * 10;
-                                    $sql = "SELECT * from makhuyenmai where id_user='$id_user' LIMIT $start, 10";
+                                    $sql = "SELECT * from khuyenmai_khachhang kmkh, makhuyenmai mkm where kmkh.makhuyenmai = mkm.id_khuyenmai and kmkh.manguoidung='$id_user' LIMIT $start, 10";
                                     $s = array('arr1' => '', 'arr2' => '');
-                                    //die($sql);
                                     $result = executeResult($sql);
-                                    $resul1t = countRow("SELECT * from makhuyenmai where id_user='$id_user'");
+                                    $resul1t = countRow("SELECT * from khuyenmai_khachhang kmkh, makhuyenmai mkm where kmkh.makhuyenmai = mkm.id_khuyenmai and kmkh.manguoidung='$id_user'");
                                     if ($resul1t > 0) {
                                         foreach ($result as $row) {
                                             $s['arr1'] .= '<tr>
@@ -117,11 +117,12 @@
                                             </td>
                                             <td>' . number_format($row["giamgia"]) . '</td>
                                             <td>' . $row["ngayhethan"] . '</td>
-                                            <td>' . ($row["trangthai"]==1 ? 'Còn hạn':'Hết hạn') . '</td>
+                                            <td>' . ($row["trangthai"] == 1 ? 'Còn hạn' : 'Hết hạn') . '</td>
+                                            <td>' . ($row["sudung"] == 1 ? 'Đã dùng' : 'Chưa dùng') . '</td>
                                         </tr>';
                                         }
                                     } else {
-                                        $s['arr1'] = '<td colspan="4">Không tìm thấy</td>  ';
+                                        $s['arr1'] = '<td colspan="6">Không tìm thấy</td>  ';
                                     };
                                     echo ($s['arr1']);
                                 }

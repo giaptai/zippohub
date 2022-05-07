@@ -1,13 +1,9 @@
-<?php
-require_once('../../query.php');
-
+<?php require_once('../../query.php');
 session_start();
-
 if (isset($_POST['data']) && isset($_POST['mua'])) {
     $id = $_POST['data'];
     $sql = "SELECT * FROM sanpham WHERE id={$id}";
     $product = executeSingleResult($sql);
-
     $item = array(
         'id' => $product['id'],
         'name' => $product['name'],
@@ -15,7 +11,6 @@ if (isset($_POST['data']) && isset($_POST['mua'])) {
         'soluong' => 1,
         'gia' => $product['price']
     );
-
     if (isset($_SESSION["cart"])) {
         if (count($_SESSION["cart"]) == 5) {
             die("Mỗi tài khoản chỉ mua được tối đa 5 sản phẩm");
@@ -31,7 +26,6 @@ if (isset($_POST['data']) && isset($_POST['mua'])) {
         }
     } else $_SESSION['cart'][$id] = $item;
 }
-
 if (isset($_POST["type"])) {
     if (($_POST["type"]) == "tangsoluong") {
         $id = $_POST["id"];
@@ -46,17 +40,11 @@ if (isset($_POST["type"])) {
         $_SESSION['cart'][$id]["soluong"] -= 1;
     }
 }
-
-
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'listcart') {
-        $dimemay = array('tbody' => '', 'tfooter' => '', 'checkoutOK' => '', 'cartCount'=>0);
+        $cartarray = array('tbody' => '', 'tfooter' => '', 'checkoutOK' => '', 'cartCount' => 0);
         $arr = array(
-            'id' => '',
-            'name' => '',
-            'imagee' => '',
-            'soluong' => 0,
-            'gia' => 0
+            'id' => '', 'name' => '', 'imagee' => '', 'soluong' => 0, 'gia' => 0
         );
         isset($_SESSION['cart']) ? $arr = $_SESSION['cart'] : $arr = [];
         $sumtien = 0;
@@ -64,7 +52,7 @@ if (isset($_POST['action'])) {
         foreach ($arr as $cart) {
             $sumtien = $sumtien + ($cart['soluong'] * $cart['gia']);
             $sumsoluong = $sumsoluong + $cart['soluong'];
-            $dimemay['tbody'] .=
+            $cartarray['tbody'] .=
                 '<tr>
                     <td scope="col">
                         <div class="d-flex align-items-center">
@@ -86,46 +74,40 @@ if (isset($_POST['action'])) {
                     <td scope="col"><button class="btn btn-danger btn-sm" id="id' . $cart["id"] . '" onclick="dele(' . $cart["id"] . ')">X</button></td>
                 </tr>';
         }
-        $dimemay['tfooter'] = '<tr>
+        $cartarray['tfooter'] = '<tr>
             <td colspan="3" style="text-align: right;" class="fw-bolder fs-5">Tổng:</td>
             <td class="fs-5">' . number_format($sumtien) . '</td>
             <td><a class="btn btn-outline-warning btn-sm" id="deletedall" onclick="deletedAll()">Xóa tất cả</a></td>
         </tr>';
-        // echo sizeof($_SESSION['cart'];
-        if (isset($_SESSION['cart']) && json_encode($_SESSION['cart'])!=null) {
-            $dimemay['cartCount']=sizeof($_SESSION['cart']);
-            $dimemay['checkoutOK'] = '<p class="card-text">' . number_format($sumtien) . ' VND</p>
+        if (isset($_SESSION['cart']) && json_encode($_SESSION['cart']) != null) {
+            $cartarray['cartCount'] = sizeof($_SESSION['cart']);
+            $cartarray['checkoutOK'] = '<p class="card-text">' . number_format($sumtien) . ' VND</p>
             <b class="card-text">' . number_format($sumtien) . ' VND</b>';
         } else {
-            $dimemay['checkoutOK'] = '';
+            $cartarray['checkoutOK'] = '';
         }
-        echo json_encode($dimemay);
+        echo json_encode($cartarray);
     }
 }
-
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'dele') {
         $id = $_POST['id'];
         unset($_SESSION['cart'][$id]);
-        if(sizeof($_SESSION['cart'])==0){
+        if (sizeof($_SESSION['cart']) == 0) {
             unset($_SESSION['cart']);
         }
     }
 }
-
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'deletedall') {
         unset($_SESSION['cart']);
-        
     }
 }
-
 if (isset($_POST['checkout'])) {
     if (isset($_SESSION['iduser'])) {
         echo 'success';
     } else echo 'fail';
 }
-
 // if(isset($_POST['data']) && isset($_POST['em'])){
 //     if($_POST['em']==$_SESSION['email']){
 //         $em=$_SESSION['email'];

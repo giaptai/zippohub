@@ -4,7 +4,9 @@
 if (isset($_SESSION["Order"])) {
     unset($_SESSION["Order"]);
     unset($_SESSION["cart"]);
-} ?>
+}
+// echo $_SESSION["Order"];
+?>
 
 <head>
     <meta charset="UTF-8">

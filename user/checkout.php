@@ -306,7 +306,6 @@
             //gui request
             xhttp.send('action=display_info');
         }
-
         listaddress();
 
         function listaddress() {
@@ -352,7 +351,6 @@
             document.getElementById('phonee').value = s2;
             document.getElementById('address').value = s3;
         }
-
         displaycart();
 
         function displaycart() {
@@ -365,9 +363,6 @@
                     let s11 = JSON.parse(this.responseText).lstcart;
                     let s12 = JSON.parse(this.responseText).checkoutbox;
                     let s13 = JSON.parse(this.responseText).tongg;
-
-                    console.log(s13);
-
                     document.getElementById("listcart").innerHTML = s11;
                     document.getElementById("checkoutcard").innerHTML = s12;
                     document.getElementById("numberProd").innerHTML = s13;

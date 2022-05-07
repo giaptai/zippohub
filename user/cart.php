@@ -69,7 +69,7 @@
             <div class="col-md-auto">
                 <div class="text-center">
                     <a type="button" class="btn btn-outline-primary btn-sm">2</a>
-                    <p><strong>Kiểm tra thanh toán</strong></p>
+                    <p><strong>Kiểm tra thông tin</strong></p>
                 </div>
             </div>
 
@@ -93,11 +93,6 @@
             </div>
         </div>
         <!-- step -->
-        <?php
-        if (isset($_SESSION['cart'])) {
-            echo json_encode($_SESSION['cart']);
-        } else echo '$_SESSION["cart"] không tồn tại !';
-        ?>
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead>

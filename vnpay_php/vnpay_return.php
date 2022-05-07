@@ -13,7 +13,7 @@ unset($inputData['vnp_SecureHashType']);
 unset($inputData['vnp_SecureHash']);
 ksort($inputData);
 $i = 0;
-$hashData = $Result = "";
+$hashData = $Result = $MaKhuyenMai = "";
 foreach ($inputData as $key => $value) {
     if ($i == 1) {
         $hashData = $hashData . '&' . $key . "=" . $value;
@@ -30,22 +30,41 @@ if ($secureHash == $vnp_SecureHash) {
             "vnp_response_code" => $_GET['vnp_ResponseCode'],
             "code_vnpay" => $_GET['vnp_TransactionNo'], "BankCode" => $_GET['vnp_BankCode']
         );
-        if (mysqli_num_rows(execute("select * from payments where code_vnpay= '" . $PaymentArray["code_vnpay"] . "'")) == 1) {
+        if (mysqli_num_rows(execute("select * from payments where code_vnpay= '" . $PaymentArray["code_vnpay"] . "'")) != 0) {
             return;
         }
-        $paymentadd = execute("INSERT INTO `payments`(`OrderID`, `Total`, `Note`, `vnp_response_code`, `code_vnpay`, `BankCode`, `PaymentTime`) 
+        $paymentadd = execute("INSERT INTO payments(OrderID, Total, Note, vnp_response_code, code_vnpay, BankCode, PaymentTime) 
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','" . $PaymentArray["Note"] . "',
             '" . $PaymentArray["vnp_response_code"] . "','" . $PaymentArray["code_vnpay"] . "','" . $PaymentArray["BankCode"] . "','" . $_SESSION["Order"]["OrderDate"] . "')");
-        $orderadd = execute("INSERT INTO `hoadon`(`id_hoadon`, `id_user`, `ngaymua`, `fullname`, `phone`, `address`,
-         `total_product`, `magiamgia`, `total_money`, `statuss`)
+        $orderadd = execute("INSERT INTO hoadon(id_hoadon, id_user, ngaymua, fullname, phone, address,
+         total_product, magiamgia, total_money, statuss)
         VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $_SESSION["iduser"] . "','" . $_SESSION["Order"]["OrderDate"] . "',
         '" . $_SESSION["Order"]["Fullname"] . "','" . $_SESSION["Order"]["Phonenumber"] . "','" .
             $_SESSION["Order"]["Address"] . "','" . $_SESSION["Order"]["Quantity"] . "','" .
             $_SESSION["Order"]["PromoCode"] . "','" . $_SESSION["Order"]["TotalPrice"] . "','Chờ xác nhận')");
         foreach ($_SESSION['cart'] as $cart) {
-            execute("INSERT INTO `chitiethoadon`(`id_hoadon`, `id_sanpham`, `amount`, `total`) 
+            execute("INSERT INTO chitiethoadon(id_hoadon, id_sanpham, amount, total) 
             VALUES ('" . $_SESSION["Order"]["OrderID"] . "','" . $cart['id'] . "','" . $cart['soluong'] . "','" . ($cart['soluong'] * $cart['gia']) . "')");
         }
+        if ($_SESSION["Order"]["PromoCode"] != "")
+            execute("update khuyenmai_khachhang set sudung=0 where makhuyenmai='" . $_SESSION["Order"]["PromoCode"] . "' and manguoidung='" . $_SESSION["iduser"] . "'");
+        $PromoArray = executeResult("select * from makhuyenmai where trangthai=1");
+        $KhachHangPromoArray = executeResult("select * from khuyenmai_khachhang where manguoidung='" . $_SESSION["iduser"] . "'");
+        $PromoArrayTemp = [];
+        if ($KhachHangPromoArray != null) {
+            foreach ($KhachHangPromoArray as $KhachHangPromo) {
+                array_push($PromoArrayTemp, $KhachHangPromo["makhuyenmai"]);
+            }
+        }
+        foreach ($PromoArray as $Promo) {
+            if (!in_array($Promo["id_khuyenmai"], $PromoArrayTemp)) {
+                $MaKhuyenMai = $Promo["id_khuyenmai"];
+                execute("INSERT INTO khuyenmai_khachhang(makhuyenmai, manguoidung, sudung) VALUES ('" . $MaKhuyenMai . "','" . $_SESSION["iduser"] . "','1')");
+                break;
+            }
+        }
+        if ($MaKhuyenMai == "")
+            $MaKhuyenMai = "Xin lỗi nhưng chúng tôi hết mã khuyến mãi r nên cút đi :))";
         $Result = "Giao dịch thành công";
     } else {
         $Result = "Giao dịch không thành công";
@@ -101,7 +120,7 @@ if ($secureHash == $vnp_SecureHash) {
             <div class="col-md-auto">
                 <div class="text-center">
                     <a type="button" class="btn btn-outline-primary btn-sm active">2</a>
-                    <p><strong>Kiểm tra thanh toán</strong></p>
+                    <p><strong>Kiểm tra thông tin</strong></p>
                 </div>
             </div>
 
@@ -156,6 +175,9 @@ if ($secureHash == $vnp_SecureHash) {
                 </div>
                 <div class="form-group">
                     <label class="form-control">Kết quả: <strong class="text-success"><?php echo $Result ?></strong></label>
+                </div>
+                <div class="form-group">
+                    <label class="form-control">Mã khuyến mãi của cmm:<?php echo $MaKhuyenMai ?></label>
                 </div>
                 <a href="../index.php" class="btn btn-primary">Quay lại</a>
             </div>
