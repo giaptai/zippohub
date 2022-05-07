@@ -1,6 +1,4 @@
-vai lon
-
-
+xong het r do ong toi da hy sinh thoi gian mon bao mat cho ong
 
 
 
