@@ -101,6 +101,7 @@
                         <span class="text-primary">Thanh toán</span>
                         <span class="badge bg-primary rounded-pill">5</span>
                     </h4>
+                    <!-- Phần hiện danh sách địa chỉ -->
                     <ul class="list-group mb-3" id="listcart">
                         <!-- <li class="list-group-item d-flex justify-content-between lh-sm">
                             <div>

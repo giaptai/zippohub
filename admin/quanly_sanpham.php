@@ -103,7 +103,7 @@
     $count = countRow("SELECT * FROM sanpham");
     ?>
     <div class="container-md m-auto">
-        <div class="row justify-content-md-start">
+        <div class="row justify-content-md-start mt-3">
             <h4 class="fs-4">Quản lý sản phẩm</h4>
             <div class="col-md-auto">
                 <a type="button" class="btn btn-success btn-sm" href="./quanly_sanpham_them.php">Thêm sản phẩm</a>

@@ -101,7 +101,7 @@
                     <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input disabled type="text" class="form-control" id="diachicanhan" value="' . $result['address'] . '" placeholder="name@example.com">
+                    <input type="text" class="form-control" id="diachicanhan" value="' . $result['address'] . '" placeholder="name@example.com">
                     <label for="floatingInput">Địa chỉ mặc định</label>
                 </div>
                 <div class="form-floating mb-3">

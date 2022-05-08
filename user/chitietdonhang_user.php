@@ -28,7 +28,7 @@
                     if (isset($_SESSION['email'])) {
                         echo '
                         <li class="nav-item">
-                        <a class="nav-link text-light" href="./user/cart.php">
+                        <a class="nav-link text-light" href="./cart.php">
                             Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
                     </li>
                         <li class="nav-item dropdown">
@@ -36,22 +36,18 @@
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
+                                <li><a class="dropdown-item" href="./canhan.php">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-light" href="./user/login_user.php">Đăng nhập</a>
+                            <a class="nav-link text-light" href="./login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
                 </ul>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-3" type="search" placeholder="Search">
-                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
-            </form>
         </div>
     </nav>
     <?php require_once('../query.php');
