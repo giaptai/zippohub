@@ -37,9 +37,7 @@
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="../taikhoan/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
+                                <li><a class="dropdown-item" href="../user/canhan.php">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                             </ul>
@@ -126,10 +124,11 @@
                     </form>
                     <!-- <div style="width: 90%; margin: 1rem auto 2rem auto;" class="d-flex justify-content-end"> -->
                     <div class="card mt-3">
-                        <div class="card-body d-flex justify-content-between">
+                        <div class="card-body d-flex justify-content-between pb-0">
                             <div>
                                 <h6 class="card-text">Tạm tính:</h6>
                                 <h6 class="card-text">Vận chuyển:</h6>
+                                <h6 class="card-text">Phí giao dịch:</h6>
                                 <h6 class="card-text">Khuyến mãi:</h6>
                                 <h6 class="card-text">Tổng thanh toán:</h6>
                             </div>
@@ -138,10 +137,20 @@
                                 <h6 class="card-text">1</h6>
                                 <h6 class="card-text">1</h6>
                                 <h6 class="card-text">1</h6>
+                                <h6 class="card-text">1</h6>
                             </div>
                         </div>
-                        <a class="btn btn-primary" onclick="payment()">Thanh toán</a>
-                        <a class="btn btn-secondary" onclick="console.log(document.referrer);window.location.href=document.referrer">Quay lại giỏ hàng</a>
+                        <hr>
+                        <div class="row justify-content-md-between m-3 mt-0">
+                            <div class="col-md-auto p-0">
+                                <a class="btn btn-secondary" onclick="console.log(document.referrer);window.location.href=document.referrer">Quay lại giỏ hàng</a>
+                            </div>
+                            <div class="col col-lg-auto p-0">
+                                <a class="btn btn-primary" onclick="payment()">Thanh toán</a>
+                            </div>
+                        </div>
+
+
                     </div>
                     <!-- </div> -->
                 </div>

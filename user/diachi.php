@@ -125,13 +125,13 @@
                             if (isset($_GET['diachi'])) {
                                 $s = '';
                                 $id = $_GET['id'];
-                                $sql = "SELECT * FROM diachikhach where id_user={$id}";
+                                $sql = "SELECT * FROM diachikhach where id_user={$id} ORDER BY loai DESC";
                                 $result = executeResult($sql);
                                 foreach ($result as $arr) {
                                     $s .= '<div class="item mt-3" style="border: 1px ridge">
                                     <div class="d-flex justify-content-between p-2">
                                         <div class="info">
-                                            <div class="name">' . $arr['name'] . '</div>
+                                            <div class="name">' . $arr['name'] .($arr['loai']==1? '<a class="text-success text-decoration-none fs-6"> (Địa chỉ mặc định)</a>':''). '</div>
                                             <div class="address"><span>Địa chỉ: </span>' . $arr['addr'] . '</div>
                                             <div class="phone"><span>Điện thoại: </span>' . $arr['phone'] . '</div>
                                         </div>
@@ -282,9 +282,16 @@
                     //Kiem tra neu nhu da gui request thanh cong
                     if (this.readyState == 4 && this.status == 200) {
                         //In ra data nhan duoc
-                        alert(this.responseText);
-                        let element = p.parentNode.parentNode.parentNode
-                        element.remove()
+                        if(this.responseText=='success'){
+                            let element = p.parentNode.parentNode.parentNode
+                            element.remove();
+                        }else {
+                            console.log(this.responseText);
+                            alert('Xảy ra lỗi khi xóa dịa chỉ:\n'+
+                                    '1. Không thể xóa địa chỉ mặc định.\n'+
+                                    '2. Có ít nhất 1 địa chỉ.');
+                        }
+                        
                     }
                 }
                 //cau hinh request

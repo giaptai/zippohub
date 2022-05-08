@@ -101,7 +101,7 @@
                     <label for="floatingInput">Email</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="diachicanhan" value="' . $result['address'] . '" placeholder="name@example.com">
+                    <input disabled type="text" class="form-control" id="diachicanhan" value="' . $result['address'] . '" placeholder="name@example.com">
                     <label for="floatingInput">Địa chỉ mặc định</label>
                 </div>
                 <div class="form-floating mb-3">
@@ -236,6 +236,7 @@
     </footer>
     <!-- Footer -->
     <script>
+        // cập nhật thông tin cá nhân
         function updateInfo(id) {
             s1 = document.getElementById('hotencanhan').value;
             s2 = document.getElementById('sdtcanhan').value;

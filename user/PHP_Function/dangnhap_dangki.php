@@ -43,8 +43,8 @@ if (isset($_POST['dangky'])) {
     $sql = "INSERT INTO taikhoan(id, fullname, email, `password`, `phone`, `address`, `status`) 
         VALUES ('$id','$hovaten','$email','$matkhau','$sodienthoai','$diachi',1)";
 
-    $sql1 = "INSERT INTO diachikhach(id_user, id_addr, `name`, `phone`, addr) 
-        VALUES ('$id','$id_adr','$hovaten','$sodienthoai','$diachi')";
+    $sql1 = "INSERT INTO diachikhach(id_user, id_addr, `name`, `phone`, addr, loai) 
+        VALUES ('$id','$id_adr','$hovaten','$sodienthoai','$diachi', 1)";
     $result = execute($sql);
     if ($result) {
         echo 'success';

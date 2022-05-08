@@ -43,7 +43,7 @@ if (isset($_SESSION["Order"])) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary">
+                            Giỏ hàng <span class="badge bg-secondary" id="cartcount">
                                 <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
                         </a>
                     </li>
@@ -296,14 +296,18 @@ if (isset($_SESSION["Order"])) {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    if (this.responseText != '') {
-                        alert(this.responseText)
-                    } else {
+                    console.log(JSON.parse(this.responseText));
+                    let s1=JSON.parse(this.responseText).arr1;
+                    let s2=JSON.parse(this.responseText).arr2;
+                    if(s1=='success'){
+                        document.getElementById('cartcount').innerHTML=s2;
                         let btn = document.getElementById("id" + e)
                         btn.innerText = "Đã thêm vào giỏ"
                         btn.classList.add('disabled')
                         btn.classList.add('btn-primary')
                         btn.classList.remove('btn-outline-primary')
+                    }else {
+                        alert('Mỗi tài khoản chỉ mua tối đa 5 sản phẩm !');
                     }
                 }
             }

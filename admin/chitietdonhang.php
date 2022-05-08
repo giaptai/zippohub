@@ -31,6 +31,9 @@
     //         hoadon.ngaymua as ngaymua, hoadon.total_money as total_money FROM taikhoan 
     //     INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user='$id_nguoidung' and hoadon.id_hoadon=$id_hoadon GROUP by hoadon.id_user";
     $result0 = executeSingleResult($sql0);
+
+    $result1 = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$result0['magiamgia']}'");
+
     $result = executeResult($sql);
     echo $sql0 . '<br>';
     echo $sql; ?>
@@ -135,27 +138,9 @@
                     </thead>
                     <tbody class="align-middle">
                         <?php
-                        // foreach ($result as $row) {
-                        //     echo '
-                        //         <tr>
-                        //         <td scope="row" style="width:40%">
-                        //             <div class="d-flex align-items-center">
-                        //                 <img src="../picture/' . $row['img'] . '" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
-                        //                 <p class="ms-2">' . $row['name'] . '</p>
-                        //             </div>
-                        //         </td>
-                        //         <td class="align-middle">
-                        //             <p class="mb-0" style="font-weight: 500;">' . number_format($row['price']) . '</p>
-                        //         </td>
-                        //         <td class="align-middle">
-                        //             <p class="mb-0" style="font-weight: 500;">' . number_format($row['amount']) . '</p>
-                        //         </td>
-                        //         <td class="align-middle">
-                        //             <p class="mb-0" style="font-weight: 500;">' . number_format($row['total']) . '</p>
-                        //         </td>
-                        //     </tr>';
-                        // }
+                        $tamtinh = 0;
                         foreach ($result as $row) {
+                            $tamtinh += $row['total'];
                             echo '
                                     <tr>
                                         <td>
@@ -181,21 +166,25 @@
             <div class="card col-md-3 mb-3 p-4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4>Đơn hàng: #<?= $result0['id_hoadon'] ?> </h4>
+                        <h5>Đơn hàng: #<?= $result0['id_hoadon'] ?> </h5>
                     </div>
                 </div>
-                <div class="row pt-3 pb-3">
+                <div class="row pt-1 pb-3">
                     <div class="col-md-12">
-                        <span>Tạm tính: </span>
-                        <span class="float-end"><?= $result0['id_hoadon'] ?></span>
+                        <span>Phí vận chuyển: </span>
+                        <span class="float-end">30,000</span>
                     </div>
                     <div class="col-md-12">
-                        <span>Phí ship: </span>
-                        <span class="float-end">30.000</span>
+                        <span>Phí giao dịch: </span>
+                        <span class="float-end">10,000</span>
+                    </div>
+                    <div class="col-md-12">
+                        <span>Tạm tính: </span>
+                        <span class="float-end"><?= number_format($tamtinh + 30000 + 10000) ?></span>
                     </div>
                     <div class="col-md-12">
                         <span>Khuyến mãi: </span>
-                        <span class="float-end">20.000</span>
+                        <span class="float-end"><?= number_format(isset($result1['giamgia']) ? -$result1['giamgia'] : 0) ?></span>
                     </div>
                 </div>
 
@@ -207,10 +196,30 @@
                     </div>
                 </div>
                 <hr class="dropdown-divider">
-                <div class="row justify-content-between">
-                    <div class="col-md-12">
-                        <span><a href="#" class="btn btn-light">Chờ xác nhận</a></span>
-                        <span class="float-end"><a href="#" class="btn btn-danger">Hủy đơn</a></span>
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-between">
+                        <?php
+                        $s['arr1'] = '';
+                        if ($result0['statuss'] == 'Chờ xác nhận') {
+                            $s['arr1'] .= '<a class="btn btn-light"  onclick="thaotac(' . $result0['id_hoadon'] . ', `Đã xác nhận`, this)">' . $result0['statuss'] . '</a>
+                                <a class="btn btn-danger" onclick="thaotac(' . $result0['id_hoadon'] . ', `Đã hủy`, this)">Hủy đơn</a>';
+                        }
+                        if ($result0['statuss'] == 'Đã xác nhận') {
+                            $s['arr1'] .= '
+                                <a class="btn btn-primary" onclick="thaotac(' . $result0["id_hoadon"] . ', `Đang giao`, this)">' . $result0['statuss'] . '</a>
+                                <a class="btn btn-danger" onclick="thaotac(' . $result0['id_hoadon'] . ', `Đã hủy`, this)">Hủy đơn</a>';
+                        }
+                        if ($result0['statuss'] == 'Đang giao') {
+                            $s['arr1'] .= '<a class="btn btn-outline-dark" onclick="thaotac(' . $result0['id_hoadon'] . ', `Đã giao`, this)">' . $result0['statuss'] . '</a>';
+                        }
+                        if ($result0['statuss'] == 'Đã hủy') {
+                            $s['arr1'] .= '<a class="btn btn-danger">' . $result0['statuss'] . '</a>';
+                        }
+                        if ($result0['statuss'] == 'Đã giao') {
+                            $s['arr1'] .= '<a class="btn btn-success">' . $result0['statuss'] . '</a>';
+                        }
+                        echo $s['arr1'];
+                        ?>
                     </div>
                 </div>
             </div>
@@ -341,7 +350,36 @@
     </footer>
     <!-- Footer -->
     <script>
-
+        function thaotac(id, act, ele) {
+            console.log(id, act, ele);
+            let s1 = ele.parentElement.parentElement;
+            console.log(s1.children[0].children[1]);
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            //Bat su kien thay doi trang thai cuar request
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    if (act == 'Đã xác nhận') {
+                       ele.outerHTML='<a class="btn btn-primary"  onclick="thaotac('+id+',  `Đang giao`, this)">Đã xác nhận</a>';
+                    } else if (act == 'Đang giao') {
+                        ele.outerHTML='<a class="btn btn-outline-dark"  onclick="thaotac('+id+',  `Đã giao`, this)">Đang giao</a>';
+                        s1.children[0].removeChild(s1.children[0].children[1])
+                    } else if (act == 'Đã giao') {
+                        ele.outerHTML='<a class="btn btn-success">Đã giao</a>';
+                    } else {
+                        s1.children[0].removeChild(s1.children[0].children[0])
+                        ele.innerText='Đã hủy';
+                    }
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/donhang.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('thaotacdon&id=' + id + '&act=' + act);
+        }
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

@@ -53,7 +53,7 @@
         $sql .= " WHERE `statuss`='$trangthai'";
         $temp = $sql;
     }
-    $sql .= " LIMIT $start, 10";
+    $sql .= " ORDER BY `statuss` ASC,`ngaymua` DESC LIMIT $start, 10";
     echo $sql . '--' . $temp;
     $result = executeResult($sql);
     $result1 = countRow($temp);
@@ -134,11 +134,12 @@
                         $StatusButtons = '<td><p class="mb-0 text-primary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
                                 <a class="btn btn-outline-dark btn-sm" onclick="thaotac(' . $row["id_hoadon"] . ', `Đang giao`, this)">Đang giao</a>
-                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>';
+                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>
+                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a></td></tr>';
                     }
                     if ($row['statuss'] == 'Đã giao') {
                         $StatusButtons = '<td><p class="mb-0 text-success" style="font-weight: 500;">' . $row['statuss'] . '</p></td><td>
-                            <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '&iduser=' . $row["id_user"] . '">!</a>
+                            <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a>
                             </td>
                         </tr>';
                     }
@@ -146,18 +147,21 @@
                         $StatusButtons = '<td><p class="mb-0 text-secondary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
                                 <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã xác nhận`, this)">Xác nhận</a>
-                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>';
+                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>
+                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a></td></tr>';
                     }
                     if ($row['statuss'] == 'Đang giao') {
                         $StatusButtons = '<td><p class="mb-0" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
-                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã giao`, this)">Đã giao</a>';
+                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã giao`, this)">Đã giao</a>
+                                <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a></td></tr>';
                     }
                     if ($row['statuss'] == 'Đã hủy') {
                         $StatusButtons = '<td><p class="mb-0 text-danger" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
-                            <td>';
+                            <td>
+                            <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '">!</a></td></tr>';
                     }
-                    echo $StatusButtons .= '<a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '&iduser=' . $row["id_user"] . '">!</a></td></tr>'; 
+                    echo $StatusButtons;
                 } ?>
             </tbody>
             <tfoot>
@@ -315,7 +319,14 @@
                         s1.children[6].removeChild(s1.children[6].children[0]);
                         s1.children[5].innerHTML = '<p class="mb-0 text-danger" style="font-weight: 500;">Đã hủy</p>';
                     }
-                    table_donhang();
+                    ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                    if (ss == -1) {
+                        phantrang(1);
+                    } else {
+                        page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                        page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                        phantrang(page);
+                    }
                 }
             }
             //cau hinh request
