@@ -28,18 +28,18 @@
         <li class="nav-item">
             <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
+        <li class="nav-item">
+            <a class="nav-link" href="?exit">Quay lại ZippoHub</a>
         </li>
+        <?php
+        if (isset($_GET['exit'])) {
+            session_start();
+            unset($_SESSION['email']);
+            unset($_SESSION['iduser']);
+            unset($_SESSION['cart']);
+            header('Location:../index.php');
+        }
+        ?>
     </ul>
     <!--  -->
 
@@ -352,7 +352,7 @@
                             alert(this.responseText);
                             let row = document.getElementById('detail' + e).parentElement.parentElement;
                             row.children[5].innerText = 'Khóa';
-                        }else alert(this.responseText);
+                        } else alert(this.responseText);
 
                     }
                 }

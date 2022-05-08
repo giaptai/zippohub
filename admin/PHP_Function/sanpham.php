@@ -218,6 +218,16 @@ function edit(){
     $material = $_POST['chatlieu'];
     $madeby = $_POST['xuatxu'];
     $intro = $_POST['gioithieu'];
+    
+    if (!preg_match('/^[0-9]{1,9}$/', $gia)) {
+        echo 'Error';
+        die();
+    }
+
+    if (!preg_match('/^[1-9]{1,2}$/', $soluong)) {
+        echo 'Error';
+        die();
+    }
     //Code xử lý, insert dữ liệu vào table
     $sql = "UPDATE sanpham SET img='$anh', `name`='$ten', `amount`='$soluong', `price`='$gia',
     `category`='$category', `material`='$material', `madeby`='$madeby', `intro`='$intro', `state`='$status' WHERE id=$ma";

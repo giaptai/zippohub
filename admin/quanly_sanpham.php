@@ -28,18 +28,18 @@
         <li class="nav-item">
             <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
+        <li class="nav-item">
+            <a class="nav-link" href="?exit">Quay lại ZippoHub</a>
         </li>
+        <?php
+        if (isset($_GET['exit'])) {
+            session_start();
+            unset($_SESSION['email']);
+            unset($_SESSION['iduser']);
+            unset($_SESSION['cart']);
+            header('Location:../index.php');
+        }
+        ?>
     </ul>
     <!--  -->
 
@@ -95,42 +95,36 @@
         </div>
     </div>
     <!-- Modal chi tiet san pham -->
-
-    <div class="d-block m-auto" style="width: 90%;">
-        <div class="container m-0 p-0 mt-2">
-            <div class="row justify-content-md-between">
-                <div class="col-md-auto">
-                    <div class="input-group mb-3">
-                        <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="xoa1trang()">Xóa tất cả</button>
-                    </div>
-                </div>
-                <div class="col ">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Mã sản phẩm</span>
-                        <input type="search" class="form-control" placeholder="Mã sản phẩm" aria-label="Email" id="button-addon1">
-                    </div>
-                </div>
-                <div class="col-md-auto">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search(1)">Tìm kiếm</button>
-                </div>
-            </div>
-        </div>
-        <?php
-        require_once('../query.php');
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $start = ($page - 1) * 5;
-        $result = executeResult("SELECT * FROM sanpham LIMIT $start,5");
-        $count = countRow("SELECT * FROM sanpham");
-        ?>
-        <table class="table align-middle caption-top">
-            <caption>
-                Quản lý sản phẩm
+    <?php
+    require_once('../query.php');
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $start = ($page - 1) * 5;
+    $result = executeResult("SELECT * FROM sanpham LIMIT $start,5");
+    $count = countRow("SELECT * FROM sanpham");
+    ?>
+    <div class="container-md m-auto">
+        <div class="row justify-content-md-start">
+            <h4 class="fs-4">Quản lý sản phẩm</h4>
+            <div class="col-md-auto">
                 <a type="button" class="btn btn-success btn-sm" href="./quanly_sanpham_them.php">Thêm sản phẩm</a>
                 <div type="button" class="btn btn-outline-primary btn-sm m-2">
                     Tổng sản phẩm <span class="badge bg-danger" id="badge"><?= $count ?></span>
                 </div>
-            </caption>
-
+            </div>
+            <div class="col-md-auto">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Mã sản phẩm</span>
+                    <input type="search" class="form-control" placeholder="Mã sản phẩm" aria-label="Email" id="button-addon1">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search(1)">Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="col-md-auto">
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="xoa1trang()">Xóa tất cả</button>
+                </div>
+            </div>
+        </div>
+        <table class="table align-middle caption-top">
             <thead>
                 <tr>
                     <th scope="col" class="w-auto">
@@ -324,7 +318,7 @@
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 //gui request
                 xhttp.send('action=deleted1page&data=' + arr);
-            }else return;
+            } else return;
         }
 
         function editproduct(id) {
@@ -352,6 +346,12 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
+                    if (this.responseText == 'Error') {
+                        alert('Xảy ra lỗi cập nhật sản phẩm:\n' +
+                            '1. Giá tiền lỗi\n' +
+                            '2. Số lượng lỗi.');
+                        return;
+                    }
                     alert(this.responseText);
                     row.children[1].children[0].src = "../picture/" + img[img.length - 1];
                     row.children[1].children[1].innerText = s2;

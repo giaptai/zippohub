@@ -103,6 +103,7 @@ if (isset($_POST['action'])) {
         echo json_encode($cartarray);
     }
 }
+
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'dele') {
         $id = $_POST['id'];

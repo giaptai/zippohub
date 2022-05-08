@@ -66,12 +66,11 @@ if (isset($_SESSION["Order"])) {
                             <a class="nav-link text-light" href="./user/login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link text-light" href="./admin/index.php">Trang quản lý</a>
+                    </li> -->
                 </ul>
             </div>
-            <!-- <form class="d-flex">
-                <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
-                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
-            </form> -->
             <form class="d-flex">
                 <input class="form-control me-3" type="search" placeholder="Tên sản phẩm" id="search">
                 <button type="button" class="btn btn-outline-light w-50" onclick="timkiemName()">Tìm kiếm</button>
@@ -79,7 +78,7 @@ if (isset($_SESSION["Order"])) {
         </div>
     </nav>
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
             <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -104,11 +103,11 @@ if (isset($_SESSION["Order"])) {
             <span class="btn btn-secondary carousel-control-next-icon"></span>
             <span class="visually-hidden">Next</span>
         </button>
-    </div>
+    </div> -->
 
     <div class="container">
 
-        <!-- <div id="carouselExampleIndicators" class="carousel slide mt-3" data-bs-ride="carousel" style="min-height:486px">
+        <div id="carouselExampleIndicators" class="carousel slide mt-3" data-bs-ride="carousel" style="min-height:486px">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -133,7 +132,7 @@ if (isset($_SESSION["Order"])) {
                 <span class="btn btn-secondary carousel-control-next-icon"></span>
                 <span class="visually-hidden">Next</span>
             </button>
-        </div> -->
+        </div>
 
         <div class="row " style="text-align: center; margin:1rem auto 1rem auto;">
             <div class="row row-cols-1 row-cols-md-3 bg-white">
@@ -243,7 +242,11 @@ if (isset($_SESSION["Order"])) {
     <script>
         function timkiemName() {
             s1 = document.getElementById('search').value;
-            window.location.href = "./cuahang.php?key=" + s1 + '&page=1';
+            if(s1!=''){
+                window.location.href = "./cuahang.php?key=" + s1 + '&page=1';
+            }else {
+                alert('Ô tìm kiếm trống !');
+            }
         }
         display();
 

@@ -146,8 +146,7 @@ function edit()
     } else echo 'fail';
 }
 // xóa 1 mã
-function deleted($id)
-{
+function deleted($id){
     $id_khuyenmai = $id;
     $sql = "DELETE FROM makhuyenmai WHERE id_khuyenmai='$id_khuyenmai'";
     //die($sql);

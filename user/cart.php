@@ -261,7 +261,7 @@
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
-                    //console.log(this.responseText);
+                    console.log(this.responseText);
                     let dimemay0 = JSON.parse(this.responseText).tbody;
                     let dimemay1 = JSON.parse(this.responseText).tfooter;
                     let dimemay2 = JSON.parse(this.responseText).checkoutOK;

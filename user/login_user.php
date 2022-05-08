@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php session_start();
+if (isset($_SESSION["Order"])) {
+    unset($_SESSION["Order"]);
+    unset($_SESSION["cart"]);
+} ?>
 
 <head>
     <meta charset="UTF-8">
@@ -29,6 +34,7 @@
 </style>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,49 +48,35 @@
                     <li class="nav-item">
                         <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
                     </li>
-                    <?php
-                    if (isset($_GET["reset"])) {
-                        switch ($_GET["reset"]) {
-                            case "success":
-                                echo "<script>alert('Đổi mật khẩu thành công!')</script>";
-                                break;
-                            case "wrongtoken":
-                                echo "<script>alert('Sai token')</script>";
-                                break;
-                            case "expired":
-                                echo "<script>alert('Token đã hết hạn sử dụng')</script>";
-                                break;
-                        }
-                    }
-                    session_start();
-                    if (isset($_SESSION['email'])) {
-                        echo '
-                        <li class="nav-item">
-                        <a class="nav-link text-light" href="./user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="./cart.php">
+                            Giỏ hàng <span class="badge bg-secondary" id="cartcount">
+                                <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
+                        </a>
                     </li>
+                    <?php
+                    if (isset($_SESSION['email'])) {
+                        echo
+                        '</span></a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
-                                <li><a class="dropdown-item" href="#">Đơn hàng</a></li>
-                                <li><a class="dropdown-item" href="#">Phản ánh</a></li>
+                                <li><a class="dropdown-item" href="./canhan.php">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                                <li><a class="dropdown-item" onclick="logout()">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-dark bg-light" href="./user/login_user.php">Đăng nhập</a>
+                            <a class="nav-link text-dark bg-light" href="./login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
                 </ul>
             </div>
         </div>
     </nav>
-
     <!-- Dang nhap -->
     <div class="container-fluid w-100 p-0">
         <div class="row d-flex justify-content-center align-items-center mt-3 mb-4">
@@ -112,15 +104,12 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
                         <!-- Checkbox -->
-                        <div class="form-check mb-0">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                            <label class="form-check-label" for="form2Example3">Remember me</label>
-                        </div>
                         <a href="../reset_password/reset-index.php" class="text-body">Quên mật khẩu?</a>
                     </div>
                     <div class="text-center text-lg-start mt-3">
-                        <button type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" id="login">Login</button>
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản? <a href="#!" class="link-danger" onclick="formRG(1)">Đăng kí</a></p>
+                        <button <?=isset($_SESSION['iduser']) ? 'hidden':''?> type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" id="login">Login</button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản? <a href="#" class="link-danger" onclick="formRG(1)">Đăng kí</a></p>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Trang quản lý <a href="../admin/index.php" class="link-primary">Chuyển tới</a></p>
                     </div>
                 </form>
 

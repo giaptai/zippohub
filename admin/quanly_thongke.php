@@ -27,6 +27,19 @@
         <li class="nav-item ">
             <a class="nav-link active " href="#">Thống kê</a>
         </li>
+       
+        <li class="nav-item">
+            <a class="nav-link" href="?exit">Quay lại ZippoHub</a>
+        </li>
+        <?php
+        if (isset($_GET['exit'])) {
+            session_start();
+            unset($_SESSION['email']);
+            unset($_SESSION['iduser']);
+            unset($_SESSION['cart']);
+            header('Location:../index.php');
+        }
+        ?>
     </ul>
     <div class="container-md mt-4">
         <div class="form-row d-flex w-100">
