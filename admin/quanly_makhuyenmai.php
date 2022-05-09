@@ -8,11 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/zippohub/fontawesome/css/all.min.css">
+    
     <title>Document</title>
 </head>
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
@@ -25,24 +30,21 @@
         <li class="nav-item">
             <a class="nav-link" href="./quanly_taikhoan.php">Quản lý tài khoản</a>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
+            <a class="nav-link" href="?exit">Quay lại ZippoHub</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </li>
+        <?php
+        if (isset($_GET['exit'])) {
+            session_start();
+            unset($_SESSION['email']);
+            unset($_SESSION['iduser']);
+            unset($_SESSION['cart']);
+            header('Location:../index.php');
+        }
+        ?>
     </ul>
     <!--  -->
-
     <!-- Modal Them san pham -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" id="modal-dialog">
@@ -90,46 +92,35 @@
         </div>
     </div>
     <!-- Modal chi tiet san pham -->
-
-    <div class="d-block m-auto" style="width: 90%;">
-        <div class="container m-0 p-0 mt-2">
-            <div class="row justify-content-md-between">
-
-                <div class="col-md-auto">
-                    <div class="input-group mb-3">
-                        <button class="btn btn-outline-danger" type="button" id="button-addon2" onclick="xoa1trang()">Xóa tất cả</button>
-                    </div>
-                </div>
-                <div class="col ">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Mã khuyến mãi</span>
-                        <input type="text" class="form-control" placeholder="Mã khuyến mãi" id="button-addon1">
-                    </div>
-                </div>
-                <div class="col-md-auto">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search( document.getElementById('button-addon1').value)">Tìm kiếm</button>
-                </div>
-            </div>
-        </div>
-
-        <?php require_once("../query.php");
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
-        $start = ($page - 1) * 10;
-        $codelist = executeResult("select * from makhuyenmai limit $start, 10");
-        $count = countRow("select * from makhuyenmai");
-        ?>
-        <table class="table align-middle caption-top">
-            <caption>
-                Quản lý mã khuyến mãi
+    <?php require_once("../query.php");
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    $start = ($page - 1) * 10;
+    $codelist = executeResult("select * from makhuyenmai limit $start, 10");
+    $count = countRow("select * from makhuyenmai");
+    ?>
+    <div class="container-md">
+        <div class="row justify-content-md-start mt-3">
+            <h4>Quản lý khuyến mãi</h4>
+            <div class="col-md-auto">
                 <a type="button" class="btn btn-success btn-sm" href="./quanly_makhuyenmai_them.php">Thêm mã khuyến mãi</a>
                 <div type="button" class="btn btn-outline-primary btn-sm m-2">
                     Tổng mã <span class="badge bg-danger" id="badge"><?= $count ?></span>
                 </div>
-            </caption>
+            </div>
+            <div class="col-md-5 ">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Mã khuyến mãi</span>
+                    <input type="text" class="form-control" placeholder="Mã khuyến mãi" id="button-addon1">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="search( document.getElementById('button-addon1').value)">Tìm kiếm</button>
+                </div>
+            </div>
+
+        </div>
+
+        <table class="table align-middle caption-top">
             <thead>
                 <tr>
-                    <th scope="col" class="w-auto">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault0">
+                    <th scope="col" class="">
                         <label>STT</label>
                     </th>
                     <th scope="col">Mã khuyến mãi</th>
@@ -144,10 +135,7 @@
                 foreach ($codelist as $code) {
                     echo '<tr>
                     <th scope="row">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="' . $code["id_khuyenmai"] . '">
                             <span>' . ++$start . '</span>
-                        </div>
                     </th>
                     <td>
                         <span>' . $code["id_khuyenmai"] . '</span>
@@ -156,8 +144,8 @@
                     <td>' . number_format($code["giamgia"]) . '</td>
                     <td>' . date("d-m-Y H:i:s", strtotime($code["ngayhethan"])) . '</td>
                     <td>
-                        <button type="button" id="btn' . $code["id_khuyenmai"] . '" value="' . $code["id_khuyenmai"] . '" class="btn btn-outline-primary btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
-                        <button class="btn btn-danger btn-sm" name="xoa"  onclick="deletepromo(`' . $code["id_khuyenmai"] . '`)">X</button>
+                        <button type="button" id="btn' . $code["id_khuyenmai"] . '" value="' . $code["id_khuyenmai"] . '" class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+                        <button class="btn btn-sm fa-regular fa-trash-can fs-4 text-danger" name="xoa"  onclick="deletepromo(`' . $code["id_khuyenmai"] . '`)"></button>
                     </td>
                 </tr>';
                 }
@@ -169,9 +157,9 @@
                         <div class="align-items-center btn-group btn-group-sm" role="group" aria-label="First group" id="table_tfoot_makhuyenmai">
                             <?php
                             for ($i = 0; $i < ceil($count / 10); $i++) {
-                                if($i==$page-1){
-                                    echo  '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang('.($i + 1).', this)">' . ($i + 1) . '</button>'; 
-                                }else echo  '<button type="button" class="btn btn-outline-secondary" onclick="phantrang('.($i + 1).', this)">' . ($i + 1) . '</button>';
+                                if ($i == $page - 1) {
+                                    echo  '<button type="button" class="btn btn-outline-secondary active" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
+                                } else echo  '<button type="button" class="btn btn-outline-secondary" onclick="phantrang(' . ($i + 1) . ', this)">' . ($i + 1) . '</button>';
                             }
                             ?>
                     </td>
@@ -217,13 +205,13 @@
         }
         // phân trang
         function phantrang(page) {
-           console.log(page);
+            console.log(page);
             var xhttp = new XMLHttpRequest() || ActiveXObject();
             xhttp.onreadystatechange = function() {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     // Chèn phản hồi từ máy chủ vào một phần tử HTML
-                    document.getElementById('flexCheckDefault0').checked = false;
+                    //document.getElementById('flexCheckDefault0').checked = false;
                     document.getElementById('table_tbody_makhuyenmai').innerHTML = this.responseText;
                     const nextURL = './quanly_makhuyenmai.php?page=' + page;
                     const nextTitle = 'My new page title';
@@ -334,19 +322,19 @@
             } else return;
         }
 
-        document.getElementById('flexCheckDefault0').addEventListener('click', function() {
-            let d = document.getElementById('flexCheckDefault0')
-            let s = document.querySelectorAll('input[type=checkbox]');
-            if (d.checked) {
-                s.forEach((item) => {
-                    item.checked = true;
-                })
-            } else {
-                s.forEach((item) => {
-                    item.checked = false;
-                })
-            }
-        })
+        // document.getElementById('flexCheckDefault0').addEventListener('click', function() {
+        //     let d = document.getElementById('flexCheckDefault0')
+        //     let s = document.querySelectorAll('input[type=checkbox]');
+        //     if (d.checked) {
+        //         s.forEach((item) => {
+        //             item.checked = true;
+        //         })
+        //     } else {
+        //         s.forEach((item) => {
+        //             item.checked = false;
+        //         })
+        //     }
+        // })
 
         function xoa1trang() {
             var ss = document.querySelectorAll('input[type=checkbox]:checked');

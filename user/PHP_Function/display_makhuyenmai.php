@@ -41,7 +41,7 @@ function display($query)
                 <span>' . $row["id_khuyenmai"] . '</span>
             </td>
             <td>' . number_format($row["giamgia"]) . '</td>
-            <td>' . $row["ngayhethan"] . '</td>
+            <td>' . date("d-m-Y", strtotime($row["ngayhethan"]))  . '</td>
             <td>' . ($row["trangthai"] == 1 ? 'Còn hạn' : 'Hết hạn') . '</td>
             <td>' . ($row["sudung"] == 1 ? 'Đã dùng' : 'Chưa dùng') . '</td>
         </tr>';

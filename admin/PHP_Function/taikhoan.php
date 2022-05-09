@@ -25,7 +25,8 @@ function chucnang()
             break;
         case 'lock':
             $id  = $_POST["id"];
-            lockCus($id);
+            $val  = $_POST["val"];
+            lockCus($id, $val);
             break;
         case 'them':
             addCus();
@@ -76,9 +77,8 @@ function display($query, $start){
                 <td>' . $tk['address'] . '</td>
                 <td>' . (($tk['status'] == 1) ?  "Mở" : "Khóa")  . '</td>
             <td>
-                <button class="btn btn-outline-warning btn-sm">Khóa</button>
-                <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-outline-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Chi tiết
+                <button class="btn btn-outline-warning btn-sm" onclick="lockCus(' . $tk['id'] . ', this.innerText)">'.(($tk['status'] == 1) ?  "Khóa" : "Mở").'</button>
+                <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
         </button>
                 </td>
             </tr>';
@@ -155,8 +155,8 @@ function updateCus($status, $id){
 }
 
 // khóa tài khoản
-function lockCus($id){
-    $sql  = "UPDATE taikhoan SET `status`=0 WHERE id=$id";
+function lockCus($id, $val){
+    $sql  = "UPDATE taikhoan SET `status`=$val WHERE id=$id";
     if (execute($sql)) {
         echo 'success';
     } else echo 'fail';

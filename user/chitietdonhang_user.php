@@ -28,7 +28,7 @@
                     if (isset($_SESSION['email'])) {
                         echo '
                         <li class="nav-item">
-                        <a class="nav-link text-light" href="./user/cart.php">
+                        <a class="nav-link text-light" href="./cart.php">
                             Giỏ hàng <span class="badge bg-secondary" id="badge bg-secondary">0</span></a>
                     </li>
                         <li class="nav-item dropdown">
@@ -36,22 +36,18 @@
                                 <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="./filephp/user/taikhoan/canhan.php">Tài khoản</a></li>
+                                <li><a class="dropdown-item" href="./canhan.php">Tài khoản</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
                             </ul>
                         </li>';
                     } else echo
                     '<li class="nav-item">
-                            <a class="nav-link text-light" href="./user/login_user.php">Đăng nhập</a>
+                            <a class="nav-link text-light" href="./login_user.php">Đăng nhập</a>
                         </li>';
                     ?>
                 </ul>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-3" type="search" placeholder="Search">
-                <button class="btn btn-outline-light w-50" type="submit">Tìm kiếm</button>
-            </form>
         </div>
     </nav>
     <?php require_once('../query.php');
@@ -66,6 +62,7 @@
     //     hoadon.total_money as total_money, hoadon.statuss as statuss FROM taikhoan 
     //     INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user={$_SESSION['iduser']} and hoadon.id_hoadon=$idd GROUP by hoadon.id_user";
     $result0 = executeSingleResult($sql0);
+    $result1 = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$result0['magiamgia']}'");
     $result = executeResult($sql);
     echo $sql0 . '<br>';
     echo $sql;
@@ -111,7 +108,7 @@
                 </div>
             </div>
         </div>
-        <div class="row d-flex align-items-center h-100">
+        <div class="row d-flex justify-content-end align-items-center h-100">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
@@ -124,27 +121,9 @@
                     </thead>
                     <tbody class="align-middle">
                         <?php
-                        // foreach ($result as $row) {
-                        //     echo '
-                        //     <tr>
-                        //     <th scope="row" style="width:40%">
-                        //         <div class="d-flex align-items-center">
-                        //             <img src="../picture/' . $row['img'] . '" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
-                        //             <p class="ms-2">' . $row['name'] . '</p>
-                        //         </div>
-                        //     </th>
-                        //     <td class="align-middle">
-                        //         <p class="mb-0" style="font-weight: 500;">' . number_format($row['price']) . '</p>
-                        //     </td>
-                        //     <td class="align-middle">
-                        //         <p class="mb-0" style="font-weight: 500;">' . number_format($row['amount']) . '</p>
-                        //     </td>
-                        //     <td class="align-middle">
-                        //         <p class="mb-0" style="font-weight: 500;">' . number_format($row['total']) . '</p>
-                        //     </td>
-                        // </tr>';
-                        // }
+                        $tamtinh = 0;
                         foreach ($result as $row) {
+                            $tamtinh += $row['total'];
                             echo '
                                 <tr>
                                     <td>
@@ -169,21 +148,25 @@
             <div class="card col-md-3 mb-3 p-4">
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 class="card-title">Thang LON chua lam Đơn hàng: #<?= $result0['id_hoadon'] ?> </h5>
+                        <h5 class="card-title">Đơn hàng: #<?= $result0['id_hoadon'] ?> </h5>
                     </div>
                 </div>
-                <div class="row pt-3 pb-3">
+                <div class="row pt-1 pb-3">
                     <div class="col-md-12">
-                        <span>Tạm tính: </span>
-                        <span class="float-end"><?= $result0['id_hoadon'] ?></span>
+                        <span>Phí vận chuyển: </span>
+                        <span class="float-end">30,000</span>
                     </div>
                     <div class="col-md-12">
-                        <span>Phí ship: </span>
-                        <span class="float-end">30.000</span>
+                        <span>Phí giao dịch: </span>
+                        <span class="float-end">10,000</span>
+                    </div>
+                    <div class="col-md-12">
+                        <span>Tạm tính: </span>
+                        <span class="float-end"><?= number_format($tamtinh + 30000 + 10000) ?></span>
                     </div>
                     <div class="col-md-12">
                         <span>Khuyến mãi: </span>
-                        <span class="float-end">20.000</span>
+                        <span class="float-end"><?= number_format(isset($result1['giamgia']) ? -$result1['giamgia'] : 0) ?></span>
                     </div>
                 </div>
 
@@ -196,7 +179,7 @@
                 </div>
                 <hr class="dropdown-divider">
                 <div class="row ">
-                    <div class="col-md-12 align-content-between">
+                    <div class="col-md-12 d-flex justify-content-between" id="thaotacdon">
                         <?php
                         $s['arr1'] = '';
                         if ($result0['statuss'] == 'Chờ xác nhận') {
@@ -205,20 +188,21 @@
                         }
                         if ($result0['statuss'] == 'Đã xác nhận') {
                             $s['arr1'] .= '
-                                <a class="btn btn-light">' . $result0['statuss'] . '</a>
-                                <a class="btn btn-danger">Hủy đơn</a>';
+                                <a class="btn btn-primary">' . $result0['statuss'] . '</a>
+                                <a class="btn btn-danger" onclick="cancelOrder(this,' . $result0['id_hoadon'] . ')">Hủy đơn</a>';
                         }
                         if ($result0['statuss'] == 'Đang giao') {
-                            $s['arr1'] .= '<a class="btn btn-danger">' . $result0['statuss'] . '</a>';
+                            $s['arr1'] .= '<a class="btn btn-outline-dark">' . $result0['statuss'] . '</a>';
                         }
                         if ($result0['statuss'] == 'Đã hủy') {
                             $s['arr1'] .= '<a class="btn btn-danger">' . $result0['statuss'] . '</a>';
                         }
                         if ($result0['statuss'] == 'Đã giao') {
-                            $s['arr1'] .= '<a class="btn btn-danger">' . $result0['statuss'] . '</a>';
+                            $s['arr1'] .= '<a class="btn btn-success">' . $result0['statuss'] . '</a>';
                         }
                         echo $s['arr1'];
                         ?>
+                         <a class="mb-0 btn btn-sm fa-solid fa-print fs-4" href="./hoadon.php?id=<?=$result0['id_hoadon']?>"></a>
                     </div>
                 </div>
             </div>
@@ -349,23 +333,26 @@
     <!-- Footer -->
     <script>
         function cancelOrder(ele, id) {
-            console.log(ele, id);
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc
-                    alert(this.responseText);
-                    ele.innerText = "Đã hủy";
-
+            //console.log(ele, id);
+            if (confirm('Bạn muốn hủy đơn ?')) {
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc
+                        alert(this.responseText);
+                        console.log(document.getElementById('thaotacdon').children[0].style.display = 'none');
+                        ele.innerText = "Đã hủy";
+                    }
                 }
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('huydon' + '&id_hoadon=' + id);
             }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/display_lichsudonhang.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('huydon' + '&id_hoadon=' + id);
+            return;
         }
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>

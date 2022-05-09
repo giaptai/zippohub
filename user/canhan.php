@@ -236,6 +236,7 @@
     </footer>
     <!-- Footer -->
     <script>
+        // cập nhật thông tin cá nhân
         function updateInfo(id) {
             s1 = document.getElementById('hotencanhan').value;
             s2 = document.getElementById('sdtcanhan').value;

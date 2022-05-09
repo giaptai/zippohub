@@ -57,10 +57,7 @@ function display($query)
         foreach ($result as $row) {
             $s['arr1'] .= '<tr>
             <th scope="row">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="' . $row["id_khuyenmai"] . '">
-                    <span>' . ++$start . '</span>
-                </div>
+                <span>' . ++$start . '</span>
             </th>
             <td>
                 <span>' . $row["id_khuyenmai"] . '</span>
@@ -69,8 +66,8 @@ function display($query)
             <td>' . number_format($row["giamgia"]) . '</td>
             <td>' . date("d-m-Y H:i:s", strtotime($row["ngayhethan"])) . '</td>
             <td>
-                <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-outline-primary btn-sm"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
-                <button class="btn btn-danger btn-sm" name="xoa"  onclick="deletepromo(`' . $row["id_khuyenmai"] . '`)">X</button>
+                <button type="button" id="btn' . $row["id_khuyenmai"] . '" value="' . $row["id_khuyenmai"] . '" class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary"  onclick="detail(this.value)" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+                <button class="btn btn-sm fa-regular fa-trash-can fs-4 text-danger" name="xoa"  onclick="deletepromo(`' . $row["id_khuyenmai"] . '`)"></button>
             </td>
         </tr>';
         }
@@ -146,8 +143,7 @@ function edit()
     } else echo 'fail';
 }
 // xóa 1 mã
-function deleted($id)
-{
+function deleted($id){
     $id_khuyenmai = $id;
     $sql = "DELETE FROM makhuyenmai WHERE id_khuyenmai='$id_khuyenmai'";
     //die($sql);

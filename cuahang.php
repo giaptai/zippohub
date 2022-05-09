@@ -50,7 +50,7 @@ if (isset($_POST["xemthem"])) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="./user/cart.php">
-                            Giỏ hàng <span class="badge bg-secondary">
+                            Giỏ hàng <span class="badge bg-secondary" id="cartcount">
                                 <?= isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0; ?></span>
                         </a>
                     </li>
@@ -123,11 +123,11 @@ if (isset($_POST["xemthem"])) {
                                 <h5>Nhập giá</h5>
                                 <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Từ</label>
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control form-control-sm" id="pricefrom" placeholder="0" value="">
+                                    <input type="number" class="form-control form-control-sm" id="pricefrom" placeholder="0" value="<?= isset($_GET['pricefrom']) ? $_GET['pricefrom'] : '' ?>">
                                 </div>
                                 <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Đến</label>
                                 <div class="col-sm-9">
-                                    <input type="number" min="0" max="999999999" value="" class="form-control form-control-sm" id="priceto" placeholder="0">
+                                    <input type="number" min="0" max="999999999" value="<?= isset($_GET['priceto']) ? $_GET['priceto'] : '' ?>" class="form-control form-control-sm" id="priceto" placeholder="0">
                                 </div>
                             </div>
                         </li>
@@ -138,10 +138,10 @@ if (isset($_POST["xemthem"])) {
                                         <h5>Chất liệu</h5>
                                     </div>
                                     <select class="form-select form-select-sm w-50 flex-sm-grow-1 bd-highlight" aria-label=".form-select-sm example" id="material">
-                                        <option value="" selected>Tất cả</option>
-                                        <option value="Đồng">Đồng</option>
-                                        <option value="Bạc">Bạc</option>
-                                        <option value="Vàng">Vàng</option>
+                                        <option value="" <?= !isset($_GET['material']) ? 'selected' : '' ?>>Tất cả</option>
+                                        <option value="Đồng" <?= isset($_GET['material']) && $_GET['material'] == 'Đồng' ? 'selected' : '' ?>>Đồng</option>
+                                        <option value="Bạc" <?= isset($_GET['material']) && $_GET['material'] == 'Bạc' ? 'selected' : '' ?>>Bạc</option>
+                                        <option value="Vàng" <?= isset($_GET['material']) && $_GET['material'] == 'Vàng' ? 'selected' : '' ?>>Vàng</option>
                                     </select>
                                 </div>
                             </div>
@@ -154,8 +154,8 @@ if (isset($_POST["xemthem"])) {
                                     </div>
                                     <select class="form-select form-select-sm w-50 flex-sm-grow-1 bd-highlight" aria-label=".form-select-sm example" id="madeby">
                                         <option value="" selected>Tất cả</option>
-                                        <option value="Nhật Bản">Nhật Bản</option>
-                                        <option value="Hàn Quốc">Hàn Quốc</option>
+                                        <option value="Nhật Bản" <?= isset($_GET['madeby']) && $_GET['madeby'] == 'Nhật Bản' ? 'selected' : '' ?>>Nhật Bản</option>
+                                        <option value="Hàn Quốc" <?= isset($_GET['madeby']) && $_GET['madeby'] == 'Hàn Quốc' ? 'selected' : '' ?>>Hàn Quốc</option>
                                     </select>
                                 </div>
                             </div>
@@ -183,7 +183,7 @@ if (isset($_POST["xemthem"])) {
                 $sql .= " WHERE name LIKE '%{$_GET['key']}%'";
                 $temp = $sql;
             } else {
-                $sql .= " where ( category like '%" . (isset($_GET['search1']) && $_GET['search1'] != 'All' ? $_GET["search1"] : '') . "%' ";
+                $sql .= " where ( category like '%" . (isset($_GET['search1']) && $_GET['search1'] != 'All' ? $_GET['search1'] : '') . "%' ";
                 if (isset($_GET['search2']) && !isset($_GET['search3'])) {
                     $sql .= "or category like '%" . $_GET['search2'] . "%'";
                 }
@@ -400,14 +400,18 @@ if (isset($_POST["xemthem"])) {
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    if (this.responseText != '') {
-                        alert(this.responseText);
-                    } else {
+                    console.log(JSON.parse(this.responseText));
+                    let s1=JSON.parse(this.responseText).arr1;
+                    let s2=JSON.parse(this.responseText).arr2;
+                    if(s1=='success'){
+                        document.getElementById('cartcount').innerHTML=s2;
                         let btn = document.getElementById("id" + e)
                         btn.innerText = "Đã thêm vào giỏ"
                         btn.classList.add('disabled')
                         btn.classList.add('btn-primary')
                         btn.classList.remove('btn-outline-primary')
+                    }else {
+                        alert('Mỗi tài khoản chỉ mua tối đa 5 sản phẩm !');
                     }
                 }
             }

@@ -138,6 +138,7 @@
                         <option value="en">English</option>
                     </select>
                 </div>
+                <a type="button" class="mt-2 btn btn-secondary" href="./checkout.php">Quay lại thanh toán</a>
                 <button type="submit" class="mt-2 btn btn-primary">Thanh toán</button>
             </form>
         </div>

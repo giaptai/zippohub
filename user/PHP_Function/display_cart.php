@@ -1,6 +1,7 @@
 <?php require_once('../../query.php');
 session_start();
 if (isset($_POST['data']) && isset($_POST['mua'])) {
+    $arr=array('arr1'=>'', 'arr2'=>0);
     $id = $_POST['data'];
     $sql = "SELECT * FROM sanpham WHERE id={$id}";
     $product = executeSingleResult($sql);
@@ -13,7 +14,10 @@ if (isset($_POST['data']) && isset($_POST['mua'])) {
     );
     if (isset($_SESSION["cart"])) {
         if (count($_SESSION["cart"]) == 5) {
-            die("Mỗi tài khoản chỉ mua được tối đa 5 sản phẩm");
+            $arr['arr1']='fail';
+            $arr['arr2']=isset($_SESSION['cart']) ? sizeof($_SESSION['cart']):0;
+            echo json_encode($arr);
+            die();
         }
         if (isset($_SESSION['cart'][$id])) {
             if ($_SESSION['cart'][$id]['soluong'] < $product['amount']) {
@@ -23,13 +27,23 @@ if (isset($_POST['data']) && isset($_POST['mua'])) {
             }
         } else {
             $_SESSION['cart'][$id] = $item;
+            $arr['arr1']='success';
+            $arr['arr2']=sizeof($_SESSION['cart']);
         }
-    } else $_SESSION['cart'][$id] = $item;
+    } else {
+        $_SESSION['cart'][$id] = $item;
+        $arr['arr1']='success';
+        $arr['arr2']=sizeof($_SESSION['cart']);
+        // echo json_encode($arr);
+    }
+    echo json_encode($arr);
 }
+
 if (isset($_POST["type"])) {
     if (($_POST["type"]) == "tangsoluong") {
         $id = $_POST["id"];
-        ($_SESSION['cart'][$id]["soluong"] < 99) ? $_SESSION['cart'][$id]["soluong"] += 1 : 'Qua so luong';
+        $product = executeSingleResult("SELECT * FROM sanpham WHERE id={$id}");
+        echo ($_SESSION['cart'][$id]["soluong"] < $product['amount']) ? $_SESSION['cart'][$id]["soluong"] += 1 : 'fail';
         die();
     }
     if (isset($_POST["type"]) == "giamsoluong") {
@@ -65,13 +79,13 @@ if (isset($_POST['action'])) {
                     <td scope="col">' . number_format($cart['gia']) . ' VND</td> 
                     <td>
                         <div class="input-group">
-                            <button class="subtract btn btn-outline-primary btn-sm" onclick="subtract(this)" value="' . $cart['id'] . '"><i class="bi bi-dash-lg"></i></button>
+                            <button class="subtract btn btn-outline-primary btn-sm" onclick="subtract(this)" value="' . $cart['id'] . '"><i class="fa-solid fa-minus"></i></button>
                             <input type="text" min="1" max="99" step="1" disabled style="text-align: center; width: 2.5rem;" class="btn btn-outline-primary btn-sm" id="ditmem' . $cart['id'] . '" value="' . number_format($cart['soluong']) . '">
-                            <button class="add btn btn-outline-primary btn-sm" value="' . $cart['id'] . '" onclick="add(this)"><i class="bi bi-plus-lg"></i></button>
+                            <button class="add btn btn-outline-primary btn-sm" value="' . $cart['id'] . '" onclick="add(this)"><i class="fa-solid fa-plus"></i></button>
                         </div>
                     </td>
                     <td scope="col">' . number_format($cart['soluong'] * $cart['gia']) . ' VND</td>
-                    <td scope="col"><button class="btn btn-danger btn-sm" id="id' . $cart["id"] . '" onclick="dele(' . $cart["id"] . ')">X</button></td>
+                    <td scope="col"><button class="btn btn-sm fa-regular fa-trash-can fs-5 text-danger" id="id' . $cart["id"] . '" onclick="dele(' . $cart["id"] . ')"></button></td>
                 </tr>';
         }
         $cartarray['tfooter'] = '<tr>
@@ -89,6 +103,7 @@ if (isset($_POST['action'])) {
         echo json_encode($cartarray);
     }
 }
+
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'dele') {
         $id = $_POST['id'];

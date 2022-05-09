@@ -64,7 +64,7 @@ if ($secureHash == $vnp_SecureHash) {
             }
         }
         if ($MaKhuyenMai == "")
-            $MaKhuyenMai = "Xin lỗi nhưng chúng tôi hết mã khuyến mãi r nên cút đi :))";
+            $MaKhuyenMai = "Xin lỗi nhưng chúng tôi hết mã khuyến mãi !";
         $Result = "Giao dịch thành công";
     } else {
         $Result = "Giao dịch không thành công";
@@ -177,7 +177,7 @@ if ($secureHash == $vnp_SecureHash) {
                     <label class="form-control">Kết quả: <strong class="text-success"><?php echo $Result ?></strong></label>
                 </div>
                 <div class="form-group">
-                    <label class="form-control">Mã khuyến mãi của cmm:<?php echo $MaKhuyenMai ?></label>
+                    <label class="form-control">MÃ KHUYẾN MÃI ĐƯỢC TẶNG: <?php echo $MaKhuyenMai ?></label>
                 </div>
                 <a href="../index.php" class="btn btn-primary">Quay lại</a>
             </div>

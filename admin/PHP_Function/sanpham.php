@@ -71,8 +71,8 @@ function display($query){
             <td>' . number_format($sp['price'], 0, '.') . ' ₫</td>' .
                 '<td>' . '<span>' . (($sp['state'] == 1) ?  "Còn hàng" : "Hết hàng") . '</span></td>' .
                 '<td>
-                <button type="button" class="btn btn-outline-primary btn-sm" id="sua' . $sp['id'] . '" onclick="detail(' . $sp['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal">Chi tiết</button>
-                <button class="btn btn-danger btn-sm" name="xoa" id="xoa' . $sp['id'] . '" onclick="deleteproduct(' . $sp['id'] . ')">X</button>
+                <button type="button" class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" id="sua' . $sp['id'] . '" onclick="detail(' . $sp['id'] . ')" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+                <button class="btn btn-sm fa-regular fa-trash-can fs-4 text-danger" name="xoa" id="xoa' . $sp['id'] . '" onclick="deleteproduct(' . $sp['id'] . ')"></button>
             </td>
         </tr>';
         }
@@ -218,6 +218,16 @@ function edit(){
     $material = $_POST['chatlieu'];
     $madeby = $_POST['xuatxu'];
     $intro = $_POST['gioithieu'];
+    
+    if (!preg_match('/^[0-9]{1,9}$/', $gia)) {
+        echo 'Error';
+        die();
+    }
+
+    if (!preg_match('/^[1-9]{1,2}$/', $soluong)) {
+        echo 'Error';
+        die();
+    }
     //Code xử lý, insert dữ liệu vào table
     $sql = "UPDATE sanpham SET img='$anh', `name`='$ten', `amount`='$soluong', `price`='$gia',
     `category`='$category', `material`='$material', `madeby`='$madeby', `intro`='$intro', `state`='$status' WHERE id=$ma";

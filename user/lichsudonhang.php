@@ -174,7 +174,8 @@
                                                 </td>';
                                             }
                                             echo '<td class="align-middle">
-                                                    <a class="mb-0 btn btn-sm btn-primary" href="./chitietdonhang_user.php?id=' . $row['id_hoadon'] . '">Chi tiết</a>
+                                                    <a class="mb-0 btn btn-sm fa-solid fa-circle-info fs-4 text-primary" href="./chitietdonhang_user.php?id=' . $row['id_hoadon'] . '"></a>
+                                                    <a class="mb-0 btn btn-sm fa-solid fa-print fs-4" href="./hoadon.php?id=' . $row['id_hoadon'] . '"></a>
                                                 </td>
                                         </tr>';
                                         }

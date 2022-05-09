@@ -92,8 +92,8 @@
                 </div>
                 <div class="form-floating mb-3">
                     <button type="button" class="btn btn-success" onclick="updateAdr(' .$id_addr. ')">Cập nhật</button>
+                    '.($result['loai']==0 ? '<button type="button" class="btn btn-primary" onclick="ChooseAdr(' .$id_addr. ')" id="addr">Đặt làm địa chỉ mặc định</button>':'').'
                     <a class="btn btn-secondary"  onclick="console.log(document.referrer);window.location.href=document.referrer">Quay lại</a>
-                   
                 </div>';
                 // }
                 ?>
@@ -234,6 +234,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     alert(this.responseText);
+                  
                 }
             }
             //cau hinh request
@@ -242,6 +243,33 @@
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
             xhttp.send('update_diachi'+
+                '&id=' + id +
+                '&name=' + s1 +
+                '&phone=' + s2 +
+                '&addr=' + s4
+            );
+        }
+
+        function ChooseAdr(id) {
+            s1 = document.getElementById('hotencanhan').value;
+            s2 = document.getElementById('sdtcanhan').value;
+            s4 = document.getElementById('diachicanhan').value;
+            console.log(s1, s2, s4);
+            var xhttp = new XMLHttpRequest() || ActiveXObject();
+            xhttp.onreadystatechange = function() {
+                //Kiem tra neu nhu da gui request thanh cong
+                if (this.readyState == 4 && this.status == 200) {
+                    //In ra data nhan duoc
+                    alert(this.responseText);
+                    document.getElementById('addr').style.display='none';
+                }
+            }
+            //cau hinh request
+            xhttp.open('POST', './PHP_Function/sua_taikhoan_canhan.php', true);
+            //cau hinh header cho request
+            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            //gui request
+            xhttp.send('choose_diachi'+
                 '&id=' + id +
                 '&name=' + s1 +
                 '&phone=' + s2 +

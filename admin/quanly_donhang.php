@@ -8,11 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/zippohub/fontawesome/css/all.min.css">
     <title>Document</title>
 </head>
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link " aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
@@ -26,20 +30,17 @@
             <a class="nav-link" href="./quanly_taikhoan.php">Quản lý tài khoản</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
+            <a class="nav-link" href="?exit">Quay lại ZippoHub</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </li>
+        <?php
+        if (isset($_GET['exit'])) {
+            session_start();
+            unset($_SESSION['email']);
+            unset($_SESSION['iduser']);
+            unset($_SESSION['cart']);
+            header('Location:../index.php');
+        }
+        ?>
     </ul>
     <?php
     require_once('../query.php');
@@ -53,8 +54,7 @@
         $sql .= " WHERE `statuss`='$trangthai'";
         $temp = $sql;
     }
-    $sql .= " LIMIT $start, 10";
-    echo $sql . '--' . $temp;
+    $sql .= " ORDER BY `statuss` ASC,`ngaymua` DESC LIMIT $start, 10";
     $result = executeResult($sql);
     $result1 = countRow($temp);
     $count = countRow('SELECT * FROM hoadon');
@@ -134,11 +134,12 @@
                         $StatusButtons = '<td><p class="mb-0 text-primary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
                                 <a class="btn btn-outline-dark btn-sm" onclick="thaotac(' . $row["id_hoadon"] . ', `Đang giao`, this)">Đang giao</a>
-                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>';
+                                <a class="btn text-danger btn-sm fa-solid fa-xmark fs-4" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)"></a>
+                                <a class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '"></a></td></tr>';
                     }
                     if ($row['statuss'] == 'Đã giao') {
                         $StatusButtons = '<td><p class="mb-0 text-success" style="font-weight: 500;">' . $row['statuss'] . '</p></td><td>
-                            <a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '&iduser=' . $row["id_user"] . '">!</a>
+                            <a class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '"></a>
                             </td>
                         </tr>';
                     }
@@ -146,18 +147,21 @@
                         $StatusButtons = '<td><p class="mb-0 text-secondary" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
                                 <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã xác nhận`, this)">Xác nhận</a>
-                                <a class="btn btn-danger btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)">X</a>';
+                                <a class="btn text-danger btn-sm fa-solid fa-xmark fs-4" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã hủy`, this)"></a>
+                                <a class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '"></a></td></tr>';
                     }
                     if ($row['statuss'] == 'Đang giao') {
                         $StatusButtons = '<td><p class="mb-0" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
                             <td>
-                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã giao`, this)">Đã giao</a>';
+                                <a class="btn btn-outline-dark btn-sm" id="id' . $row['id_hoadon'] . '" onclick="thaotac(' . $row['id_hoadon'] . ', `Đã giao`, this)">Đã giao</a>
+                                <a class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '"></a></td></tr>';
                     }
                     if ($row['statuss'] == 'Đã hủy') {
                         $StatusButtons = '<td><p class="mb-0 text-danger" style="font-weight: 500;">' . $row['statuss'] . '</p></td>
-                            <td>';
+                            <td>
+                            <a class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '"></a></td></tr>';
                     }
-                    echo $StatusButtons .= '<a class="btn btn-outline-primary btn-sm" href="./chitietdonhang.php?id=' . $row['id_hoadon'] . '&iduser=' . $row["id_user"] . '">!</a></td></tr>'; 
+                    echo $StatusButtons;
                 } ?>
             </tbody>
             <tfoot>
@@ -315,7 +319,14 @@
                         s1.children[6].removeChild(s1.children[6].children[0]);
                         s1.children[5].innerHTML = '<p class="mb-0 text-danger" style="font-weight: 500;">Đã hủy</p>';
                     }
-                    table_donhang();
+                    ss = (window.location.search).search(/page/); // tìm từ khóa page nó trả về vị trí đầu tiên thấy
+                    if (ss == -1) {
+                        phantrang(1);
+                    } else {
+                        page = window.location.search.slice(ss); //xóa path search chỉ còn 'page=số nào đó'
+                        page = page.split('=')[1]; // tách bởi dấu bằng rồi chọn số
+                        phantrang(page);
+                    }
                 }
             }
             //cau hinh request

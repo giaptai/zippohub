@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link href="style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../fontawesome/css/all.min.css">
     <title>Document</title>
 </head>
 <style></style>
@@ -273,7 +274,7 @@
                     // let div = document.createElement('div');
                     // div.innerHTML = div.innerHTML + dimemay2;
 
-                    console.log(JSON.parse(this.responseText).checkoutOK);
+                    //console.log(JSON.parse(this.responseText).checkoutOK);
                     if (dimemay2 == '') {
                         document.getElementById('checkout').innerHTML = "";
                     } else {
@@ -298,7 +299,8 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //id.parentNode.querySelector('input[type=number]').stepDown();
-                    displaycart()
+                    console.log(this.responseText);
+                    displaycart();
                 }
             }
             //cau hinh request
@@ -318,7 +320,11 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
-                    displaycart()
+                    if(this.responseText=='fail'){
+                        alert('Quá số lượng trong kho !');
+                        return;
+                    }
+                    displaycart();
                 }
             }
             //cau hinh request

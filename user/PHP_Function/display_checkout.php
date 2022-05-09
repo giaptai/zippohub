@@ -55,7 +55,7 @@ if (isset($_POST['action'])) {
             echo ' <a onclick="clickaddr(' . $arr['id_addr'] . '); document.getElementById(`flexRadioDefault' . ($arr['id_addr']) . '`).checked=true" id="addr' . $arr['id_addr'] . '" class="list-group-item list-group-item-action" aria-current="true">
             <div class="d-flex w-100 justify-content-between">
                 <h6 class="">' . $arr["name"] . '</h6>
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault' . $arr['id_addr'] . '">
+                <input '.($arr['loai']==1 ? 'checked ':'').'class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault' . $arr['id_addr'] . '">
             </div>
             <p class="mb-1">' . $arr["phone"] . '</p>
             <small>' . $arr["addr"] . '</small>
@@ -115,14 +115,16 @@ if (isset($_POST['promocode'])) {
         $stringg['checkoutbox'] .=
             '<h6 class="card-text">' . number_format($tongtien) . '</h6>
                 <h6 class="card-text">' . number_format(30000) . '</h6>
+                <h6 class="card-text">' . number_format(10000) . '</h6>
                 <h6 class="card-text">' . number_format($result['giamgia']) . '</h6>
-                <h6 class="card-text">' . number_format(($tongtien + 30000 - $result['giamgia']) < 0 ? 0 : $tongtien + 30000 - $result['giamgia']) . '</h6>';
+                <h6 class="card-text">' . number_format(($tongtien + 10000 + 30000 - $result['giamgia']) < 0 ? 10000 : $tongtien +10000+ 30000 - $result['giamgia']) . '</h6>';
     } else {
         $stringg['checkoutbox'] .=
             '<h6 class="card-text">' . number_format($tongtien) . '</h6>
             <h6 class="card-text">' . number_format(30000) . '</h6>
+            <h6 class="card-text">' . number_format(10000) . '</h6>
             <h6 class="card-text">' . number_format(0) . '</h6>
-            <h6 class="card-text">' . number_format($tongtien + 30000 - 0) . '</h6>
+            <h6 class="card-text">' . number_format($tongtien + 10000+30000 - 0) . '</h6>
             <script>alert("Mã khuyến mãi đã được sử dụng hoặc hết hạn")</script>';
     }
     echo json_encode($stringg);
@@ -144,9 +146,9 @@ if (isset($_GET['payment'])) {
         $TotalPrice += ($cart['soluong'] * $cart['gia']);
         $Quantity += $cart['soluong'];
     }
-    $TotalPrice = $TotalPrice - $GiamGia + 30000;
+    $TotalPrice = $TotalPrice - $GiamGia + 10000 + 30000;
     $_SESSION["Order"] = array(
-        "OrderID" => $OrderID, "OrderDate" => $OrderDate, "TotalPrice" => strval($TotalPrice < 0 ? 0 : $TotalPrice), "Fullname" => $Fullname,
+        "OrderID" => $OrderID, "OrderDate" => $OrderDate, "TotalPrice" => strval($TotalPrice < 0 ? 10000 : $TotalPrice), "Fullname" => $Fullname,
         "Phonenumber" => $Phonenumber, "Address" => $Address, "Quantity" => strval($Quantity), "PromoCode" => $_SESSION["id_makhuyenmai"],
     );
 }

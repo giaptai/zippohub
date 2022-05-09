@@ -5,7 +5,7 @@ include('../../query.php');
 if (isset($_POST['email']) && isset($_POST['pass'])) {
     $email = $_POST['email'];
     $pass = $_POST['pass'];
-    $sql = "SELECT * FROM taikhoan WHERE email='$email' AND password='$pass'";
+    $sql = "SELECT * FROM taikhoan WHERE email='$email' AND password='$pass' AND `status`=1";
     if (countRow($sql) > 0) {
         $result = execute($sql);
         $_SESSION['email'] = $email;
@@ -43,8 +43,8 @@ if (isset($_POST['dangky'])) {
     $sql = "INSERT INTO taikhoan(id, fullname, email, `password`, `phone`, `address`, `status`) 
         VALUES ('$id','$hovaten','$email','$matkhau','$sodienthoai','$diachi',1)";
 
-    $sql1 = "INSERT INTO diachikhach(id_user, id_addr, `name`, `phone`, addr) 
-        VALUES ('$id','$id_adr','$hovaten','$sodienthoai','$diachi')";
+    $sql1 = "INSERT INTO diachikhach(id_user, id_addr, `name`, `phone`, addr, loai) 
+        VALUES ('$id','$id_adr','$hovaten','$sodienthoai','$diachi', 1)";
     $result = execute($sql);
     if ($result) {
         echo 'success';

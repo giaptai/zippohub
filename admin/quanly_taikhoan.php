@@ -8,11 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/zippohub/fontawesome/css/all.min.css">
     <title>Document</title>
 </head>
 
 <body>
     <ul class="nav nav-tabs justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" aria-current="page" href="quanly_makhuyenmai.php">Quản lý mã khuyến mãi</a>
         </li>
@@ -26,20 +30,17 @@
             <a class="nav-link active" href="#">Quản lý tài khoản</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./quanly_thongke.php">Thống kê</a>
+            <a class="nav-link" href="?exit">Quay lại ZippoHub</a>
         </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Tài khoản</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-        </li>
+        <?php
+        if (isset($_GET['exit'])) {
+            session_start();
+            unset($_SESSION['email']);
+            unset($_SESSION['iduser']);
+            unset($_SESSION['cart']);
+            header('Location:../index.php');
+        }
+        ?>
     </ul>
     <!--  -->
 
@@ -128,7 +129,7 @@
         <table class="table align-middle caption-top" id="table_taikhoan">
             <caption>
                 Quản lý tài khoản
-                <a class="btn btn-success btn-sm" href="./quanly_taikhoan_them.php">Thêm tài khoản</a>
+                <!-- <a class="btn btn-success btn-sm" href="./quanly_taikhoan_them.php">Thêm tài khoản</a> -->
                 <div type="button" class="btn btn-sm btn-outline-primary m-2" onclick="sendMail()">
                     Tổng tài khoản <span class="badge bg-danger" id="badge"><?= $count ?></span>
                 </div>
@@ -158,9 +159,8 @@
                                 <td>' . $tk['address'] . '</td>
                                 <td>' . (($tk['status'] == 1) ?  "Mở" : "Khóa")  . '</td>
                             <td>
-                                <button class="btn btn-outline-warning btn-sm" onclick="lockCus(' . $tk['id'] . ')">Khóa</button>
-                                <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-outline-info btn-sm" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Chi tiết
+                                <button class="btn btn-outline-warning btn-sm" onclick="lockCus(' . $tk['id'] . ', this.innerText)">'.(($tk['status'] == 1) ?  "Khóa" : "Mở").'</button>
+                                <button onclick="details(' . $tk['id'] . ')" type="button" class="btn btn-sm fa-solid fa-circle-info fs-4 text-primary" id="detail' . $tk['id'] . '" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         </button>
                                 </td>
                             </tr>';
@@ -330,6 +330,7 @@
                     //In ra data nhan duoc
                     alert(this.responseText);
                     row.children[5].innerText = (status == 1 ? 'Mở' : 'Khóa');
+                    row.children[6].children[0].innerText=(status == 1 ? 'Khóa' : 'Mở');
                 }
             }
             //cau hinh request
@@ -340,8 +341,10 @@
             xhttp.send('action=update' + '&status=' + status + '&id=' + e);
         }
 
-        function lockCus(e) {
-            if (confirm('Bạn muốn khóa tài khoản này ?')) {
+        function lockCus(e, actt) {
+            if (confirm('Bạn muốn '+actt+' tài khoản này ?')) {
+                console.log(actt);
+                var act=(actt=='Khóa' ? 0:1); 
                 var xhttp = new XMLHttpRequest() || ActiveXObject();
                 //Bat su kien thay doi trang thai cuar request
                 xhttp.onreadystatechange = function() {
@@ -351,8 +354,10 @@
                         if (this.responseText == 'success') {
                             alert(this.responseText);
                             let row = document.getElementById('detail' + e).parentElement.parentElement;
-                            row.children[5].innerText = 'Khóa';
-                        }else alert(this.responseText);
+                            row.children[5].innerText = (actt=='Khóa' ? 'Khóa':'Mở');
+                            row.children[6].children[0].innerText=(actt=='Khóa' ? 'Mở':'Khóa');
+                            console.log(row.children[6].children[0])
+                        } else alert(this.responseText);
 
                     }
                 }
@@ -361,7 +366,7 @@
                 //cau hinh header cho request
                 xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 //gui request
-                xhttp.send('action=lock' + '&id=' + e);
+                xhttp.send('action=lock' + '&id=' + e + '&val=' + act);
             } else return;
         }
         // function addRow() {
