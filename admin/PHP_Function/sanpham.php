@@ -39,6 +39,9 @@ function chucnang(){
             deleted1Page($idd);
             break;
 
+        case 'add':
+            add();
+            break;
         default:
             break;
     }
@@ -220,13 +223,11 @@ function edit(){
     $intro = $_POST['gioithieu'];
     
     if (!preg_match('/^[0-9]{1,9}$/', $gia)) {
-        echo 'Error';
-        die();
+        die('Error');
     }
 
     if (!preg_match('/^[1-9]{1,2}$/', $soluong)) {
-        echo 'Error';
-        die();
+        die('Error');   
     }
     //Code xử lý, insert dữ liệu vào table
     $sql = "UPDATE sanpham SET img='$anh', `name`='$ten', `amount`='$soluong', `price`='$gia',
@@ -321,7 +322,7 @@ function deleted1Page($idd){
 // }
 
 // thêm sản phẩm
-if (isset($_POST['add'])) {
+function add(){
     //if ($_POST['action'] == "add") {
     if (isset($_POST["codez"])) {
         $ma = $_POST['codez'];
@@ -356,6 +357,17 @@ if (isset($_POST['add'])) {
     if (isset($_POST["gioithieu"])) {
         $intro = $_POST['gioithieu'];
     }
+
+    if (!preg_match('/^[0-9]{1,2}$/', $soluong)) {
+        echo 'Error';
+        die();
+    }
+
+    if (!preg_match('/^[0-9]{1,8}$/', $gia)) {
+        echo 'Error';
+        die();
+    }
+
     //Code xử lý, insert dữ liệu vào table
     $sql = "INSERT INTO sanpham (id, img, `name`, amount, price, category, material, madeby, intro, `state`) 
         VALUES ('$ma','$anh','$ten','$soluong','$gia', '$theloai', '$chatlieu', '$xuatxu', '$intro', $status)";

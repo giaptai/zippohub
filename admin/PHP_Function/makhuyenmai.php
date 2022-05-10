@@ -157,7 +157,17 @@ function them()
     $khuyenmai = $_POST['khuyenmai'];
     $trangthai = $_POST['trangthai'];
     $ngayhethan = $_POST['ngayhethan'];
-    $giagiam = $_POST['giagiam'];
+    $giagiam = (empty($_POST['giagiam']) ? 1: $_POST['giagiam']);
+
+    if(empty($khuyenmai)){
+        echo 'fail';
+        die();
+    }
+
+    if(empty($ngayhethan)){
+        echo 'fail';
+        die();
+    }
 
     $sql = "INSERT INTO `makhuyenmai`(`id_khuyenmai`, `trangthai`, `ngayhethan`, `giamgia`) 
     VALUES ('$khuyenmai','$trangthai','$ngayhethan','$giagiam')";
