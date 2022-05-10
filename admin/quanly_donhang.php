@@ -55,6 +55,7 @@
         $temp = $sql;
     }
     $sql .= " ORDER BY `statuss` ASC,`ngaymua` DESC LIMIT $start, 10";
+    echo $sql . '--' . $temp;
     $result = executeResult($sql);
     $result1 = countRow($temp);
     $count = countRow('SELECT * FROM hoadon');

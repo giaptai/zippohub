@@ -66,32 +66,37 @@
     <!--  -->
     <script>
         function addPromo() {
-            var s1 = document.getElementById('khuyenmai').value;
-            var s2 = document.getElementById('trangthai').value;
-            var s3 = document.getElementById('ngayhethan').value;
-            var s4 = document.getElementById('giagiam').value;
-            console.log(s1, s2, s3, s4);
-            //Khoi tao doi tuong
-            var xhttp = new XMLHttpRequest() || ActiveXObject();
-            //Bat su kien thay doi trang thai cuar request
-            xhttp.onreadystatechange = function() {
-                //Kiem tra neu nhu da gui request thanh cong
-                if (this.readyState == 4 && this.status == 200) {
-                    //In ra data nhan duoc     
-                    alert(this.responseText);
+            if (confirm('Thêm mã khuyến mãi ?')) {
+                var s1 = document.getElementById('khuyenmai').value;
+                var s2 = document.getElementById('trangthai').value;
+                var s3 = document.getElementById('ngayhethan').value;
+                var s4 = document.getElementById('giagiam').value;
+                console.log(s1, s2, s3, s4);
+                //Khoi tao doi tuong
+                var xhttp = new XMLHttpRequest() || ActiveXObject();
+                //Bat su kien thay doi trang thai cuar request
+                xhttp.onreadystatechange = function() {
+                    //Kiem tra neu nhu da gui request thanh cong
+                    if (this.readyState == 4 && this.status == 200) {
+                        //In ra data nhan duoc    
+                        console.log(this.responseText);
+                        if(this.responseText=='success'){
+                            alert('Thêm mã khuyến mãi thành công');
+                        }else alert('Xảy ra lỗi khi thêm mã khuyến mãi !');
+                    }
                 }
-            }
-            //cau hinh request
-            xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
-            //cau hinh header cho request
-            xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            //gui request
-            xhttp.send('action=them' +
-                "&khuyenmai=" + s1 +
-                '&trangthai=' + s2 +
-                "&ngayhethan=" + s3 +
-                "&giagiam=" + s4
-            );
+                //cau hinh request
+                xhttp.open('POST', './PHP_Function/makhuyenmai.php', true);
+                //cau hinh header cho request
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                //gui request
+                xhttp.send('action=them' +
+                    "&khuyenmai=" + s1 +
+                    '&trangthai=' + s2 +
+                    "&ngayhethan=" + s3 +
+                    "&giagiam=" + s4
+                );
+            } else return;
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

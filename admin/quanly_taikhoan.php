@@ -352,7 +352,7 @@
                     if (this.readyState == 4 && this.status == 200) {
                         //In ra data nhan duoc
                         if (this.responseText == 'success') {
-                            alert(this.responseText);
+                            alert(actt+ ' thành công');
                             let row = document.getElementById('detail' + e).parentElement.parentElement;
                             row.children[5].innerText = (actt=='Khóa' ? 'Khóa':'Mở');
                             row.children[6].children[0].innerText=(actt=='Khóa' ? 'Mở':'Khóa');

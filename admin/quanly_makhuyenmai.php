@@ -296,7 +296,7 @@
         // xóa 1 mã khuyến mãi
         function deletepromo(id) {
             console.log(id);
-            if (confirm('Xóa mã này ?')) {
+            if (confirm('Xóa mã khuyến mãi này ?')) {
                 var xhttp = new XMLHttpRequest() || ActiveXObject();
                 xhttp.onreadystatechange = function() {
                     //Kiem tra neu nhu da gui request thanh cong

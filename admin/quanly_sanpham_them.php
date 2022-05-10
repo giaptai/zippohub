@@ -254,8 +254,8 @@
                     //if(confirm(this.responseText)) 
                     console.log(this.responseText);
                     if (confirm('Thêm sản phẩm ?')) {
-                        if (this.responseText = 'success') {
-                            alert('thành công');
+                        if (this.responseText == 'success') {
+                            alert('Thêm sản phẩm thành công');
                             location.reload();
                         } else {
                             alert('Lỗi khi thêm sản phẩm: \n' +
@@ -271,7 +271,7 @@
             //cau hinh header cho request
             xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             //gui request
-            xhttp.send('add' +
+            xhttp.send('action=add' +
                 '&inputGroupFile02=' + ss +
                 '&codez=' + s1 +
                 "&namee=" + s2 +

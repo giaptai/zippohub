@@ -21,16 +21,22 @@
     <?php require_once('../query.php');
     session_start();
     $id_hoadon = isset($_GET['id']) ? $_GET['id'] : '';
+    //$id_nguoidung = isset($_GET['iduser']) ? $_GET['iduser'] : '';
     $sql = "SELECT sanpham.img as img, sanpham.name as name ,sanpham.price as price , chitiethoadon.amount as amount, chitiethoadon.total as total
         FROM chitiethoadon INNER JOIN hoadon on chitiethoadon.id_hoadon=hoadon.id_hoadon AND hoadon.id_hoadon=$id_hoadon 
         INNER JOIN sanpham on chitiethoadon.id_sanpham=sanpham.id";
+
     $sql0 = "SELECT * FROM hoadon where id_hoadon='{$id_hoadon}'";
     // $sql0 = "SELECT hoadon.id_hoadon as id_hoadon, hoadon.fullname as name , hoadon.phone as phone, hoadon.address as address, 
     //         hoadon.ngaymua as ngaymua, hoadon.total_money as total_money FROM taikhoan 
     //     INNER JOIN hoadon on hoadon.id_user=taikhoan.id and hoadon.id_user='$id_nguoidung' and hoadon.id_hoadon=$id_hoadon GROUP by hoadon.id_user";
     $result0 = executeSingleResult($sql0);
+
     $result1 = executeSingleResult("SELECT * FROM makhuyenmai WHERE id_khuyenmai='{$result0['magiamgia']}'");
-    $result = executeResult($sql); ?>
+
+    $result = executeResult($sql);
+    echo $sql0 . '<br>';
+    echo $sql; ?>
     <!-- <h1 class="pt-4" style="text-align: center;">Chi tiết đơn hàng</h1>
     <div class="row row-cols-1 row-cols-md-3 pt-4 pb-4" style="width:95%; margin:auto">
         <div class="col">
@@ -355,15 +361,15 @@
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     if (act == 'Đã xác nhận') {
-                        ele.outerHTML = '<a class="btn btn-primary"  onclick="thaotac(' + id + ',  `Đang giao`, this)">Đã xác nhận</a>';
+                       ele.outerHTML='<a class="btn btn-primary"  onclick="thaotac('+id+',  `Đang giao`, this)">Đã xác nhận</a>';
                     } else if (act == 'Đang giao') {
-                        ele.outerHTML = '<a class="btn btn-outline-dark"  onclick="thaotac(' + id + ',  `Đã giao`, this)">Đang giao</a>';
+                        ele.outerHTML='<a class="btn btn-outline-dark"  onclick="thaotac('+id+',  `Đã giao`, this)">Đang giao</a>';
                         s1.children[0].removeChild(s1.children[0].children[1])
                     } else if (act == 'Đã giao') {
-                        ele.outerHTML = '<a class="btn btn-success">Đã giao</a>';
+                        ele.outerHTML='<a class="btn btn-success">Đã giao</a>';
                     } else {
                         s1.children[0].removeChild(s1.children[0].children[0])
-                        ele.innerText = 'Đã hủy';
+                        ele.innerText='Đã hủy';
                     }
                 }
             }
