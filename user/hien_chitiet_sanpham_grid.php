@@ -249,14 +249,16 @@
                 //Kiem tra neu nhu da gui request thanh cong
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
-                    if (this.responseText != '') {
-                        alert(this.responseText)
-                    } else {
+                    let s1=JSON.parse(this.responseText).arr1;
+                    if (s1== 'success') {
                         let btn = document.getElementById("id" + e)
                         btn.innerText = "Đã thêm vào giỏ"
                         btn.classList.add('disabled')
                         btn.classList.add('btn-primary')
                         btn.classList.remove('btn-outline-primary')
+                        
+                    } else {
+                        alert("Mỗi tài khoản chỉ mua tối đa 5 sản phẩm !")
                     }
                 }
             }
