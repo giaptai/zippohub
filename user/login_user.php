@@ -352,7 +352,8 @@ if (isset($_SESSION["Order"])) {
                     } else document.getElementById('thongbao').innerHTML = ('<small>Không tìm thấy tài khoản, có thể do:<br>' +
                         '1. Chưa nhập thông tin.<br>' +
                         '2. Sai email hoặc mật khẩu.<br>' +
-                        '3. Tài khoản chưa đăng ký.<br></small>');
+                        '3. Tài khoản chưa đăng ký hoặc bị khóa.<br>'+
+                       'Lưu ý: Nếu tài khoản bị khóa hãy liên hệ 0124408079 để mở khóa</small>');
                     //console.log(this.responseText);
                 }
             }

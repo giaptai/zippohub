@@ -321,7 +321,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
                     if(this.responseText=='fail'){
-                        alert('Quá số lượng trong kho !');
+                        alert('Không được vượt quá số lượng trong kho !');
                         return;
                     }
                     displaycart();
