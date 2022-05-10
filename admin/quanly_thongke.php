@@ -48,7 +48,7 @@
     $result4 = countRow("SELECT * FROM makhuyenmai");
     ?>
     <div class="container-md" style="min-height: 906px;">
-        <div class="row">
+        <div class="row w-100">
             <div class="row row-cols-1 row-cols-md-4 g-2 mb-3 justify-content-between">
                 <div class="col text-white ">
                     <div class="card h-100">
