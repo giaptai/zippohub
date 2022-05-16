@@ -4,6 +4,19 @@
 if (isset($_SESSION["Order"])) {
     unset($_SESSION["Order"]);
     unset($_SESSION["cart"]);
+}
+if (isset($_GET["reset"])) {
+    switch ($_GET["reset"]) {
+        case 'success':
+            echo '<script>alert("Đổi mật khẩu thành công")</script>';
+            break;
+        case 'wrongtoken';
+            echo '<script>alert("Token lỗi hoặc sai")</script>';
+            break;
+        case 'expired';
+            echo '<script>alert("Token quá hạn")</script>';
+            break;
+    }
 } ?>
 
 <head>
@@ -107,7 +120,7 @@ if (isset($_SESSION["Order"])) {
                         <a href="../reset_password/reset-index.php" class="text-body">Quên mật khẩu?</a>
                     </div>
                     <div class="text-center text-lg-start mt-3">
-                        <button <?=isset($_SESSION['iduser']) ? 'hidden':''?> type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" id="login">Login</button>
+                        <button <?= isset($_SESSION['iduser']) ? 'hidden' : '' ?> type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" id="login">Login</button>
                         <p class="small fw-bold mt-2 pt-1 mb-0">Chưa có tài khoản? <a href="#" class="link-danger" onclick="formRG(1)">Đăng kí</a></p>
                         <p class="small fw-bold mt-2 pt-1 mb-0">Trang quản lý <a href="../admin/index.php" class="link-primary">Chuyển tới</a></p>
                     </div>
@@ -347,14 +360,13 @@ if (isset($_SESSION["Order"])) {
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     if (this.responseText == 'success') {
-                        alert(this.responseText);
+                        alert("Đăng nhập thành công !");
                         window.location.href = '../index.php';
                     } else document.getElementById('thongbao').innerHTML = ('<small>Không tìm thấy tài khoản, có thể do:<br>' +
                         '1. Chưa nhập thông tin.<br>' +
                         '2. Sai email hoặc mật khẩu.<br>' +
-                        '3. Tài khoản chưa đăng ký hoặc bị khóa.<br>'+
-                       'Lưu ý: Nếu tài khoản bị khóa hãy liên hệ 0124408079 để mở khóa</small>');
-                    //console.log(this.responseText);
+                        '3. Tài khoản chưa đăng ký hoặc bị khóa.<br>' +
+                        'Lưu ý: Nếu tài khoản bị khóa hãy liên hệ 0124408079 để mở khóa</small>');
                 }
             }
             //cau hinh request
