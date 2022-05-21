@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +31,7 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark bg-light" href="#">
                             Giỏ hàng <span class="badge bg-secondary" id="cartcount">
-                                <?php session_start();
+                                <?php
                                 echo isset($_SESSION['cart']) ? count($_SESSION['cart']) :  0;
                                 ?></span></a>
                     </li>

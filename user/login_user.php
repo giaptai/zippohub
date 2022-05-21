@@ -1,6 +1,7 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
-<?php session_start();
+<?php
 if (isset($_SESSION["Order"])) {
     unset($_SESSION["Order"]);
     unset($_SESSION["cart"]);
@@ -394,10 +395,14 @@ if (isset($_GET["reset"])) {
                 if (this.readyState == 4 && this.status == 200) {
                     //In ra data nhan duoc
                     if (this.responseText == 'success') {
-                        alert(this.responseText);
+                        alert('Đăng ký thành công');
                         document.getElementById("formLG").style.display = "block";
                         document.getElementById("formRG").style.display = "none";
-                    } else alert(this.responseText);
+                    } else if(this.responseText == 'fail'){
+                            alert('Xảy ra lỗi khi đăng ký:\n'+
+                                '1 .Email đăng ký đã tồn tại\n'+
+                                '2. Số điện thoại đăng ký đã tồn tại');
+                    }else alert(this.responseText);
                 }
             }
             //cau hinh request
@@ -411,7 +416,6 @@ if (isset($_GET["reset"])) {
                 '&email=' + email +
                 '&matkhau=' + matkhau +
                 '&diachi=' + diachi);
-
         }
     </script>
     <script src="https://kit.fontawesome.com/18b3e0af24.js" crossorigin="anonymous"></script>

@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +25,6 @@
                         <a class="nav-link text-light" href="../cuahang.php">Cửa hàng</a>
                     </li>
                     <?php
-                    session_start();
                     if (isset($_SESSION['email'])) {
                         echo '
                         <li class="nav-item">

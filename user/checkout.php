@@ -1,3 +1,4 @@
+<?php session_start();?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +31,6 @@
                         </a>
                     </li>
                     <?php
-                    session_start();
                     if (isset($_SESSION['email'])) {
                         echo '<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"  data-bs-toggle="dropdown" aria-expanded="false">

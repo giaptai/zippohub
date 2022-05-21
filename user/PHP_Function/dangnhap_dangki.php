@@ -25,8 +25,18 @@ if (isset($_POST['dangky'])) {
     $matkhau = $_POST['matkhau'];
     $diachi = $_POST['diachi'];
 
+    if (empty($hovaten)) {
+        echo 'Họ và tên trống';
+        die();
+    }
+
+    if (empty($diachi)) {
+        echo 'Địa chỉ trống';
+        die();
+    }
+
     if (!preg_match('/^[0-9]{10,11}$/', $sodienthoai)) {
-        echo 'Số điện thoại lỗi';
+        echo 'Số điện thoại không hợp lệ hoặc trống';
         die();
     }
 
